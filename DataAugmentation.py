@@ -7,7 +7,7 @@ from imgaug import augmenters as iaa
 # settings settings
 
 # directory of images to augment
-dataDirectoryAddress = 'E:\\test'
+dataDirectoryAddress = 'C:\\Users\\Ben-ThinkPad\\Pictures\\test'
 # augmentat techniques. Visit https://github.com/aleju/imgaug to find more techniques.
 seq = iaa.Sequential(
     [iaa.Rot90(k=1, keep_size=False)])  # modify "iaa.Add(-45), iaa.Crop(precent=0.2), iaa.GaussianBlur(2)" to get the augmentation type you want
@@ -29,33 +29,36 @@ for f in os.listdir(dataDirectoryAddress):
 for address in imageAddresses:
     boundingBoxes = []
     image = imageio.imread(address)
-    tree = ET.parse(address.replace(fileType, '.xml'))
-    root = tree.getroot()
+    originalTree = ET.parse(address.replace(fileType, '.xml'))
+    originalRoot = originalTree.getroot()
+    augmentedTree = ET.parse(address.replace(fileType, '.xml'))
+    augmentedRoot = augmentedTree.getroot()
+
     # getting bounding boxes
-    for obj in root.iter('object'):
+    for obj in augmentedRoot.iter('object'):
         boundingBoxes.append(ia.BoundingBox(x1=int(obj[4][0].text), y1=int(
             obj[4][1].text), x2=int(obj[4][2].text), y2=int(obj[4][3].text), label=obj[0].text))
     BBS = ia.BoundingBoxesOnImage(boundingBoxes, shape=image.shape)
 
+    # augmentation
     augmentedImage, augmentedBBS = seq(image=image, bounding_boxes=BBS)
 
-    # dealing with bounding boxes that are out of the border of the image
-    # augmentedBBS = augmentedBBS.remove_out_of_image()
-    # augmentedBBS = augmentedBBS.clip_out_of_image()
-
-    for fileName in root.iter('filename'):
+    # xml handling
+    for path in originalRoot.iter('path'):
+        path.text = str(address) # modify the path in original xml
+    for fileName in augmentedRoot.iter('filename'):
         newName = str(fileName.text.replace(
             fileType, fileNameToAdd)) + fileType
         fileName.text = str(newName)
-    for path in root.iter('path'):
+    for path in augmentedRoot.iter('path'):
         newPath = address.replace(fileType, fileNameToAdd) + fileType
         path.text = str(newPath)
-    for size in root.iter('size'):
+    for size in augmentedRoot.iter('size'):
         size[0].text = str(augmentedImage.shape[1])
         size[1].text = str(augmentedImage.shape[0])
         size[2].text = str(augmentedImage.shape[2])
     i = 0
-    for obj in root.findall('object'):
+    for obj in augmentedRoot.findall('object'):
         if augmentedBBS.bounding_boxes[i].is_fully_within_image(augmentedImage.shape):
             obj[4][0].text = str(augmentedBBS.bounding_boxes[i].x1)
             obj[4][1].text = str(augmentedBBS.bounding_boxes[i].y1)
@@ -69,14 +72,15 @@ for address in imageAddresses:
             obj[4][2].text = str(augmentedBBS.bounding_boxes[i].x2)
             obj[4][3].text = str(augmentedBBS.bounding_boxes[i].y2)
         else:
-            root.remove(obj)
+            augmentedRoot.remove(obj)
         i += 1
 
     # augmentedImage = augmentedBBS.draw_on_image(
     #     augmentedImage, size=5, color=[0, 0, 255])
 
     # saving new xml
-    tree.write(newPath.replace(fileType, '.xml'))
+    originalTree.write(address.replace(fileType, '.xml'))
+    augmentedTree.write(newPath.replace(fileType, '.xml'))
     # saving new image
     imageio.imsave(newPath, augmentedImage)
 
