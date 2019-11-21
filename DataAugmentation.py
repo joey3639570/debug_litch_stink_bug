@@ -21,11 +21,15 @@ fileType = '.jpg'
 
 # getting fileNames of images to augment
 imageAddresses = []
+totalImageCount = 0
+finishCount = 0
 for f in os.listdir(dataDirectoryAddress):
     if (f.__contains__(fileType)):
         imageAddresses.append(dataDirectoryAddress + '\\' + f)
+        totalImageCount += 1
 
 # augmentation
+print("start augmentation.")
 for address in imageAddresses:
     boundingBoxes = []
     image = imageio.imread(address)
@@ -45,7 +49,7 @@ for address in imageAddresses:
 
     # xml handling
     for path in originalRoot.iter('path'):
-        path.text = str(address) # modify the path in original xml
+        path.text = str(address)  # modify the path in original xml
     for fileName in augmentedRoot.iter('filename'):
         newName = str(fileName.text.replace(
             fileType, fileNameToAdd)) + fileType
@@ -83,5 +87,7 @@ for address in imageAddresses:
     augmentedTree.write(newPath.replace(fileType, '.xml'))
     # saving new image
     imageio.imsave(newPath, augmentedImage)
+    finishCount += 1
+    print(str(finishCount)+"/"+str(totalImageCount))
 
 print("Augmentation finished.")
