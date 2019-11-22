@@ -6,13 +6,15 @@ from imgaug import augmenters as iaa
 
 # settings settings
 
-# directory of images to augment
-dataDirectoryAddress = 'C:\\Users\\Ben-ThinkPad\\Pictures\\test'
+# the directory of images to augment
+sourceDirectory = 'C:\\Users\\Ben-ThinkPad\\Pictures\\test'
+# the directory to save augmented images
+destinationDirectory = 'E:\\test'
 # augmentat techniques. Visit https://github.com/aleju/imgaug to find more techniques.
 seq = iaa.Sequential(
     [iaa.Rot90(k=1, keep_size=False)])  # modify "iaa.Add(-45), iaa.Crop(precent=0.2), iaa.GaussianBlur(2)" to get the augmentation type you want
 # file names to augmented images
-fileNameToAdd = '_Rot90'
+fileNameToAdd = '_Rotttt90'
 # file type
 # be aware of the file type, ex: jpg v.s. JPG and jpg v.s. jpeg, they are different!
 fileType = '.jpg'
@@ -23,9 +25,9 @@ fileType = '.jpg'
 imageAddresses = []
 totalImageCount = 0
 finishCount = 0
-for f in os.listdir(dataDirectoryAddress):
+for f in os.listdir(sourceDirectory):
     if (f.__contains__(fileType)):
-        imageAddresses.append(dataDirectoryAddress + '\\' + f)
+        imageAddresses.append(sourceDirectory + '\\' + f)
         totalImageCount += 1
 
 # augmentation
@@ -33,8 +35,8 @@ print("start augmentation.")
 for address in imageAddresses:
     boundingBoxes = []
     image = imageio.imread(address)
-    originalTree = ET.parse(address.replace(fileType, '.xml'))
-    originalRoot = originalTree.getroot()
+    # originalTree = ET.parse(address.replace(fileType, '.xml'))
+    # originalRoot = originalTree.getroot()
     augmentedTree = ET.parse(address.replace(fileType, '.xml'))
     augmentedRoot = augmentedTree.getroot()
 
@@ -48,15 +50,20 @@ for address in imageAddresses:
     augmentedImage, augmentedBBS = seq(image=image, bounding_boxes=BBS)
 
     # xml handling
-    for path in originalRoot.iter('path'):
-        path.text = str(address)  # modify the path in original xml
     for fileName in augmentedRoot.iter('filename'):
         newName = str(fileName.text.replace(
             fileType, fileNameToAdd)) + fileType
         fileName.text = str(newName)
+    # for path in originalRoot.iter('path'):
+        # path.text = str(address)  # modify the path in original xml
+        # newPath = str(address.replace(sourceDirectory, destinationDirectory)) # save to another directory
+        # path.text = newPath
     for path in augmentedRoot.iter('path'):
-        newPath = address.replace(fileType, fileNameToAdd) + fileType
-        path.text = str(newPath)
+        # newPath = address.replace(fileType, fileNameToAdd) + fileType
+        # path.text = str(newPath)
+        newPath = str(destinationDirectory) + '\\' + \
+            newName  # save to another directory
+        path.text = newPath
     for size in augmentedRoot.iter('size'):
         size[0].text = str(augmentedImage.shape[1])
         size[1].text = str(augmentedImage.shape[0])
@@ -83,11 +90,11 @@ for address in imageAddresses:
     #     augmentedImage, size=5, color=[0, 0, 255])
 
     # saving new xml
-    originalTree.write(address.replace(fileType, '.xml'))
+    # originalTree.write(address.replace(fileType, '.xml'))
     augmentedTree.write(newPath.replace(fileType, '.xml'))
     # saving new image
     imageio.imsave(newPath, augmentedImage)
     finishCount += 1
-    print(str(finishCount)+"/"+str(totalImageCount))
+    print(str(finishCount)+"/"+str(totalImageCount)+", saved to:"+newPath)
 
 print("Augmentation finished.")
