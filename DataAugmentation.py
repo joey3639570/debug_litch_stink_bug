@@ -101,6 +101,6 @@ for address in imageAddresses:
     # saving new image
     imageio.imsave(newPath, augmentedImage)
     finishCount += 1
-    print(str(finishCount) + "/" + str(totalImageCount) + ", saved to:" + newPath)
+    print(str(finishCount) + "/" + str(totalImageCount) + ", saved to: " + newPath)
 
 print("Augmentation finished.")
