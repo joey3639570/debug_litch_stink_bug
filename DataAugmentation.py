@@ -7,9 +7,12 @@ from imgaug import augmenters as iaa
 # settings settings
 
 # the directory of images to augment
-sourceDirectory = 'C:\\Users\\Ben-ThinkPad\\Pictures\\test'
+imageSourceDirectory = 'C:\\Users\\Ben-ThinkPad\\Pictures\\test'
+# the directory of original xml
+xmlSourceDirectory = 'C:\\Users\\Ben-ThinkPad\\Pictures\\test\\xmlFile'
 # the directory to save augmented images
-destinationDirectory = 'E:\\test'
+imageDestinationDirectory = 'E:\\test'
+xmlDestinationDirectory = 'E:\\test\\xmlFile'
 # augmentat techniques. Visit https://github.com/aleju/imgaug to find more techniques.
 seq = iaa.Sequential(
     [iaa.Rot90(k=1, keep_size=False)])  # modify "iaa.Add(-45), iaa.Crop(precent=0.2), iaa.GaussianBlur(2)" to get the augmentation type you want
@@ -25,9 +28,9 @@ fileType = '.jpg'
 imageAddresses = []
 totalImageCount = 0
 finishCount = 0
-for f in os.listdir(sourceDirectory):
+for f in os.listdir(imageSourceDirectory):
     if (f.__contains__(fileType)):
-        imageAddresses.append(sourceDirectory + '\\' + f)
+        imageAddresses.append(imageSourceDirectory + '\\' + f)
         totalImageCount += 1
 
 # augmentation
@@ -37,7 +40,9 @@ for address in imageAddresses:
     image = imageio.imread(address)
     # originalTree = ET.parse(address.replace(fileType, '.xml'))
     # originalRoot = originalTree.getroot()
-    augmentedTree = ET.parse(address.replace(fileType, '.xml'))
+    # augmentedTree = ET.parse(address.replace(fileType, '.xml')) # for jpg and xml are in the same directory
+    augmentedTree = ET.parse(address.replace(
+        imageSourceDirectory, xmlSourceDirectory).replace(fileType, '.xml'))  # for jpg and xml aren't in the same directory
     augmentedRoot = augmentedTree.getroot()
 
     # getting bounding boxes
@@ -61,7 +66,7 @@ for address in imageAddresses:
     for path in augmentedRoot.iter('path'):
         # newPath = address.replace(fileType, fileNameToAdd) + fileType
         # path.text = str(newPath)
-        newPath = str(destinationDirectory) + '\\' + \
+        newPath = str(imageDestinationDirectory) + '\\' + \
             newName  # save to another directory
         path.text = newPath
     for size in augmentedRoot.iter('size'):
@@ -91,10 +96,11 @@ for address in imageAddresses:
 
     # saving new xml
     # originalTree.write(address.replace(fileType, '.xml'))
-    augmentedTree.write(newPath.replace(fileType, '.xml'))
+    augmentedTree.write(newPath.replace(imageDestinationDirectory, xmlDestinationDirectory).replace(
+        fileType, '.xml'))  # for saving jpg and xml into seperate directories
     # saving new image
     imageio.imsave(newPath, augmentedImage)
     finishCount += 1
-    print(str(finishCount)+"/"+str(totalImageCount)+", saved to:"+newPath)
+    print(str(finishCount) + "/" + str(totalImageCount) + ", saved to:" + newPath)
 
 print("Augmentation finished.")
