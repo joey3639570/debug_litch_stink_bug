@@ -1,0 +1,327 @@
+import imageio
+import imgaug as ia
+import xml.etree.ElementTree as ET
+import os
+import matplotlib.pyplot as plt
+from imgaug import augmenters as iaa
+from argparse import ArgumentParser
+
+
+def findAugmenterIndex(augmenterList, target, augmenterHistory):
+    for i in range(len(augmenterList)):
+        if augmenterList[i][0].text == target and augmenterHistory[i] == 0:
+            return i
+    return - 1  # normally, it won't be executed
+
+
+def generateAugmenter(augmenters, target, augmenterHistory):
+    if target == 'Add':
+        augmenter = iaa.Add(int(augmenters[findAugmenterIndex(
+            augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'AdditiveGaussianNoise':
+        augmenter = iaa.AdditiveGaussianNoise(scale=float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text) * 255)
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'AveragePooling':
+        augmenter = iaa.AveragePooling(kernel_size=int(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'CoarseDropout':
+        augmenter = iaa.CoarseDropout(size_percent=float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'Crop':
+        augmenter = iaa.Crop(percent=(float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
+            float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text),
+            float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][2].text),
+            float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][3].text)
+        ), keep_size=False)
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'Dropout':
+        augmenter = iaa.Dropout(p=float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'ElasticTransformation':
+        augmenter = iaa.ElasticTransformation(alpha=int(augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
+                                              sigma=int(augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'Emboss':
+        augmenter = iaa.Emboss(alpha=float(augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
+                               strength=float(augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'Flipud':
+        augmenter = iaa.Flipud(p=1)
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'Fliplr':
+        augmenter = iaa.Fliplr(p=1)
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'GammaContrast':
+        augmenter = iaa.GammaContrast(gamma=float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'GaussianBlur':
+        augmenter = iaa.GaussianBlur(sigma=float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'HistogramEqualization':
+        augmenter = iaa.HistogramEqualization(to_colorspace=augmenters[findAugmenterIndex(
+            augmenters, target, augmenterHistory)][2][0].text)
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'JpegCompression':
+        augmenter = iaa.JpegCompression(compression=int(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'LinearContrast':
+        augmenter = iaa.LinearContrast(alpha=float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'LogContrast':
+        augmenter = iaa.LogContrast(gain=float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'MotionBlur':
+        augmenter = iaa.MotionBlur(k=int(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text), angle=int(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'Pad':
+        augmenter = iaa.Pad(percent=float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'Rot':
+        augmenter = iaa.Rot90(k=int(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    elif target == 'Sharpen':
+        augmenter = iaa.Sharpen(alpha=int(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text), lightness=int(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+    else:
+        augmenter = iaa.SigmoidContrast(cutoff=float(
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+        augmenterHistory[findAugmenterIndex(
+            augmenters, target, augmenterHistory)] = 1
+        return augmenter
+
+
+# argparse
+parser = ArgumentParser()
+parser.add_argument("conf", help="the path of augmenter configurations")
+arguments = parser.parse_args()
+configurationFile = os.path.abspath('.') + '/' + arguments.conf
+# configurationFile = os.path.abspath('.') + '\\AugmenterConfigurations.xml'
+
+# parsing configuration file
+configurationTree = ET.parse(configurationFile)
+configurationRoot = configurationTree.getroot()
+
+# the directory of images to augment
+imageSourceDirectory = configurationRoot.findall(
+    'imageSourceDirectory')[0].text
+# the directory of original xml
+xmlSourceDirectory = configurationRoot.findall('xmlSourceDirectory')[0].text
+# the directory to save augmented images
+imageDestinationDirectory = configurationRoot.findall(
+    'imageDestinationDirectory')[0].text
+xmlDestinationDirectory = configurationRoot.findall(
+    'xmlDestinationDirectory')[0].text
+
+# deprecated deprecated
+# augmenters. Visit https://github.com/aleju/imgaug to find more augmenters.
+# sequential augmentation. Applies all the augmenters(sequentially) to an image, generates an image that contains all the augmenters.
+# seq = iaa.Sequential([
+#     iaa.SigmoidContrast(cutoff=0.6, gain=7)])  # modify "iaa.Add(-45), iaa.Crop(precent=0.2), iaa.GaussianBlur(2)" to get the augmentation type you want
+# deprecated deprecated
+
+# seperate augmentation. Applies one augmenter to an image and generated augmented image.
+# load all of the augmenters in configuration file
+augmenters = configurationRoot.findall('augmenter')
+
+# file type
+# be aware of the file type, ex: jpg v.s. JPG and jpg v.s. jpeg, they are different!
+fileType = '.jpg'
+
+# getting addresses of images to augment
+imageAddresses = []
+totalImageCount = 0
+finishPartCount = 0
+for f in os.listdir(imageSourceDirectory):
+    if (f.__contains__(fileType)):
+        imageAddresses.append(imageSourceDirectory + '/' + f)
+        totalImageCount += 1
+
+# counting the number of augmenters
+augmenterCount = 0
+for a in augmenters:
+    if a[1].text == 'Yes':
+        augmenterCount += 1
+
+# augmentation
+imagesToShow = []
+augmenterHistory = [0]*len(augmenters)
+print("start augmentation.")
+# for s in seq:
+for a in augmenters:
+    if a[1].text == 'Yes':
+        print("part: " + str(finishPartCount + 1) + "/" + str(augmenterCount))
+        s = generateAugmenter(augmenters, a[0].text, augmenterHistory)
+        finishImageCount = 0
+        for address in imageAddresses:
+            boundingBoxes = []
+
+            # getting target image and xml file
+            image = imageio.imread(address)
+            augmentedTree = ET.parse(address.replace(
+                imageSourceDirectory, xmlSourceDirectory).replace(fileType, '.xml'))
+            augmentedRoot = augmentedTree.getroot()
+
+            # getting bounding boxes
+            for obj in augmentedRoot.iter('object'):
+                boundingBoxes.append(ia.BoundingBox(x1=int(obj[4][0].text), y1=int(
+                    obj[4][1].text), x2=int(obj[4][2].text), y2=int(obj[4][3].text), label=obj[0].text))
+            BBS = ia.BoundingBoxesOnImage(boundingBoxes, shape=image.shape)
+
+            # augmentation
+            augmentedImage, augmentedBBS = s(image=image, bounding_boxes=BBS)
+
+            # xml handling
+            for fileName in augmentedRoot.iter('filename'):
+                newNameAttributes = '_'
+                if a[0].text == 'Crop':
+                    newNameAttributes = newNameAttributes + a[0].text
+                    if a[2][0].text == '0' and a[2][3].text == '0':
+                        newNameAttributes = newNameAttributes + '=' + 'topLeft'
+                    elif a[2][0].text == '0' and a[2][1].text == '0':
+                        newNameAttributes = newNameAttributes + '=' + 'topRight'
+                    elif a[2][2].text == '0' and a[2][1].text == '0':
+                        newNameAttributes = newNameAttributes + '=' + 'bottomRight'
+                    elif a[2][2].text == '0' and a[2][3].text == '0':
+                        newNameAttributes = newNameAttributes + '=' + 'bottomLeft'
+                elif a[0].text == 'Flipud' or a[0].text == 'Fliplr':
+                    newNameAttributes = newNameAttributes + a[0].text
+                elif a[0].text == 'Rot':
+                    newNameAttributes = newNameAttributes + \
+                        a[0].text + '=' + a[2][0].text
+                elif a[0].text == 'Add':
+                    newNameAttributes = newNameAttributes + \
+                        a[0].text + '=' + a[2][0].text
+                else:
+                    newNameAttributes = newNameAttributes + '_' + a[0].text
+                    for args in a[2]:
+                        newNameAttributes = newNameAttributes + '_' + \
+                            args.tag + '=' + args.text.replace('.', 'p')
+                newName = str(fileName.text.replace(
+                    fileType, newNameAttributes)) + fileType
+                fileName.text = newName
+            for folder in augmentedRoot.iter('folder'):
+                newFolder = str(a[0].text)
+                folder.text = newFolder
+            for path in augmentedRoot.iter('path'):
+                newPath = str(imageDestinationDirectory) + \
+                    '/' + a[0].text + '/' + newName
+                path.text = newPath
+            for size in augmentedRoot.iter('size'):
+                size[0].text = str(augmentedImage.shape[1])
+                size[1].text = str(augmentedImage.shape[0])
+                size[2].text = str(augmentedImage.shape[2])
+            i = 0
+            for obj in augmentedRoot.findall('object'):
+                if augmentedBBS.bounding_boxes[i].is_fully_within_image(augmentedImage.shape):
+                    obj[4][0].text = str(augmentedBBS.bounding_boxes[i].x1)
+                    obj[4][1].text = str(augmentedBBS.bounding_boxes[i].y1)
+                    obj[4][2].text = str(augmentedBBS.bounding_boxes[i].x2)
+                    obj[4][3].text = str(augmentedBBS.bounding_boxes[i].y2)
+                elif augmentedBBS.bounding_boxes[i].is_partly_within_image(augmentedImage.shape):
+                    augmentedBBS.bounding_boxes[i].clip_out_of_image(
+                        augmentedImage.shape)
+                    obj[4][0].text = str(augmentedBBS.bounding_boxes[i].x1)
+                    obj[4][1].text = str(augmentedBBS.bounding_boxes[i].y1)
+                    obj[4][2].text = str(augmentedBBS.bounding_boxes[i].x2)
+                    obj[4][3].text = str(augmentedBBS.bounding_boxes[i].y2)
+                else:
+                    augmentedRoot.remove(obj)
+                i += 1
+
+            # draw on image
+            # augmentedImage = augmentedBBS.draw_on_image(
+            #     augmentedImage, size=5, color=[0, 0, 255])
+
+            # saving new xml file
+            # mkdir if destination directory doesn't exist
+            if os.path.isdir(newPath.replace(newName, '')) is False:
+                os.mkdir(newPath.replace(newName, ''))
+                os.mkdir(newPath.replace(newName, '/xmlFile'))
+            augmentedTree.write(newPath.replace(newName, '/xmlFile/' + newName).replace(
+                fileType, '.xml'))  # for saving jpg and xml into seperate directories
+
+            # saving new image
+            imageio.imsave(newPath, augmentedImage)
+            if finishImageCount is 0:  # sample images to show later
+                imagesToShow.append(augmentedImage)
+
+            finishImageCount += 1
+            print(str(finishImageCount) + "/" +
+                  str(totalImageCount) + ", saved to: " + newPath)
+            finishPartCount += 1
+    print('\n')
+
+if configurationRoot.findall('showAugmentedSamples')[0].text == 'Yes':
+    # not finished yet
+    plt.figure(figsize=(12.8, 7.2))
+    # plt.imshow(imagesToShow)
+    i = 0
+    for i in range(augmenterCount):
+        plt.subplot(augmenterCount/3, 3, i+1)
+        plt.imshow(imagesToShow[i])
+        plt.title(augmenters[i][0].text)
+        plt.axis('off')
+    plt.show()
+    # not finished yet
+
+print("Augmentation finished.")
