@@ -1,9 +1,19 @@
 <configurations>
+    <comment>Please modify the content in tags to the configuration you need</comment>
+    <comment>Indicate the directory that stores the images you want to augment</comment>
     <imageSourceDirectory>C:\\Users\\Ben-ThinkPad\\Pictures\\test</imageSourceDirectory>
+    <comment>Indicate the directory that stores the corresponding xml file</comment>
     <xmlSourceDirectory>C:\\Users\\Ben-ThinkPad\\Pictures\\test\\xmlFile</xmlSourceDirectory>
+    <comment>Indicate the directory that is going to store the augmented images</comment>
     <imageDestinationDirectory>C:\\Users\\Ben-ThinkPad\\Pictures\\aug</imageDestinationDirectory>
+    <comment>Indicate the directory that is going to store the corresponding xml file</comment>
     <xmlDestinationDirectory>C:\\Users\\Ben-ThinkPad\\Pictures</xmlDestinationDirectory>
+    <comment>Modify to 'Yes' to enable the function of showing augmented samples</comment>
     <showAugmentedSamples>No</showAugmentedSamples>
+    <comment>The augmenter you may use</comment>
+    <comment>Modify the content in the tag 'enable' to 'Yes' to use the augmenter</comment>
+    <comment>Modify the content in the tag 'enable' to 'No' to ignore the augmenter</comment>
+    <comment>You are free add/delete augmenters, but only these predefined augmenters</comment>
     <augmenter>
         <name>Add</name>
         <enable>Yes</enable>
@@ -13,7 +23,7 @@
     </augmenter>
     <augmenter>
         <name>AdditiveGaussianNoise</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <scale>0.1</scale>
         </args>
@@ -27,7 +37,7 @@
     </augmenter>
     <augmenter>
         <name>CoarseDropout</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <sizepercent>0.1</sizepercent>
         </args>
@@ -44,14 +54,14 @@
     </augmenter>
     <augmenter>
         <name>Dropout</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <p>0.05</p>
         </args>
     </augmenter>
     <augmenter>
         <name>ElasticTransformation</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <alpha>20</alpha>
             <sigma>4</sigma>
@@ -59,7 +69,7 @@
     </augmenter>
     <augmenter>
         <name>Emboss</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <alpha>1</alpha>
             <strength>1.5</strength>
@@ -67,61 +77,61 @@
     </augmenter>
     <augmenter>
         <name>Flipud</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
         </args>
     </augmenter>
     <augmenter>
         <name>Fliplr</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
         </args>
     </augmenter>
     <augmenter>
         <name>GammaContrast</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <gamma>0.6</gamma>
         </args>
     </augmenter>
     <augmenter>
         <name>GaussianBlur</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <sigma>5</sigma>
         </args>
     </augmenter>
     <augmenter>
         <name>HistogramEqualization</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <tocolorspace>Lab</tocolorspace>
         </args>
     </augmenter>
     <augmenter>
         <name>JpegCompression</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <compression>92</compression>
         </args>
     </augmenter>
     <augmenter>
         <name>LinearContrast</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <alpha>0.6</alpha>
         </args>
     </augmenter>
     <augmenter>
         <name>LogContrast</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <gain>0.8</gain>
         </args>
     </augmenter>
     <augmenter>
         <name>MotionBlur</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <k>16</k>
             <angle>72</angle>
@@ -129,21 +139,21 @@
     </augmenter>
     <augmenter>
         <name>Pad</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <percent>0.2</percent>
         </args>
     </augmenter>
     <augmenter>
         <name>Rot</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <k>1</k>
         </args>
     </augmenter>
     <augmenter>
         <name>Sharpen</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <alpha>1</alpha>
             <lightness>1</lightness>
@@ -151,7 +161,7 @@
     </augmenter>
     <augmenter>
         <name>SigmoidContrast</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <cutoff>0.2</cutoff>
         </args>
