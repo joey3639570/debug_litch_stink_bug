@@ -14,6 +14,7 @@ def findAugmenterIndex(augmenterList, target, augmenterHistory):
     return - 1  # normally, it won't be executed
 
 
+# generate the augmenters according to the discription in configuration file
 def generateAugmenter(augmenters, target, augmenterHistory):
     if target == 'Add':
         augmenter = iaa.Add(int(augmenters[findAugmenterIndex(
@@ -155,6 +156,7 @@ parser = ArgumentParser()
 parser.add_argument("conf", help="the path of augmenter configurations")
 arguments = parser.parse_args()
 configurationFile = os.path.abspath('.') + '/' + arguments.conf
+# for debugging
 # configurationFile = os.path.abspath('.') + '\\AugmenterConfigurations.xml'
 
 # parsing configuration file
@@ -169,17 +171,21 @@ xmlSourceDirectory = configurationRoot.findall('xmlSourceDirectory')[0].text
 # the directory to save augmented images
 imageDestinationDirectory = configurationRoot.findall(
     'imageDestinationDirectory')[0].text
+# mkdir if destination directory doesn't exist
+if os.path.isdir(imageDestinationDirectory) is False:
+    os.mkdir(imageDestinationDirectory)
+
+# deprecated deprecated
 xmlDestinationDirectory = configurationRoot.findall(
     'xmlDestinationDirectory')[0].text
 
-# deprecated deprecated
 # augmenters. Visit https://github.com/aleju/imgaug to find more augmenters.
 # sequential augmentation. Applies all the augmenters(sequentially) to an image, generates an image that contains all the augmenters.
 # seq = iaa.Sequential([
 #     iaa.SigmoidContrast(cutoff=0.6, gain=7)])  # modify "iaa.Add(-45), iaa.Crop(precent=0.2), iaa.GaussianBlur(2)" to get the augmentation type you want
+# seperate augmentation. Applies one augmenter to an image and generated augmented image.
 # deprecated deprecated
 
-# seperate augmentation. Applies one augmenter to an image and generated augmented image.
 # load all of the augmenters in configuration file
 augmenters = configurationRoot.findall('augmenter')
 
@@ -196,21 +202,27 @@ for f in os.listdir(imageSourceDirectory):
         imageAddresses.append(imageSourceDirectory + '/' + f)
         totalImageCount += 1
 
-# counting the number of augmenters
+# counting the number of augmenters actually using
 augmenterCount = 0
 for a in augmenters:
     if a[1].text == 'Yes':
         augmenterCount += 1
 
-# augmentation
+# data for showing augmented samples
+originalImageToShow = None
 imagesToShow = []
+titlesToShow = []
+
+# augmentation
 augmenterHistory = [0]*len(augmenters)
-print("start augmentation.")
-# for s in seq:
+print("starting augmentation")
 for a in augmenters:
-    if a[1].text == 'Yes':
+    if a[1].text == 'Yes':  # checking whether the user want to use this augmenter
         print("part: " + str(finishPartCount + 1) + "/" + str(augmenterCount))
+
+        # generate imgaug augmenter
         s = generateAugmenter(augmenters, a[0].text, augmenterHistory)
+
         finishImageCount = 0
         for address in imageAddresses:
             boundingBoxes = []
@@ -252,7 +264,7 @@ for a in augmenters:
                     newNameAttributes = newNameAttributes + \
                         a[0].text + '=' + a[2][0].text
                 else:
-                    newNameAttributes = newNameAttributes + '_' + a[0].text
+                    newNameAttributes = newNameAttributes + a[0].text
                     for args in a[2]:
                         newNameAttributes = newNameAttributes + '_' + \
                             args.tag + '=' + args.text.replace('.', 'p')
@@ -288,7 +300,7 @@ for a in augmenters:
                     augmentedRoot.remove(obj)
                 i += 1
 
-            # draw on image
+            # draw bounding boxes on image (uncomment to enable)
             # augmentedImage = augmentedBBS.draw_on_image(
             #     augmentedImage, size=5, color=[0, 0, 255])
 
@@ -302,26 +314,35 @@ for a in augmenters:
 
             # saving new image
             imageio.imsave(newPath, augmentedImage)
+
+            # collecting samples to show
+            if finishPartCount is 0 and finishImageCount is 0:
+                originalImageToShow = image
             if finishImageCount is 0:  # sample images to show later
                 imagesToShow.append(augmentedImage)
+                titlesToShow.append(a[0].text)
 
             finishImageCount += 1
             print(str(finishImageCount) + "/" +
                   str(totalImageCount) + ", saved to: " + newPath)
-            finishPartCount += 1
-    print('\n')
+        finishPartCount += 1
+        print('')
 
+# showing augmented samples
+# checking whether the user want to show augmented samples
 if configurationRoot.findall('showAugmentedSamples')[0].text == 'Yes':
-    # not finished yet
-    plt.figure(figsize=(12.8, 7.2))
-    # plt.imshow(imagesToShow)
     i = 0
-    for i in range(augmenterCount):
-        plt.subplot(augmenterCount/3, 3, i+1)
-        plt.imshow(imagesToShow[i])
-        plt.title(augmenters[i][0].text)
-        plt.axis('off')
-    plt.show()
-    # not finished yet
+    for i in range(0, augmenterCount, 3):
+        print('showing sample: ' + str(i+1) + '/' + str(int(augmenterCount/3)))
+        plt.figure(figsize=(12.8, 7.2))
+        plt.subplot(2, 2, 1)
+        plt.imshow(originalImageToShow)
+        plt.title('Original')
+        for j in range(0, 3, 1):
+            plt.subplot(2, 2, j + 2)
+            plt.imshow(imagesToShow[i+j])
+            plt.title(titlesToShow[i+j])
+            plt.axis('off')
+        plt.show()
 
 print("Augmentation finished.")
