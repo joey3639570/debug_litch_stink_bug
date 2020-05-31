@@ -132,7 +132,7 @@ def generateAugmenter(augmenters, target, augmenterHistory):
         return augmenter
     elif target == 'Rot':
         augmenter = iaa.Rot90(k=int(
-            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+            augmenters[findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text), keep_size=False)
         augmenterHistory[findAugmenterIndex(
             augmenters, target, augmenterHistory)] = 1
         return augmenter
