@@ -221,7 +221,7 @@ for a in augmenters:
         print("part: " + str(finishPartCount + 1) + "/" + str(augmenterCount))
 
         # generate imgaug augmenter
-        s = generateAugmenter(augmenters, a[0].text, augmenterHistory)
+        seq = generateAugmenter(augmenters, a[0].text, augmenterHistory)
 
         finishImageCount = 0
         for address in imageAddresses:
@@ -240,7 +240,7 @@ for a in augmenters:
             BBS = ia.BoundingBoxesOnImage(boundingBoxes, shape=image.shape)
 
             # augmentation
-            augmentedImage, augmentedBBS = s(image=image, bounding_boxes=BBS)
+            augmentedImage, augmentedBBS = seq(image=image, bounding_boxes=BBS)
 
             # xml handling
             for fileName in augmentedRoot.iter('filename'):
