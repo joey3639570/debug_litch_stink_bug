@@ -3,6 +3,7 @@ import imgaug as ia
 import xml.etree.ElementTree as ET
 import os
 import matplotlib.pyplot as plt
+import math
 from imgaug import augmenters as iaa
 from argparse import ArgumentParser
 
@@ -331,18 +332,32 @@ for a in augmenters:
 # showing augmented samples
 # checking whether the user want to show augmented samples
 if configurationRoot.findall('showAugmentedSamples')[0].text == 'Yes':
-    i = 0
+    totalSampleCount = math.ceil(augmenterCount/3)
     for i in range(0, augmenterCount, 3):
-        print('showing sample: ' + str(i+1) + '/' + str(int(augmenterCount/3)))
+        print('showing sample: ' + str(int((i/3)+1))
+              + '/' + str(totalSampleCount))
         plt.figure(figsize=(12.8, 7.2))
-        plt.subplot(2, 2, 1)
+        plt.axis('off')
+        if augmenterCount - i is 1:
+            plt.subplot(1, 2, 1)
+        elif augmenterCount - i is 2:
+            plt.subplot(1, 3, 1)
+        else:
+            plt.subplot(2, 2, 1)
         plt.imshow(originalImageToShow)
         plt.title('Original')
-        for j in range(0, 3, 1):
-            plt.subplot(2, 2, j + 2)
+        j = 0
+        while j < 3 and i + j < len(imagesToShow):
+            if augmenterCount - i is 1:
+                plt.subplot(1, 2, j+2)
+            elif augmenterCount - i is 2:
+                plt.subplot(1, 3, j+2)
+            else:
+                plt.subplot(2, 2, j+2)
             plt.imshow(imagesToShow[i+j])
             plt.title(titlesToShow[i+j])
             plt.axis('off')
+            j += 1
         plt.show()
 
 print("Augmentation finished.")
