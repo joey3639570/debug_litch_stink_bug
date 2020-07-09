@@ -1,22 +1,28 @@
 <configurations>
     <comment>Please modify the content in tags to the configuration you need</comment>
-    <comment>Indicate the directory that stores the images you want to augment</comment>
+    <comment>
+    Indicate the directory that stores the images you want to augment</comment>
     <imageSourceDirectory>C:\\Users\\Ben-ThinkPad\\Pictures\\test</imageSourceDirectory>
-    <comment>Indicate the directory that stores the corresponding xml file</comment>
+    <comment>
+    Indicate the directory that stores the corresponding xml file</comment>
     <xmlSourceDirectory>C:\\Users\\Ben-ThinkPad\\Pictures\\test\\xmlFile</xmlSourceDirectory>
-    <comment>Indicate the directory that is going to store the augmented images</comment>
+    <comment>
+    Indicate the directory that is going to store the augmented images</comment>
     <imageDestinationDirectory>C:\\Users\\Ben-ThinkPad\\Pictures\\aug</imageDestinationDirectory>
-    <comment>Indicate the directory that is going to store the corresponding xml file</comment>
+    <comment>
+    Indicate the directory that is going to store the corresponding xml file</comment>
     <xmlDestinationDirectory>C:\\Users\\Ben-ThinkPad\\Pictures</xmlDestinationDirectory>
-    <comment>Modify to 'Yes' to enable the function of showing augmented samples</comment>
+    <comment>
+    Modify to 'Yes' to enable the function of showing augmented samples</comment>
     <showAugmentedSamples>No</showAugmentedSamples>
-    <comment>The augmenter you may use</comment>
-    <comment>Modify the content in the tag 'enable' to 'Yes' to use the augmenter</comment>
-    <comment>Modify the content in the tag 'enable' to 'No' to ignore the augmenter</comment>
-    <comment>You are free add/delete augmenters, but only these predefined augmenters</comment>
+    <comment>
+    Following are the augmenters you may use
+    Modify the content in the tag 'enable' to 'Yes' to use the augmenter
+    Modify the content in the tag 'enable' to 'No' to disable the augmenter
+    You are free add/delete augmenters, but only these augmenters below</comment>
     <augmenter>
         <name>Add</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <value>20</value>
         </args>
@@ -30,7 +36,7 @@
     </augmenter>
     <augmenter>
         <name>AveragePooling</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <kernelsize>5</kernelsize>
         </args>
@@ -44,7 +50,7 @@
     </augmenter>
     <augmenter>
         <name>Crop</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
             <topPercent>0</topPercent>
             <rightPercent>0.25</rightPercent>
@@ -146,7 +152,7 @@
     </augmenter>
     <augmenter>
         <name>Rot</name>
-        <enable>No</enable>
+        <enable>Yes</enable>
         <args>
             <k>1</k>
         </args>
