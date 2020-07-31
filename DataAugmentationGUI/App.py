@@ -2,9 +2,9 @@ import os
 import sys
 import xml.etree.ElementTree as ET
 from PySide2.QtWidgets import QApplication, QMainWindow, QFileDialog
-from PySide2.QtCore import QFile, Qt
-from DataAugmentationGUI import Ui_MainWindow
-# from DataAugmentation_2005_GUI import doAugmentation
+from PySide2.QtCore import QFile, Qt, QCoreApplication, QEventLoop
+from PySide2.QtGui import QIcon
+from AppMainWindowGUI import Ui_MainWindow
 import imageio
 import imgaug as ia
 import matplotlib.pyplot as plt
@@ -25,6 +25,8 @@ class MainWindow(QMainWindow):
         self.ui.xmlSourceBrowseButton.clicked.connect(self.xmlSourceBrowseButtonClick)
 
         self.ui.destinationBrowseButton.clicked.connect(self.destinationBrowseButtonClick)
+
+        self.ui.selectAllAugmentersCheckBox.stateChanged.connect(self.selectAllAugmenters)
 
     def findAugmenterIndex(self, augmenterList, target, augmenterHistory):
         for i in range(len(augmenterList)):
@@ -112,13 +114,7 @@ class MainWindow(QMainWindow):
         return augmenter
 
     def doAugmentation(self):
-        # argparse
-        # parser = ArgumentParser()
-        # parser.add_argument("conf", help="the path of augmenter configurations")
-        # arguments = parser.parse_args()
-        # configurationFile = os.path.abspath('.') + '/' + arguments.conf
-        # for debugging
-        configurationFile = os.path.abspath('.') + '\\AugmenterConfigurations.xml'
+        configurationFile = os.path.abspath('.') + '/AugmenterConfigurations.xml'
 
         # parsing configuration file
         configurationTree = ET.parse(configurationFile)
@@ -134,17 +130,7 @@ class MainWindow(QMainWindow):
         if os.path.isdir(imageDestinationDirectory) is False:
             os.mkdir(imageDestinationDirectory)
 
-        # deprecated deprecated
-        # xmlDestinationDirectory = configurationRoot.findall('xmlDestinationDirectory')[0].text
-
-        # augmenters. Visit https://github.com/aleju/imgaug to find more augmenters.
-        # sequential augmentation. Applies all the augmenters(sequentially) to an image, generates an image that contains all the augmenters.
-        # seq = iaa.Sequential([
-        #     iaa.SigmoidContrast(cutoff=0.6, gain=7)])  # modify "iaa.Add(-45), iaa.Crop(precent=0.2), iaa.GaussianBlur(2)" to get the augmentation type you want
-        # seperate augmentation. Applies one augmenter to an image and generated augmented image.
-        # deprecated deprecated
-
-        # load all of the augmenters in configuration file
+        # load all of the augmenters described in configuration file
         augmenters = configurationRoot.findall('augmenter')
 
         # file type
@@ -173,12 +159,12 @@ class MainWindow(QMainWindow):
 
         # augmentation
         augmenterHistory = [0]*len(augmenters)
-        # print('starting augmentation')
         self.ui.stateTextEdit.append('Starting augmentation...')
+        QCoreApplication.processEvents(QEventLoop.AllEvents)
         for a in augmenters:
             if a[1].text == 'Yes':  # checking whether the user want to use this augmenter
-                # print('part: ' + str(finishPartCount + 1) + '/' + str(augmenterCount))
                 self.ui.stateTextEdit.append('part: ' + str(finishPartCount + 1) + '/' + str(augmenterCount))
+                QCoreApplication.processEvents(QEventLoop.AllEvents)
 
                 # generate imgaug augmenter
                 seq = self.generateAugmenter(augmenters, a[0].text, augmenterHistory)
@@ -278,19 +264,19 @@ class MainWindow(QMainWindow):
                         titlesToShow.append(a[0].text)
 
                     finishImageCount += 1
-                    # print(str(finishImageCount) + '/' + str(totalImageCount) + ', saved to: ' + newPath)
                     self.ui.stateTextEdit.append(str(finishImageCount) + '/' + str(totalImageCount) + ', saved to: ' + newPath)
+                    QCoreApplication.processEvents(QEventLoop.AllEvents)
                 finishPartCount += 1
-                # print('')
                 self.ui.stateTextEdit.append('')
+                QCoreApplication.processEvents(QEventLoop.AllEvents)
 
         # showing augmented samples
         # checking whether the user want to show augmented samples
         if configurationRoot.findall('showAugmentedSamples')[0].text == 'Yes':
             totalSampleCount = math.ceil(augmenterCount/3)
             for i in range(0, augmenterCount, 3):
-                # print('showing sample: ' + str(int((i / 3) + 1)) + '/' + str(totalSampleCount))
                 self.ui.stateTextEdit.append('showing sample: ' + str(int((i / 3) + 1)) + '/' + str(totalSampleCount))
+                QCoreApplication.processEvents(QEventLoop.AllEvents)
                 plt.figure(figsize=(12.8, 7.2))
                 plt.axis('off')
                 if augmenterCount - i is 1:
@@ -317,6 +303,7 @@ class MainWindow(QMainWindow):
 
         # print('Augmentation finished.')
         self.ui.stateTextEdit.append('Augmentation finished.')
+        QCoreApplication.processEvents(QEventLoop.AllEvents)
 
     def runButtonClick(self):
         configTree = ET.parse(os.path.abspath('.') + '/AugmenterConfigurations.xml')
@@ -328,7 +315,7 @@ class MainWindow(QMainWindow):
         for i in configRoot.iter('imageDestinationDirectory'):
             i.text = str(self.ui.destinationLineEdit.text())
         for i in configRoot.iter('showAugmentedSamples'):
-            if self.ui.showCheckBox.isChecked():
+            if self.ui.showSampleCheckBox.isChecked():
                 i.text = 'Yes'
             else:
                 i.text = 'No'
@@ -359,6 +346,14 @@ class MainWindow(QMainWindow):
     def destinationBrowseButtonClick(self):
         source = QFileDialog.getExistingDirectory(self)
         self.ui.destinationLineEdit.setText(source)
+
+    def selectAllAugmenters(self):
+        if self.ui.selectAllAugmentersCheckBox.isChecked():
+            for i in range(self.ui.augmenterListWidget.count()):
+                self.ui.augmenterListWidget.item(i).setCheckState(Qt.Checked)
+        else:
+            for i in range(self.ui.augmenterListWidget.count()):
+                self.ui.augmenterListWidget.item(i).setCheckState(Qt.Unchecked)
 
 
 if __name__ == "__main__":
