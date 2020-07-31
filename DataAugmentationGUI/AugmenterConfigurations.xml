@@ -10,11 +10,8 @@
     Indicate the directory that is going to store the augmented images</comment>
     <imageDestinationDirectory>C:/Users/Ben-ThinkPad/Desktop</imageDestinationDirectory>
     <comment>
-    Indicate the directory that is going to store the corresponding xml file</comment>
-    <xmlDestinationDirectory>C:\\Users\\Ben-ThinkPad\\Pictures</xmlDestinationDirectory>
-    <comment>
     Modify to 'Yes' to enable the function of showing augmented samples</comment>
-    <showAugmentedSamples>Yes</showAugmentedSamples>
+    <showAugmentedSamples>No</showAugmentedSamples>
     <comment>
     Following are the augmenters you may use
     Modify the content in the tag 'enable' to 'Yes' to use the augmenter

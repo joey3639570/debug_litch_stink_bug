@@ -169,7 +169,8 @@ def doAugmentation():
     imageSourceDirectory = configurationRoot.findall(
         'imageSourceDirectory')[0].text
     # the directory of original xml
-    xmlSourceDirectory = configurationRoot.findall('xmlSourceDirectory')[0].text
+    xmlSourceDirectory = configurationRoot.findall(
+        'xmlSourceDirectory')[0].text
     # the directory to save augmented images
     imageDestinationDirectory = configurationRoot.findall(
         'imageDestinationDirectory')[0].text
@@ -178,8 +179,8 @@ def doAugmentation():
         os.mkdir(imageDestinationDirectory)
 
     # deprecated deprecated
-    xmlDestinationDirectory = configurationRoot.findall(
-        'xmlDestinationDirectory')[0].text
+    # xmlDestinationDirectory = configurationRoot.findall(
+    #     'xmlDestinationDirectory')[0].text
 
     # augmenters. Visit https://github.com/aleju/imgaug to find more augmenters.
     # sequential augmentation. Applies all the augmenters(sequentially) to an image, generates an image that contains all the augmenters.
@@ -220,7 +221,8 @@ def doAugmentation():
     print("starting augmentation")
     for a in augmenters:
         if a[1].text == 'Yes':  # checking whether the user want to use this augmenter
-            print("part: " + str(finishPartCount + 1) + "/" + str(augmenterCount))
+            print("part: " + str(finishPartCount + 1) +
+                  "/" + str(augmenterCount))
 
             # generate imgaug augmenter
             seq = generateAugmenter(augmenters, a[0].text, augmenterHistory)
@@ -242,7 +244,8 @@ def doAugmentation():
                 BBS = ia.BoundingBoxesOnImage(boundingBoxes, shape=image.shape)
 
                 # augmentation
-                augmentedImage, augmentedBBS = seq(image=image, bounding_boxes=BBS)
+                augmentedImage, augmentedBBS = seq(
+                    image=image, bounding_boxes=BBS)
 
                 # xml handling
                 for fileName in augmentedRoot.iter('filename'):
@@ -326,7 +329,7 @@ def doAugmentation():
 
                 finishImageCount += 1
                 print(str(finishImageCount) + "/" +
-                    str(totalImageCount) + ", saved to: " + newPath)
+                      str(totalImageCount) + ", saved to: " + newPath)
             finishPartCount += 1
             print('')
 
@@ -336,7 +339,7 @@ def doAugmentation():
         totalSampleCount = math.ceil(augmenterCount/3)
         for i in range(0, augmenterCount, 3):
             print('showing sample: ' + str(int((i/3)+1))
-                + '/' + str(totalSampleCount))
+                  + '/' + str(totalSampleCount))
             plt.figure(figsize=(12.8, 7.2))
             plt.axis('off')
             if augmenterCount - i is 1:
@@ -364,5 +367,5 @@ def doAugmentation():
     print("Augmentation finished.")
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     doAugmentation()
