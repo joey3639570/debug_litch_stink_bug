@@ -519,7 +519,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Show augmented samples?</string>
+     <string>Show augmented samples</string>
     </property>
    </widget>
    <widget class="QTextEdit" name="stateTextEdit">

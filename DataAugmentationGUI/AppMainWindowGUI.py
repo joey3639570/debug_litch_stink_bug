@@ -230,7 +230,7 @@ class Ui_MainWindow(object):
         ___qlistwidgetitem20.setText(QCoreApplication.translate("MainWindow", u"SigmoidContrast", None));
         self.augmenterListWidget.setSortingEnabled(__sortingEnabled)
 
-        self.showSampleCheckBox.setText(QCoreApplication.translate("MainWindow", u"Show augmented samples?", None))
+        self.showSampleCheckBox.setText(QCoreApplication.translate("MainWindow", u"Show augmented samples", None))
         self.stateLabel.setText(QCoreApplication.translate("MainWindow", u"State", None))
         self.selectAllAugmentersCheckBox.setText(QCoreApplication.translate("MainWindow", u"Select All", None))
     # retranslateUi
