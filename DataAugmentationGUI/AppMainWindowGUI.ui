@@ -337,7 +337,15 @@
     </property>
     <item>
      <property name="text">
-      <string>Add</string>
+      <string>Add_positive</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Add_negative</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -369,7 +377,39 @@
     </item>
     <item>
      <property name="text">
-      <string>Crop</string>
+      <string>Crop_topLeft</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Crop_topRight</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Crop_bottomRight</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Crop_bottomLeft</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Crop_center</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -385,7 +425,15 @@
     </item>
     <item>
      <property name="text">
-      <string>ElasticTransformation</string>
+      <string>ElasticTransformation_strong</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>ElasticTransformation_weak</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -417,7 +465,15 @@
     </item>
     <item>
      <property name="text">
-      <string>GammaContrast</string>
+      <string>GammaContrast_low</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>GammaContrast_high</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -433,7 +489,23 @@
     </item>
     <item>
      <property name="text">
-      <string>HistogramEqualization</string>
+      <string>HistogramEqualization_Lab</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>HistogramEqualization_HLS</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>HistogramEqualization_HSV</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -449,7 +521,7 @@
     </item>
     <item>
      <property name="text">
-      <string>LinearContrast</string>
+      <string>LinearContrast_low</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -457,7 +529,7 @@
     </item>
     <item>
      <property name="text">
-      <string>LogContrast</string>
+      <string>LinearContrast_high</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -465,7 +537,7 @@
     </item>
     <item>
      <property name="text">
-      <string>MotionBlur</string>
+      <string>LogContrast_low</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -473,7 +545,7 @@
     </item>
     <item>
      <property name="text">
-      <string>Pad</string>
+      <string>LinearContrast_high</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -481,7 +553,79 @@
     </item>
     <item>
      <property name="text">
-      <string>Rot</string>
+      <string>MotionBlur_degree_0</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MotionBlur_degree_72</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MotionBlur_degree_144</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MotionBlur_degree_216</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>MotionBlur_degree_288</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Pad_thin</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Pad_thick</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Rot_degree_90</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Rot_degree_180</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Rot_degree_270</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>
@@ -497,7 +641,23 @@
     </item>
     <item>
      <property name="text">
-      <string>SigmoidContrast</string>
+      <string>SigmoidContrast_low</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>SigmoidContrast_medium</string>
+     </property>
+     <property name="checkState">
+      <enum>Unchecked</enum>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>SigmoidContrast_high</string>
      </property>
      <property name="checkState">
       <enum>Unchecked</enum>

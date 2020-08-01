@@ -145,6 +145,46 @@ class Ui_MainWindow(object):
         __qlistwidgetitem19.setCheckState(Qt.Unchecked);
         __qlistwidgetitem20 = QListWidgetItem(self.augmenterListWidget)
         __qlistwidgetitem20.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem21 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem21.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem22 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem22.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem23 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem23.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem24 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem24.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem25 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem25.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem26 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem26.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem27 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem27.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem28 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem28.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem29 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem29.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem30 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem30.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem31 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem31.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem32 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem32.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem33 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem33.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem34 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem34.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem35 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem35.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem36 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem36.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem37 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem37.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem38 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem38.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem39 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem39.setCheckState(Qt.Unchecked);
+        __qlistwidgetitem40 = QListWidgetItem(self.augmenterListWidget)
+        __qlistwidgetitem40.setCheckState(Qt.Unchecked);
         self.augmenterListWidget.setObjectName(u"augmenterListWidget")
         self.augmenterListWidget.setGeometry(QRect(40, 400, 261, 131))
         self.showSampleCheckBox = QCheckBox(self.centralwidget)
@@ -187,47 +227,87 @@ class Ui_MainWindow(object):
         __sortingEnabled = self.augmenterListWidget.isSortingEnabled()
         self.augmenterListWidget.setSortingEnabled(False)
         ___qlistwidgetitem = self.augmenterListWidget.item(0)
-        ___qlistwidgetitem.setText(QCoreApplication.translate("MainWindow", u"Add", None));
+        ___qlistwidgetitem.setText(QCoreApplication.translate("MainWindow", u"Add_positive", None));
         ___qlistwidgetitem1 = self.augmenterListWidget.item(1)
-        ___qlistwidgetitem1.setText(QCoreApplication.translate("MainWindow", u"AdditiveGaussianNoise", None));
+        ___qlistwidgetitem1.setText(QCoreApplication.translate("MainWindow", u"Add_negative", None));
         ___qlistwidgetitem2 = self.augmenterListWidget.item(2)
-        ___qlistwidgetitem2.setText(QCoreApplication.translate("MainWindow", u"AveragePooling", None));
+        ___qlistwidgetitem2.setText(QCoreApplication.translate("MainWindow", u"AdditiveGaussianNoise", None));
         ___qlistwidgetitem3 = self.augmenterListWidget.item(3)
-        ___qlistwidgetitem3.setText(QCoreApplication.translate("MainWindow", u"CoarseDropout", None));
+        ___qlistwidgetitem3.setText(QCoreApplication.translate("MainWindow", u"AveragePooling", None));
         ___qlistwidgetitem4 = self.augmenterListWidget.item(4)
-        ___qlistwidgetitem4.setText(QCoreApplication.translate("MainWindow", u"Crop", None));
+        ___qlistwidgetitem4.setText(QCoreApplication.translate("MainWindow", u"CoarseDropout", None));
         ___qlistwidgetitem5 = self.augmenterListWidget.item(5)
-        ___qlistwidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Dropout", None));
+        ___qlistwidgetitem5.setText(QCoreApplication.translate("MainWindow", u"Crop_topLeft", None));
         ___qlistwidgetitem6 = self.augmenterListWidget.item(6)
-        ___qlistwidgetitem6.setText(QCoreApplication.translate("MainWindow", u"ElasticTransformation", None));
+        ___qlistwidgetitem6.setText(QCoreApplication.translate("MainWindow", u"Crop_topRight", None));
         ___qlistwidgetitem7 = self.augmenterListWidget.item(7)
-        ___qlistwidgetitem7.setText(QCoreApplication.translate("MainWindow", u"Emboss", None));
+        ___qlistwidgetitem7.setText(QCoreApplication.translate("MainWindow", u"Crop_bottomRight", None));
         ___qlistwidgetitem8 = self.augmenterListWidget.item(8)
-        ___qlistwidgetitem8.setText(QCoreApplication.translate("MainWindow", u"Flipud", None));
+        ___qlistwidgetitem8.setText(QCoreApplication.translate("MainWindow", u"Crop_bottomLeft", None));
         ___qlistwidgetitem9 = self.augmenterListWidget.item(9)
-        ___qlistwidgetitem9.setText(QCoreApplication.translate("MainWindow", u"Fliplr", None));
+        ___qlistwidgetitem9.setText(QCoreApplication.translate("MainWindow", u"Crop_center", None));
         ___qlistwidgetitem10 = self.augmenterListWidget.item(10)
-        ___qlistwidgetitem10.setText(QCoreApplication.translate("MainWindow", u"GammaContrast", None));
+        ___qlistwidgetitem10.setText(QCoreApplication.translate("MainWindow", u"Dropout", None));
         ___qlistwidgetitem11 = self.augmenterListWidget.item(11)
-        ___qlistwidgetitem11.setText(QCoreApplication.translate("MainWindow", u"GaussianBlur", None));
+        ___qlistwidgetitem11.setText(QCoreApplication.translate("MainWindow", u"ElasticTransformation_strong", None));
         ___qlistwidgetitem12 = self.augmenterListWidget.item(12)
-        ___qlistwidgetitem12.setText(QCoreApplication.translate("MainWindow", u"HistogramEqualization", None));
+        ___qlistwidgetitem12.setText(QCoreApplication.translate("MainWindow", u"ElasticTransformation_weak", None));
         ___qlistwidgetitem13 = self.augmenterListWidget.item(13)
-        ___qlistwidgetitem13.setText(QCoreApplication.translate("MainWindow", u"JpegCompression", None));
+        ___qlistwidgetitem13.setText(QCoreApplication.translate("MainWindow", u"Emboss", None));
         ___qlistwidgetitem14 = self.augmenterListWidget.item(14)
-        ___qlistwidgetitem14.setText(QCoreApplication.translate("MainWindow", u"LinearContrast", None));
+        ___qlistwidgetitem14.setText(QCoreApplication.translate("MainWindow", u"Flipud", None));
         ___qlistwidgetitem15 = self.augmenterListWidget.item(15)
-        ___qlistwidgetitem15.setText(QCoreApplication.translate("MainWindow", u"LogContrast", None));
+        ___qlistwidgetitem15.setText(QCoreApplication.translate("MainWindow", u"Fliplr", None));
         ___qlistwidgetitem16 = self.augmenterListWidget.item(16)
-        ___qlistwidgetitem16.setText(QCoreApplication.translate("MainWindow", u"MotionBlur", None));
+        ___qlistwidgetitem16.setText(QCoreApplication.translate("MainWindow", u"GammaContrast_low", None));
         ___qlistwidgetitem17 = self.augmenterListWidget.item(17)
-        ___qlistwidgetitem17.setText(QCoreApplication.translate("MainWindow", u"Pad", None));
+        ___qlistwidgetitem17.setText(QCoreApplication.translate("MainWindow", u"GammaContrast_high", None));
         ___qlistwidgetitem18 = self.augmenterListWidget.item(18)
-        ___qlistwidgetitem18.setText(QCoreApplication.translate("MainWindow", u"Rot", None));
+        ___qlistwidgetitem18.setText(QCoreApplication.translate("MainWindow", u"GaussianBlur", None));
         ___qlistwidgetitem19 = self.augmenterListWidget.item(19)
-        ___qlistwidgetitem19.setText(QCoreApplication.translate("MainWindow", u"Sharpen", None));
+        ___qlistwidgetitem19.setText(QCoreApplication.translate("MainWindow", u"HistogramEqualization_Lab", None));
         ___qlistwidgetitem20 = self.augmenterListWidget.item(20)
-        ___qlistwidgetitem20.setText(QCoreApplication.translate("MainWindow", u"SigmoidContrast", None));
+        ___qlistwidgetitem20.setText(QCoreApplication.translate("MainWindow", u"HistogramEqualization_HLS", None));
+        ___qlistwidgetitem21 = self.augmenterListWidget.item(21)
+        ___qlistwidgetitem21.setText(QCoreApplication.translate("MainWindow", u"HistogramEqualization_HSV", None));
+        ___qlistwidgetitem22 = self.augmenterListWidget.item(22)
+        ___qlistwidgetitem22.setText(QCoreApplication.translate("MainWindow", u"JpegCompression", None));
+        ___qlistwidgetitem23 = self.augmenterListWidget.item(23)
+        ___qlistwidgetitem23.setText(QCoreApplication.translate("MainWindow", u"LinearContrast_low", None));
+        ___qlistwidgetitem24 = self.augmenterListWidget.item(24)
+        ___qlistwidgetitem24.setText(QCoreApplication.translate("MainWindow", u"LinearContrast_high", None));
+        ___qlistwidgetitem25 = self.augmenterListWidget.item(25)
+        ___qlistwidgetitem25.setText(QCoreApplication.translate("MainWindow", u"LogContrast_low", None));
+        ___qlistwidgetitem26 = self.augmenterListWidget.item(26)
+        ___qlistwidgetitem26.setText(QCoreApplication.translate("MainWindow", u"LinearContrast_high", None));
+        ___qlistwidgetitem27 = self.augmenterListWidget.item(27)
+        ___qlistwidgetitem27.setText(QCoreApplication.translate("MainWindow", u"MotionBlur_degree_0", None));
+        ___qlistwidgetitem28 = self.augmenterListWidget.item(28)
+        ___qlistwidgetitem28.setText(QCoreApplication.translate("MainWindow", u"MotionBlur_degree_72", None));
+        ___qlistwidgetitem29 = self.augmenterListWidget.item(29)
+        ___qlistwidgetitem29.setText(QCoreApplication.translate("MainWindow", u"MotionBlur_degree_144", None));
+        ___qlistwidgetitem30 = self.augmenterListWidget.item(30)
+        ___qlistwidgetitem30.setText(QCoreApplication.translate("MainWindow", u"MotionBlur_degree_216", None));
+        ___qlistwidgetitem31 = self.augmenterListWidget.item(31)
+        ___qlistwidgetitem31.setText(QCoreApplication.translate("MainWindow", u"MotionBlur_degree_288", None));
+        ___qlistwidgetitem32 = self.augmenterListWidget.item(32)
+        ___qlistwidgetitem32.setText(QCoreApplication.translate("MainWindow", u"Pad_thin", None));
+        ___qlistwidgetitem33 = self.augmenterListWidget.item(33)
+        ___qlistwidgetitem33.setText(QCoreApplication.translate("MainWindow", u"Pad_thick", None));
+        ___qlistwidgetitem34 = self.augmenterListWidget.item(34)
+        ___qlistwidgetitem34.setText(QCoreApplication.translate("MainWindow", u"Rot_degree_90", None));
+        ___qlistwidgetitem35 = self.augmenterListWidget.item(35)
+        ___qlistwidgetitem35.setText(QCoreApplication.translate("MainWindow", u"Rot_degree_180", None));
+        ___qlistwidgetitem36 = self.augmenterListWidget.item(36)
+        ___qlistwidgetitem36.setText(QCoreApplication.translate("MainWindow", u"Rot_degree_270", None));
+        ___qlistwidgetitem37 = self.augmenterListWidget.item(37)
+        ___qlistwidgetitem37.setText(QCoreApplication.translate("MainWindow", u"Sharpen", None));
+        ___qlistwidgetitem38 = self.augmenterListWidget.item(38)
+        ___qlistwidgetitem38.setText(QCoreApplication.translate("MainWindow", u"SigmoidContrast_low", None));
+        ___qlistwidgetitem39 = self.augmenterListWidget.item(39)
+        ___qlistwidgetitem39.setText(QCoreApplication.translate("MainWindow", u"SigmoidContrast_medium", None));
+        ___qlistwidgetitem40 = self.augmenterListWidget.item(40)
+        ___qlistwidgetitem40.setText(QCoreApplication.translate("MainWindow", u"SigmoidContrast_high", None));
         self.augmenterListWidget.setSortingEnabled(__sortingEnabled)
 
         self.showSampleCheckBox.setText(QCoreApplication.translate("MainWindow", u"Show augmented samples", None))

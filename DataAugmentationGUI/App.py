@@ -46,7 +46,8 @@ class MainWindow(QMainWindow):
             augmenter = iaa.AveragePooling(kernel_size=int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
             augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
         elif target == 'CoarseDropout':
-            augmenter = iaa.CoarseDropout(size_percent=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+            augmenter = iaa.CoarseDropout(p=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
+                                          size_percent=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
             augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
         elif target == 'Crop':
             augmenter = iaa.Crop(percent=(float(
@@ -63,8 +64,8 @@ class MainWindow(QMainWindow):
             augmenter = iaa.Dropout(p=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
             augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
         elif target == 'ElasticTransformation':
-            augmenter = iaa.ElasticTransformation(alpha=int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
-                                                  sigma=int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
+            augmenter = iaa.ElasticTransformation(alpha=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
+                                                  sigma=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
             augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
         elif target == 'Emboss':
             augmenter = iaa.Emboss(alpha=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
@@ -154,7 +155,7 @@ class MainWindow(QMainWindow):
 
         # data for showing augmented samples
         originalImageToShow = None
-        imagesToShow = []
+        augmentedImageToShow = []
         titlesToShow = []
 
         # augmentation
@@ -203,6 +204,8 @@ class MainWindow(QMainWindow):
                                 newNameAttributes = newNameAttributes + '=' + 'bottomRight'
                             elif a[2][2].text == '0' and a[2][3].text == '0':
                                 newNameAttributes = newNameAttributes + '=' + 'bottomLeft'
+                            else:
+                                newNameAttributes = newNameAttributes + '=' + 'center_percent' + a[2][0].text.replace('.', 'p')
                         elif a[0].text == 'Flipud' or a[0].text == 'Fliplr':
                             newNameAttributes = newNameAttributes + a[0].text
                         elif a[0].text == 'Rot':
@@ -260,8 +263,9 @@ class MainWindow(QMainWindow):
                     if finishPartCount is 0 and finishImageCount is 0:
                         originalImageToShow = image
                     if finishImageCount is 0:  # sample images to show later
-                        imagesToShow.append(augmentedImage)
-                        titlesToShow.append(a[0].text)
+                        augmentedImageToShow.append(augmentedImage)
+                        # titlesToShow.append(a[0].text)
+                        titlesToShow.append(newNameAttributes[1:])
 
                     finishImageCount += 1
                     self.ui.stateTextEdit.append(str(finishImageCount) + '/' + str(totalImageCount) + ', saved to: ' + newPath)
@@ -288,20 +292,19 @@ class MainWindow(QMainWindow):
                 plt.imshow(originalImageToShow)
                 plt.title('Original')
                 j = 0
-                while j < 3 and i + j < len(imagesToShow):
+                while j < 3 and i + j < len(augmentedImageToShow):
                     if augmenterCount - i is 1:
                         plt.subplot(1, 2, j+2)
                     elif augmenterCount - i is 2:
                         plt.subplot(1, 3, j+2)
                     else:
                         plt.subplot(2, 2, j+2)
-                    plt.imshow(imagesToShow[i+j])
+                    plt.imshow(augmentedImageToShow[i+j])
                     plt.title(titlesToShow[i+j])
                     plt.axis('off')
                     j += 1
                 plt.show()
 
-        # print('Augmentation finished.')
         self.ui.stateTextEdit.append('Augmentation finished.')
         QCoreApplication.processEvents(QEventLoop.AllEvents)
 
@@ -319,15 +322,15 @@ class MainWindow(QMainWindow):
                 i.text = 'Yes'
             else:
                 i.text = 'No'
-        checkedAugmenter = []
+        augmenterStatus = []
         for i in range(self.ui.augmenterListWidget.count()):
             if self.ui.augmenterListWidget.item(i).checkState() == Qt.Checked:
-                checkedAugmenter.append('Yes')
+                augmenterStatus.append('Yes')
             else:
-                checkedAugmenter.append('No')
+                augmenterStatus.append('No')
         count = 0
         for i in configRoot.iter('augmenter'):
-            if checkedAugmenter[count] == 'Yes':
+            if augmenterStatus[count] == 'Yes':
                 i[1].text = str('Yes')
             else:
                 i[1].text = str('No')
