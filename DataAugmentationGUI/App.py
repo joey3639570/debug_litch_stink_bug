@@ -36,82 +36,83 @@ class MainWindow(QMainWindow):
 
     # generate the augmenters according to the discription in configuration file
     def generateAugmenter(self, augmenters, target, augmenterHistory):
+        augmenterIndex = self.findAugmenterIndex(augmenters, target, augmenterHistory)
         if target == 'Add':
-            augmenter = iaa.Add(int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.Add(int(augmenters[augmenterIndex][2][0].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'AdditiveGaussianNoise':
-            augmenter = iaa.AdditiveGaussianNoise(scale=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text) * 255)
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.AdditiveGaussianNoise(scale=float(augmenters[augmenterIndex][2][0].text) * 255)
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'AveragePooling':
-            augmenter = iaa.AveragePooling(kernel_size=int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.AveragePooling(kernel_size=int(augmenters[augmenterIndex][2][0].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'CoarseDropout':
-            augmenter = iaa.CoarseDropout(p=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
-                                          size_percent=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.CoarseDropout(p=float(augmenters[augmenterIndex][2][0].text),
+                                          size_percent=float(augmenters[augmenterIndex][2][1].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'Crop':
             augmenter = iaa.Crop(percent=(float(
-                augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
+                augmenters[augmenterIndex][2][0].text),
                 float(
-                augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text),
+                augmenters[augmenterIndex][2][1].text),
                 float(
-                augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][2].text),
+                augmenters[augmenterIndex][2][2].text),
                 float(
-                augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][3].text)),
+                augmenters[augmenterIndex][2][3].text)),
                 keep_size=False)
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'Dropout':
-            augmenter = iaa.Dropout(p=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.Dropout(p=float(augmenters[augmenterIndex][2][0].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'ElasticTransformation':
-            augmenter = iaa.ElasticTransformation(alpha=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
-                                                  sigma=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.ElasticTransformation(alpha=float(augmenters[augmenterIndex][2][0].text),
+                                                  sigma=float(augmenters[augmenterIndex][2][1].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'Emboss':
-            augmenter = iaa.Emboss(alpha=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
-                                   strength=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.Emboss(alpha=float(augmenters[augmenterIndex][2][0].text),
+                                   strength=float(augmenters[augmenterIndex][2][1].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'Flipud':
             augmenter = iaa.Flipud(p=1)
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'Fliplr':
             augmenter = iaa.Fliplr(p=1)
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'GammaContrast':
-            augmenter = iaa.GammaContrast(gamma=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.GammaContrast(gamma=float(augmenters[augmenterIndex][2][0].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'GaussianBlur':
-            augmenter = iaa.GaussianBlur(sigma=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.GaussianBlur(sigma=float(augmenters[augmenterIndex][2][0].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'HistogramEqualization':
-            augmenter = iaa.HistogramEqualization(to_colorspace=augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text)
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.HistogramEqualization(to_colorspace=augmenters[augmenterIndex][2][0].text)
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'JpegCompression':
-            augmenter = iaa.JpegCompression(compression=int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.JpegCompression(compression=int(augmenters[augmenterIndex][2][0].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'LinearContrast':
-            augmenter = iaa.LinearContrast(alpha=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.LinearContrast(alpha=float(augmenters[augmenterIndex][2][0].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'LogContrast':
-            augmenter = iaa.LogContrast(gain=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
+            augmenter = iaa.LogContrast(gain=float(augmenters[augmenterIndex][2][0].text))
             augmenterHistory[self.findAugmenterIndex( augmenters, target, augmenterHistory)] = 1
         elif target == 'MotionBlur':
-            augmenter = iaa.MotionBlur(k=int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
-                                       angle=int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.MotionBlur(k=int(augmenters[augmenterIndex][2][0].text),
+                                       angle=int(augmenters[augmenterIndex][2][1].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'Pad':
-            augmenter = iaa.Pad(percent=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.Pad(percent=float(augmenters[augmenterIndex][2][0].text))
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'Rot':
-            augmenter = iaa.Rot90(k=int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text), keep_size=False)
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.Rot90(k=int(augmenters[augmenterIndex][2][0].text), keep_size=False)
+            augmenterHistory[augmenterIndex] = 1
         elif target == 'Sharpen':
-            augmenter = iaa.Sharpen(alpha=int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text),
-                                    lightness=int(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][1].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.Sharpen(alpha=int(augmenters[augmenterIndex][2][0].text),
+                                    lightness=int(augmenters[augmenterIndex][2][1].text))
+            augmenterHistory[augmenterIndex] = 1
         else:
-            augmenter = iaa.SigmoidContrast(cutoff=float(augmenters[self.findAugmenterIndex(augmenters, target, augmenterHistory)][2][0].text))
-            augmenterHistory[self.findAugmenterIndex(augmenters, target, augmenterHistory)] = 1
+            augmenter = iaa.SigmoidContrast(cutoff=float(augmenters[augmenterIndex][2][0].text))
+            augmenterHistory[augmenterIndex] = 1
         return augmenter
 
     def doAugmentation(self):
