@@ -318,22 +318,13 @@ class MainWindow(QMainWindow):
         for i in configRoot.iter('imageDestinationDirectory'):
             i.text = str(self.ui.destinationLineEdit.text())
         for i in configRoot.iter('showAugmentedSamples'):
-            if self.ui.showSampleCheckBox.isChecked():
-                i.text = 'Yes'
-            else:
-                i.text = 'No'
+            i.text = 'Yes' if self.ui.showSampleCheckBox.isChecked() else 'No'
         augmenterStatus = []
         for i in range(self.ui.augmenterListWidget.count()):
-            if self.ui.augmenterListWidget.item(i).checkState() == Qt.Checked:
-                augmenterStatus.append('Yes')
-            else:
-                augmenterStatus.append('No')
+            augmenterStatus.append('Yes' if self.ui.augmenterListWidget.item(i).checkState() == Qt.Checked else 'No')
         count = 0
         for i in configRoot.iter('augmenter'):
-            if augmenterStatus[count] == 'Yes':
-                i[1].text = str('Yes')
-            else:
-                i[1].text = str('No')
+            i[1].text = 'Yes' if augmenterStatus[count] == 'Yes' else 'No'
             count += 1
         configTree.write(os.path.abspath('.') + '/AugmenterConfigurations.xml')
         self.doAugmentation()
