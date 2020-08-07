@@ -158,7 +158,7 @@
      <rect>
       <x>40</x>
       <y>40</y>
-      <width>291</width>
+      <width>341</width>
       <height>21</height>
      </rect>
     </property>
@@ -168,7 +168,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Click browse to specify image source</string>
+     <string>Click browse to select image source directory</string>
     </property>
    </widget>
    <widget class="QLabel" name="destinationLabel">
@@ -208,7 +208,7 @@
      <rect>
       <x>40</x>
       <y>260</y>
-      <width>311</width>
+      <width>361</width>
       <height>21</height>
      </rect>
     </property>
@@ -218,7 +218,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Click browse to specify image destination</string>
+     <string>Click browse to select image destination directory</string>
     </property>
    </widget>
    <widget class="QPushButton" name="destinationBrowseButton">
@@ -276,7 +276,7 @@
      <rect>
       <x>40</x>
       <y>150</y>
-      <width>271</width>
+      <width>311</width>
       <height>21</height>
      </rect>
     </property>
@@ -286,7 +286,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Click browse to specify XML source</string>
+     <string>Click browse to select XML source directory</string>
     </property>
    </widget>
    <widget class="QPushButton" name="xmlSourceBrowseButton">
