@@ -140,13 +140,9 @@ class MainWindow(QMainWindow):
         fileType = '.jpg'
 
         # getting addresses of images to augment
-        imageAddresses = []
-        totalImageCount = 0
         finishPartCount = 0
-        for f in os.listdir(imageSourceDirectory):
-            if (f.__contains__(fileType)):
-                imageAddresses.append(imageSourceDirectory + '/' + f)
-                totalImageCount += 1
+        imageAddresses = [imageSourceDirectory + '/' + f for f in os.listdir(imageSourceDirectory) if (f.__contains__(fileType))]
+        totalImageCount = len(imageAddresses)
 
         # counting the number of augmenters actually using
         augmenterCount = 0
@@ -265,7 +261,6 @@ class MainWindow(QMainWindow):
                         originalImageToShow = image
                     if finishImageCount is 0:  # sample images to show later
                         augmentedImageToShow.append(augmentedImage)
-                        # titlesToShow.append(a[0].text)
                         titlesToShow.append(newNameAttributes[1:])
 
                     finishImageCount += 1
