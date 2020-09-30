@@ -279,7 +279,7 @@ class Ui_MainWindow(object):
         ___qlistwidgetitem25 = self.augmenterListWidget.item(25)
         ___qlistwidgetitem25.setText(QCoreApplication.translate("MainWindow", u"LogContrast_low", None));
         ___qlistwidgetitem26 = self.augmenterListWidget.item(26)
-        ___qlistwidgetitem26.setText(QCoreApplication.translate("MainWindow", u"LinearContrast_high", None));
+        ___qlistwidgetitem26.setText(QCoreApplication.translate("MainWindow", u"LogContrast_high", None));
         ___qlistwidgetitem27 = self.augmenterListWidget.item(27)
         ___qlistwidgetitem27.setText(QCoreApplication.translate("MainWindow", u"MotionBlur_degree_0", None));
         ___qlistwidgetitem28 = self.augmenterListWidget.item(28)
