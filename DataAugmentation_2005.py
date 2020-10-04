@@ -10,7 +10,7 @@ from argparse import ArgumentParser
 
 def findAugmenterIndex(augmenterList, target, augmenterHistory):
     for i in range(len(augmenterList)):
-        if augmenterList[i][0].text == target and augmenterHistory[i] == 0:
+        if augmenterList[i][0].text == target and augmenterHistory[i] == 0 and augmenterList[i][1].text == 'Yes':
             return i
     return - 1  # normally, it won't be executed
 
