@@ -116,7 +116,7 @@ class MainWindow(QMainWindow):
         return augmenter
 
     def doAugmentation(self):
-        configurationFile = os.path.abspath('.') + '/AugmenterConfigurations.xml'
+        configurationFile = path.abspath('.') + '/AugmenterConfigurations.xml'
 
         # parsing configuration file
         configurationTree = ET.parse(configurationFile)
@@ -257,11 +257,12 @@ class MainWindow(QMainWindow):
                     imageio.imsave(newPath, augmentedImage)
 
                     # collecting samples to show
-                    if finishPartCount is 0 and finishImageCount is 0:
-                        originalImageToShow = image
-                    if finishImageCount is 0:  # sample images to show later
-                        augmentedImageToShow.append(augmentedImage)
-                        titlesToShow.append(newNameAttributes[1:])
+                    if configurationRoot.findall('showAugmentedSamples')[0].text == 'Yes':
+                        if finishPartCount is 0 and finishImageCount is 0:
+                            originalImageToShow = image
+                        if finishImageCount is 0:  # sample images to show later
+                            augmentedImageToShow.append(augmentedImage)
+                            titlesToShow.append(newNameAttributes[1:])
 
                     finishImageCount += 1
                     self.ui.stateTextEdit.append(str(finishImageCount) + '/' + str(totalImageCount) + ', saved to: ' + newPath)
