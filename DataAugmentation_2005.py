@@ -100,12 +100,12 @@ def generateAugmenter(augmenters, target, augmenterHistory):
 
 def doAugmentation():
     # argparse
-    # parser = ArgumentParser()
-    # parser.add_argument("conf", help="the path of augmenter configurations")
-    # arguments = parser.parse_args()
-    # configurationFile = os.path.abspath('.') + '/' + arguments.conf
+    parser = ArgumentParser()
+    parser.add_argument("conf", help="the path of augmenter configurations")
+    arguments = parser.parse_args()
+    configurationFile = os.path.abspath('.') + '/' + arguments.conf
     # for debugging
-    configurationFile = os.path.abspath('.') + '\\AugmenterConfigurations.xml'
+    # configurationFile = os.path.abspath('.') + '\\AugmenterConfigurations.xml'
 
     # parsing configuration file
     configurationTree = ET.parse(configurationFile)
@@ -117,31 +117,33 @@ def doAugmentation():
     xmlSourceDirectory = configurationRoot.findall('xmlSourceDirectory')[0].text
     # the directory to save augmented images
     imageDestinationDirectory = configurationRoot.findall('imageDestinationDirectory')[0].text
+    # the directory to save augmented xml files
+    xmlDestinationDirectory = configurationRoot.findall('xmlDestinationDirectory')[0].text
     # mkdir if destination directory doesn't exist
     if os.path.isdir(imageDestinationDirectory) is False:
         os.mkdir(imageDestinationDirectory)
 
-    # deprecated deprecated
+    '''deprecated
     # augmenters. Visit https://github.com/aleju/imgaug to find more augmenters.
     # sequential augmentation. Applies all the augmenters(sequentially) to an image, generates an image that contains all the augmenters.
     # seq = iaa.Sequential([
     #     iaa.SigmoidContrast(cutoff=0.6, gain=7)])  # modify "iaa.Add(-45), iaa.Crop(precent=0.2), iaa.GaussianBlur(2)" to get the augmentation type you want
     # seperate augmentation. Applies one augmenter to an image and generated augmented image.
-    # deprecated deprecated
+    deprecated'''
 
     # load all of the augmenters in configuration file
     augmenters = configurationRoot.findall('augmenter')
 
     # file type
-    # be aware of the file type, ex: jpg v.s. JPG and jpg v.s. jpeg, they are different!
-    fileType = '.jpg'
+    # be aware of the file type, ex: jpg vs. JPG or jpg vs. jpeg, they are different!
+    fileExtension = configurationRoot.findall('fileExtension')[0].text
 
     # getting addresses of images to augment
     imageAddresses = []
     totalImageCount = 0
     finishPartCount = 0
     for f in os.listdir(imageSourceDirectory):
-        if (f.__contains__(fileType)):
+        if (f.__contains__(fileExtension)):
             imageAddresses.append(imageSourceDirectory + '/' + f)
             totalImageCount += 1
 
@@ -172,7 +174,7 @@ def doAugmentation():
 
                 # getting target image and xml file
                 image = imageio.imread(address)
-                augmentedTree = ET.parse(address.replace(imageSourceDirectory, xmlSourceDirectory).replace(fileType, '.xml'))
+                augmentedTree = ET.parse(address.replace(imageSourceDirectory, xmlSourceDirectory).replace(fileExtension, '.xml'))
                 augmentedRoot = augmentedTree.getroot()
 
                 # getting bounding boxes
@@ -210,7 +212,7 @@ def doAugmentation():
                         newNameAttributes = newNameAttributes + a[0].text
                         for args in a[2]:
                             newNameAttributes = newNameAttributes + '_' + args.tag + '=' + args.text.replace('.', 'p')
-                    newName = str(fileName.text.replace(fileType, newNameAttributes)) + fileType
+                    newName = str(fileName.text.replace(fileExtension, newNameAttributes)) + fileExtension
                     fileName.text = newName
                 for folder in augmentedRoot.iter('folder'):
                     newFolder = str(a[0].text)
@@ -247,8 +249,12 @@ def doAugmentation():
                 # mkdir if destination directory doesn't exist
                 if os.path.isdir(newPath.replace(newName, '')) is False:
                     os.mkdir(newPath.replace(newName, ''))
-                    os.mkdir(newPath.replace(newName, '/xmlFile'))
-                augmentedTree.write(newPath.replace(newName, '/xmlFile/' + newName).replace(fileType, '.xml'))  # for saving jpg and xml into seperate directories
+                    # os.mkdir(newPath.replace(newName, '/xmlFile'))
+                # augmentedTree.write(newPath.replace(newName, '/xmlFile/' + newName).replace(fileExtension, '.xml'))  # for saving jpg and xml into seperate directories
+                if os.path.isdir(newPath.replace(imageDestinationDirectory, xmlDestinationDirectory).replace(newName, '')) is False:
+                    os.mkdir(xmlDestinationDirectory)
+                    os.mkdir(newPath.replace(imageDestinationDirectory, xmlDestinationDirectory).replace(newName, ''))
+                augmentedTree.write(newPath.replace(imageDestinationDirectory, xmlDestinationDirectory).replace(fileExtension, '.xml'))
 
                 # saving new image
                 imageio.imsave(newPath, augmentedImage)
