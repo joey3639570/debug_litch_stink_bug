@@ -155,7 +155,7 @@ def doAugmentation():
 
     # data for showing augmented samples
     originalImageToShow = None
-    imagesToShow = []
+    augmentedImageToShow = []
     titlesToShow = []
 
     # augmentation
@@ -260,11 +260,12 @@ def doAugmentation():
                 imageio.imsave(newPath, augmentedImage)
 
                 # collecting samples to show
-                if finishPartCount is 0 and finishImageCount is 0:
-                    originalImageToShow = image
-                if finishImageCount is 0:  # sample images to show later
-                    imagesToShow.append(augmentedImage)
-                    titlesToShow.append(a[0].text)
+                if configurationRoot.findall('showAugmentedSamples')[0].text == 'Yes':
+                    if finishPartCount is 0 and finishImageCount is 0:
+                        originalImageToShow = image
+                    if finishImageCount is 0:  # sample images to show later
+                        augmentedImageToShow.append(augmentedImage)
+                        titlesToShow.append(newNameAttributes[1:])
 
                 finishImageCount += 1
                 print(str(finishImageCount) + "/" + str(totalImageCount) + ", saved to: " + newPath)
@@ -288,14 +289,14 @@ def doAugmentation():
             plt.imshow(originalImageToShow)
             plt.title('Original')
             j = 0
-            while j < 3 and i + j < len(imagesToShow):
+            while j < 3 and i + j < len(augmentedImageToShow):
                 if augmenterCount - i is 1:
                     plt.subplot(1, 2, j+2)
                 elif augmenterCount - i is 2:
                     plt.subplot(1, 3, j+2)
                 else:
                     plt.subplot(2, 2, j+2)
-                plt.imshow(imagesToShow[i+j])
+                plt.imshow(augmentedImageToShow[i+j])
                 plt.title(titlesToShow[i+j])
                 plt.axis('off')
                 j += 1
