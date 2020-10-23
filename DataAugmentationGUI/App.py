@@ -116,7 +116,7 @@ class MainWindow(QMainWindow):
         return augmenter
 
     def doAugmentation(self):
-        configurationFile = path.abspath('.') + '/AugmenterConfigurations.xml'
+        configurationFile = os.path.abspath('.') + '/AugmenterConfigurations.xml'
 
         # parsing configuration file
         configurationTree = ET.parse(configurationFile)
@@ -137,11 +137,11 @@ class MainWindow(QMainWindow):
 
         # file type
         # be aware of the file type, ex: jpg v.s. JPG and jpg v.s. jpeg, they are different!
-        fileType = '.jpg'
+        fileExtension = '.jpg'
 
         # getting addresses of images to augment
         finishPartCount = 0
-        imageAddresses = [imageSourceDirectory + '/' + f for f in os.listdir(imageSourceDirectory) if (f.__contains__(fileType))]
+        imageAddresses = [imageSourceDirectory + '/' + f for f in os.listdir(imageSourceDirectory) if (f.__contains__(fileExtension))]
         totalImageCount = len(imageAddresses)
 
         # counting the number of augmenters actually using
@@ -161,7 +161,7 @@ class MainWindow(QMainWindow):
         QCoreApplication.processEvents(QEventLoop.AllEvents)
         for a in augmenters:
             if a[1].text == 'Yes':  # checking whether the user want to use this augmenter
-                self.ui.stateTextEdit.append('part: ' + str(finishPartCount + 1) + '/' + str(augmenterCount))
+                self.ui.stateTextEdit.append('part: ' + str(finishPartCount + 1) + '/' + str(augmenterCount) + ' , augmenter: ' + a[0].text)
                 QCoreApplication.processEvents(QEventLoop.AllEvents)
 
                 # generate imgaug augmenter
@@ -173,7 +173,7 @@ class MainWindow(QMainWindow):
 
                     # getting target image and xml file
                     image = imageio.imread(address)
-                    augmentedTree = ET.parse(address.replace(imageSourceDirectory, xmlSourceDirectory).replace(fileType, '.xml'))
+                    augmentedTree = ET.parse(address.replace(imageSourceDirectory, xmlSourceDirectory).replace(fileExtension, '.xml'))
                     augmentedRoot = augmentedTree.getroot()
 
                     # getting bounding boxes
@@ -213,7 +213,7 @@ class MainWindow(QMainWindow):
                             newNameAttributes = newNameAttributes + a[0].text
                             for args in a[2]:
                                 newNameAttributes = newNameAttributes + '_' + args.tag + '=' + args.text.replace('.', 'p')
-                        newName = str(fileName.text.replace(fileType, newNameAttributes)) + fileType
+                        newName = str(fileName.text.replace(fileExtension, newNameAttributes)) + fileExtension
                         fileName.text = newName
                     for folder in augmentedRoot.iter('folder'):
                         newFolder = str(a[0].text)
@@ -251,7 +251,7 @@ class MainWindow(QMainWindow):
                     if os.path.isdir(newPath.replace(newName, '')) is False:
                         os.mkdir(newPath.replace(newName, ''))
                         os.mkdir(newPath.replace(newName, '/xmlFile'))
-                    augmentedTree.write(newPath.replace(newName, '/xmlFile/' + newName).replace(fileType, '.xml'))  # for saving jpg and xml into seperate directories
+                    augmentedTree.write(newPath.replace(newName, '/xmlFile/' + newName).replace(fileExtension, '.xml'))  # for saving jpg and xml into seperate directories
 
                     # saving new image
                     imageio.imsave(newPath, augmentedImage)

@@ -21,7 +21,7 @@
         <name>Add</name>
         <enable>No</enable>
         <args>
-            <value>20</value>
+            <value>60</value>
         </args>
     </augmenter>
     <augmenter>
@@ -42,14 +42,14 @@
         <name>AveragePooling</name>
         <enable>No</enable>
         <args>
-            <kernelsize>5</kernelsize>
+            <kernelsize>40</kernelsize>
         </args>
     </augmenter>
     <augmenter>
         <name>CoarseDropout</name>
-        <enable>Yes</enable>
+        <enable>No</enable>
         <args>
-            <p>0.2</p>
+            <p>0.5</p>
             <sizepercent>0.1</sizepercent>
         </args>
     </augmenter>
@@ -206,7 +206,7 @@
         <name>LinearContrast</name>
         <enable>No</enable>
         <args>
-            <alpha>1.4</alpha>
+            <alpha>2.0</alpha>
         </args>
     </augmenter>
     <augmenter>
@@ -235,7 +235,7 @@
         <name>MotionBlur</name>
         <enable>No</enable>
         <args>
-            <k>16</k>
+            <k>120</k>
             <angle>72</angle>
         </args>
     </augmenter>
