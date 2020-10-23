@@ -7,9 +7,9 @@ from imgaug import augmenters as iaa
 # settings settings
 
 # the directory of images to augment
-imageSourceDirectory = 'C:\\Users\\Ben-ThinkPad\\Pictures\\test'
+imageSourceDirectory = 'C:\\Users\\path\\Pictures\\test'
 # the directory of original xml
-xmlSourceDirectory = 'C:\\Users\\Ben-ThinkPad\\Pictures\\test\\xmlFile'
+xmlSourceDirectory = 'C:\\Users\\path\\Pictures\\test\\xmlFile'
 # the directory to save augmented images
 imageDestinationDirectory = 'E:\\test'
 xmlDestinationDirectory = 'E:\\test\\xmlFile'
