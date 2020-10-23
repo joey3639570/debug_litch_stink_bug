@@ -2,13 +2,13 @@
     <comment>Please modify the content in tags to the configuration you need</comment>
     <comment>
     Indicate the directory that stores the images you want to augment</comment>
-    <imageSourceDirectory>C:/Users/Ben-ThinkPad/Pictures/test</imageSourceDirectory>
+    <imageSourceDirectory>C:/Users/path/Pictures/test</imageSourceDirectory>
     <comment>
     Indicate the directory that stores the corresponding xml file</comment>
-    <xmlSourceDirectory>C:/Users/Ben-ThinkPad/Pictures/test/xmlFile</xmlSourceDirectory>
+    <xmlSourceDirectory>C:/Users/path/Pictures/test/xmlFile</xmlSourceDirectory>
     <comment>
     Indicate the directory that is going to store the augmented images</comment>
-    <imageDestinationDirectory>C:/Users/Ben-ThinkPad/Desktop</imageDestinationDirectory>
+    <imageDestinationDirectory>C:/Users/path/Desktop</imageDestinationDirectory>
     <comment>
     Modify to 'Yes' to enable the function of showing augmented samples</comment>
     <showAugmentedSamples>No</showAugmentedSamples>
