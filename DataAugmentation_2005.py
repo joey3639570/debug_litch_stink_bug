@@ -248,11 +248,14 @@ def doAugmentation():
                 # saving new xml file
                 # mkdir if destination directory doesn't exist
                 if os.path.isdir(newPath.replace(newName, '')) is False:
+                    if os.path.isdir(imageDestinationDirectory) is False:
+                        os.mkdir(imageDestinationDirectory)
                     os.mkdir(newPath.replace(newName, ''))
                     # os.mkdir(newPath.replace(newName, '/xmlFile'))
                 # augmentedTree.write(newPath.replace(newName, '/xmlFile/' + newName).replace(fileExtension, '.xml'))  # for saving jpg and xml into seperate directories
                 if os.path.isdir(newPath.replace(imageDestinationDirectory, xmlDestinationDirectory).replace(newName, '')) is False:
-                    os.mkdir(xmlDestinationDirectory)
+                    if os.path.isdir(xmlDestinationDirectory) is False:
+                        os.mkdir(xmlDestinationDirectory)
                     os.mkdir(newPath.replace(imageDestinationDirectory, xmlDestinationDirectory).replace(newName, ''))
                 augmentedTree.write(newPath.replace(imageDestinationDirectory, xmlDestinationDirectory).replace(fileExtension, '.xml'))
 
