@@ -107,8 +107,8 @@ class MainWindow(QMainWindow):
             augmenter = iaa.Rot90(k=int(augmenters[augmenterIndex][2][0].text), keep_size=False)
             augmenterHistory[augmenterIndex] = 1
         elif target == 'Sharpen':
-            augmenter = iaa.Sharpen(alpha=int(augmenters[augmenterIndex][2][0].text),
-                                    lightness=int(augmenters[augmenterIndex][2][1].text))
+            augmenter = iaa.Sharpen(alpha=float(augmenters[augmenterIndex][2][0].text),
+                                    lightness=float(augmenters[augmenterIndex][2][1].text))
             augmenterHistory[augmenterIndex] = 1
         else:
             augmenter = iaa.SigmoidContrast(cutoff=float(augmenters[augmenterIndex][2][0].text))
