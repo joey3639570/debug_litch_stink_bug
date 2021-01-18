@@ -8,7 +8,8 @@
 
 
 from PySide2 import QtCore, QtGui, QtWidgets
-import time
+from datetime import datetime
+import json
 import sys
 import os
 
@@ -113,7 +114,7 @@ class Ui_MainWindow(object):
         self.tab1_pic_widget_layout.addWidget(self.tab1_left_pic)
         self.tab1_pic_widget_layout.addWidget(self.tab1_right_pic)
 
-        self.tab1_bottom_widget_layout.addWidget(self.tab1_state)
+        # self.tab1_bottom_widget_layout.addWidget(self.tab1_state)
         self.tab1_bottom_widget_layout.addWidget(self.tab1_test_button)
 
         self.tab1_vlayout.addWidget(self.tab1_model_widget, alignment=QtCore.Qt.AlignTop)
@@ -223,6 +224,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_model_button.clicked.connect(self.on_tab1_model_button_Clicked)
         self.tab1_test_button.clicked.connect(self.on_tab1_test_button_Clicked)
 
+        self.serialNumberCount = 0
+
     def tr(self, text):
         return QtCore.QObject.tr(self, text)
 
@@ -256,17 +259,46 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         elif self.tab1_pic == '':
             print("No Pic!")
             return
-        movie = QtGui.QMovie('loading.gif')
-        movie.setCacheMode(QtGui.QMovie.CacheAll)
-        movie.setSpeed(100)
-        movie.setScaledSize(QtCore.QSize(50,50))
-        self.tab1_state.setMovie(movie)
-        movie.start()
-        commands = ['./darknet detector test data/obj.data cfg/yolov4-custom.cfg',
-                    self.tab1_model,
-                    '-dont_show -ext_output',
-                    self.tab1_pic]
+        
+        darknetPath = 'github_repositories/VG_AlexeyAB_darknet/'
+        # make directory to store detected samples and detection log
+        detectionOutput = 'detection_output/'
+        if os.path.isdir(detectionOutput) is False:
+            os.mkdir(detectionOutput)
+        
+        # generate serial number
+        date = datetime.now().strftime("%Y%m%d")
+        serialNumber = date + '{0:03}'.format(self.serialNumberCount)
+        while (os.path.isdir(detectionOutput + serialNumber) == False):
+            self.serialNumberCount = self.serialNumberCount + 1
+            serialNumber = date + '{0:03}'.format(self.serialNumberCount)
+        
+        detectionOutput = detectionOutput + serialNumber
+
+        # create empty json file
+        commands = ['touch',
+                    detectionOutput + '/result.json']
         os.system(' '.join(commands))
+
+        # movie = QtGui.QMovie('loading.gif')
+        # movie.setCacheMode(QtGui.QMovie.CacheAll)
+        # movie.setSpeed(100)
+        # movie.setScaledSize(QtCore.QSize(50,50))
+        # self.tab1_state.setMovie(movie)
+        # movie.start()
+
+        # run detection
+        ### batch images detector (darknet) provided by vincentgong7 ###
+        commands = ['./' + darknetPath + 'darknet detector batch',
+                    darknetPath + 'data/obj.data',
+                    darknetPath + 'cfg/yolov4-custom.cfg',
+                    darknetPath + 'backup/20200509_20000iterations_random0_sub32_wh480/yolov4-custom_20000.weights',
+                    'io_folder ' + self.tab1_pic,
+                    detectionOutput,
+                    '-out ' + detectionOutput + '/result.json',
+                    '-dont_show -ext_output']
+        os.system(' '.join(commands))
+
         img_path = "/home/mmnlab/Desktop/joey/20200430/darknet/predictions.jpg"
         right_pixmap = QtGui.QPixmap(img_path)
         right_pixmap = right_pixmap.scaled(550, 225, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
