@@ -238,19 +238,24 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return QtCore.QObject.tr(self, text)
 
     def on_tab1_picture_button_Clicked(self):
-        path_to_file, _ = QtWidgets.QFileDialog.getOpenFileName(self, 
-                self.tr("Load Image"), self.tr("~/Desktop/"), self.tr("Images (*.jpg)"))
-        '''if path_to_file:
-            self.tab1_picture_path_lineEdit.setText(path_to_file)
-            left_pixmap = QtGui.QPixmap(path_to_file)
+        # path_to_file, _ = QtWidgets.QFileDialog.getOpenFileName(self, 
+        #         self.tr("Load Image"), self.tr("~/Desktop/"), self.tr("Images (*.jpg)"))
+        source = QtWidgets.QFileDialog.getExistingDirectory(self, self.tr('Open directory'), '/home/mmnlab/')
+        if source:
+            self.tab1_picture_path_lineEdit.setText(source)
+            '''left_pixmap = QtGui.QPixmap(path_to_file)
             left_pixmap = left_pixmap.scaled(550, 225, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-            self.tab1_left_picture.setPixmap(left_pixmap)
-            self.tab1_picture_path = path_to_file'''
-        if path_to_file == '':
-            print("Nothing.")
-            self.tab1_state.setText(self.tr('No directory selected'))
+            self.tab1_left_picture.setPixmap(left_pixmap)'''
+            self.tab1_picture_path = source
+            self.tab1_state.setText(self.tr('Selected directory: ' + source))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-            return
+        elif source == '':
+            if self.tab1_picture_path_lineEdit.text() == '':
+                self.tab1_state.setText(self.tr('No directory selected'))
+                QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+            else:
+                print(self.tab1_picture_path)
+        return
     
     '''def on_tab1_model_button_Clicked(self):
         path_to_file, _ = QtWidgets.QFileDialog.getOpenFileName(self,
