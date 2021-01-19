@@ -227,7 +227,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         # Signal Setting
         self.tab1_picture_button.clicked.connect(self.on_tab1_picture_button_Clicked)
-        # self.tab1_model_button.clicked.connect(self.on_tab1_model_button_Clicked)
         self.tab1_test_button.clicked.connect(self.on_tab1_test_button_Clicked)
 
         self.serialNumberCount = 0
@@ -256,16 +255,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             else:
                 print(self.tab1_picture_path)
         return
-    
-    '''def on_tab1_model_button_Clicked(self):
-        path_to_file, _ = QtWidgets.QFileDialog.getOpenFileName(self,
-                self.tr("Load Model"), self.tr("~/Desktop/"), self.tr("Models (*.weights)"))
-        if path_to_file:
-            self.tab1_model_path.setText(path_to_file)
-            self.tab1_model = path_to_file
-        elif path_to_file == "":
-            print("Nothing.")
-            return'''
 
     def on_tab1_test_button_Clicked(self):
         '''if self.tab1_model == '':
@@ -290,32 +279,40 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.originalPictureAddresses.sort()
 
-        darknetPath = 'github_repositories/VG_AlexeyAB_darknet/'
+        # darknetPath = 'github_repositories/VG_AlexeyAB_darknet/'
         # make directory to store detected samples and detection log
         self.tab1_state.setText(self.tr('Creating output directory'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         detectionOutputPath = os.path.abspath('.') + '/detection_output/'
         if os.path.isdir(detectionOutputPath) is False:
             os.mkdir(detectionOutputPath)
+            self.tab1_state.setText(self.tr('Created directory: ' + detectionOutputPath))
+            QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         # generate serial number
         date = datetime.now().strftime("%Y%m%d")
         serialNumber = date + '{0:03}'.format(self.serialNumberCount)
-        while (os.path.isdir(detectionOutputPath + serialNumber) is False):
+        while (os.path.isdir(detectionOutputPath + serialNumber) is True):
             self.serialNumberCount = self.serialNumberCount + 1
             serialNumber = date + '{0:03}'.format(self.serialNumberCount)
         
-        detectionOutputPath = detectionOutputPath + serialNumber
+        detectionOutputPath = detectionOutputPath + serialNumber + '/'
         os.mkdir(detectionOutputPath)
+        self.tab1_state.setText(self.tr('Created directory: ' + detectionOutputPath))
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # create empty detection log file
         commands = ['touch',
-                    detectionOutputPath + '/detection_results.json']
+                    detectionOutputPath + 'detection_results.json']
         os.system(' '.join(commands))
+        self.tab1_state.setText(self.tr('Detection log file created'))
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         # create empty statistics log file
         commands = ['touch',
-                    detectionOutputPath + '/statistics.json']
+                    detectionOutputPath + 'statistics.json']
         os.system(' '.join(commands))
+        self.tab1_state.setText(self.tr('Statistics log file created'))
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         '''movie = QtGui.QMovie('loading.gif')
         movie.setCacheMode(QtGui.QMovie.CacheAll)
@@ -326,17 +323,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # run detection
         ### batch images detector (darknet) provided by vincentgong7 ###
-        self.tab1_state.setText(self.tr('Start detection'))
+        self.tab1_state.setText(self.tr('Detection started'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-        commands = ['./' + darknetPath + 'darknet detector batch',
-                    darknetPath + 'data/obj.data',
-                    darknetPath + 'cfg/yolov4-custom.cfg',
-                    darknetPath + 'backup/20200509_20000iterations_random0_sub32_wh480/yolov4-custom_20000.weights',
-                    'io_folder ' + self.tab1_picture_path,
+        commands = ['./darknet detector batch',
+                    'data/obj.data',
+                    'cfg/yolov4-custom.cfg',
+                    'weights/20200509_20000iterations_random0_sub32_wh480/yolov4-custom_20000.weights',
+                    'io_folder ' + self.tab1_picture_path + '/',
                     detectionOutputPath,
                     '-out ' + detectionOutputPath + '/detection_results.json',
-                    '-dont_show -ext_output']
+                    '-dont_show']
         os.system(' '.join(commands))
+        self.tab1_state.setText(self.tr('Detection finished'))
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # collecting paths to all the detected pictures
         for f in os.listdir(detectionOutputPath):
@@ -357,7 +356,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         '''check = 'check.jpg'
         state_pixmap = QtGui.QPixmap(check)
         state_pixmap = state_pixmap.scaled(50, 50, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        self.tab1_state.setPixmap(state_pixmap)'''
+        self.tab1_state.setPixmap(state_pixmap) '''
+        self.tab1_state.setText(self.tr('Ready'))
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+        return
 
 
 
