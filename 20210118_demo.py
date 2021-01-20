@@ -88,8 +88,8 @@ class Ui_MainWindow(object):
 
         # Nesting layout
         self.tab1_verticalLayout = QtWidgets.QVBoxLayout(self.tab1)  # parent is tab. In order to line up widgets under self.tab1???
-        self.tab1_picture_description_widget = QtWidgets.QWidget()
-        self.tab1_picture_description_widget_layout = QtWidgets.QHBoxLayout(self.tab1_picture_description_widget)
+        self.tab1_picture_instruction_widget = QtWidgets.QWidget()
+        self.tab1_picture_instruction_widget_layout = QtWidgets.QHBoxLayout(self.tab1_picture_instruction_widget)
         self.tab1_picture_selection_widget = QtWidgets.QWidget()
         self.tab1_picture_selection_widget_layout = QtWidgets.QHBoxLayout(self.tab1_picture_selection_widget)  # parent is tab. In order to line up widgets under tab1_picture_path_widget???
         self.tab1_picture_widget = QtWidgets.QWidget()
@@ -98,7 +98,7 @@ class Ui_MainWindow(object):
         self.tab1_test_widget_layout = QtWidgets.QVBoxLayout(self.tab1_test_widget) # parent is tab. In order to line up widgets under tab1_test_widget???
 
         # picture path widget
-        self.tab1_picture_description_widget_layout.addWidget(self.tab1_picture_label)
+        self.tab1_picture_instruction_widget_layout.addWidget(self.tab1_picture_label)
 
         self.tab1_picture_selection_widget_layout.addWidget(self.tab1_picture_button)
         self.tab1_picture_selection_widget_layout.addWidget(self.tab1_picture_path_lineEdit)
@@ -112,7 +112,7 @@ class Ui_MainWindow(object):
         self.tab1_test_widget_layout.addWidget(self.tab1_state)
 
         # whole layout
-        self.tab1_verticalLayout.addWidget(self.tab1_picture_description_widget)
+        self.tab1_verticalLayout.addWidget(self.tab1_picture_instruction_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_picture_selection_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_test_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_line)
