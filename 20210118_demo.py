@@ -229,7 +229,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_picture_button.clicked.connect(self.on_tab1_picture_button_Clicked)
         self.tab1_test_button.clicked.connect(self.on_tab1_test_button_Clicked)
 
-        self.serialNumberCount = 0
+        self.dateCount = 0
         self.originalPictureAddresses = []
         self.detectedPictureAddresses = []
 
@@ -281,23 +281,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # darknetPath = 'github_repositories/VG_AlexeyAB_darknet/'
         # make directory to store detected samples and detection log
-        self.tab1_state.setText(self.tr('Creating output directory'))
-        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         detectionOutputPath = os.path.abspath('.') + '/detection_output/'
         if os.path.isdir(detectionOutputPath) is False:
             os.mkdir(detectionOutputPath)
             self.tab1_state.setText(self.tr('Created directory: ' + detectionOutputPath))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
-        # generate serial number
-        date = datetime.now().strftime("%Y%m%d")
-        serialNumber = date + '{0:03}'.format(self.serialNumberCount)
-        while (os.path.isdir(detectionOutputPath + serialNumber) is True):
-            self.serialNumberCount = self.serialNumberCount + 1
-            serialNumber = date + '{0:03}'.format(self.serialNumberCount)
+        date = datetime.now().strftime("%Y%m%d%H%M")
+        resultDirectoryName = date
+        while (os.path.isdir(detectionOutputPath + resultDirectoryName) is True):
+            self.dateCount = self.dateCount + 1
+            resultDirectoryName = date + '_' + self.dateCount
         
-        detectionOutputPath = detectionOutputPath + serialNumber + '/'
+        detectionOutputPath = detectionOutputPath + resultDirectoryName + '/'
         os.mkdir(detectionOutputPath)
+
         self.tab1_state.setText(self.tr('Created directory: ' + detectionOutputPath))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
@@ -305,12 +303,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         commands = ['touch',
                     detectionOutputPath + 'detection_results.json']
         os.system(' '.join(commands))
+
         self.tab1_state.setText(self.tr('Detection log file created'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         # create empty statistics log file
         commands = ['touch',
                     detectionOutputPath + 'statistics.json']
         os.system(' '.join(commands))
+
         self.tab1_state.setText(self.tr('Statistics log file created'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
@@ -323,7 +323,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # run detection
         ### batch images detector (darknet) provided by vincentgong7 ###
-        self.tab1_state.setText(self.tr('Detection started'))
+        self.tab1_state.setText(self.tr('Detection started, please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         commands = ['./darknet detector batch',
                     'data/obj.data',
@@ -357,6 +357,57 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         state_pixmap = QtGui.QPixmap(check)
         state_pixmap = state_pixmap.scaled(50, 50, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         self.tab1_state.setPixmap(state_pixmap) '''
+
+        self.tab1_state.setText(self.tr('Generating statistics data'))
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+
+        detectedObjectCount = [0, 0, 0, 0, 0]
+
+        f = open(detectionOutputPath + 'detection_results.json')
+        openedResult = json.load(f)
+        for r in openedResult:
+            for o in r['objects']:
+                if o['name'] == 'egg':
+                    detectedObjectCount[0] = detectedObjectCount[0] + 1
+                elif o['name'] == 'larval_before':
+                    detectedObjectCount[1] = detectedObjectCount[1] + 1
+                elif o['name'] == 'larval_after':
+                    detectedObjectCount[2] = detectedObjectCount[2] + 1
+                elif o['name'] == 'juvenile':
+                    detectedObjectCount[3] = detectedObjectCount[3] + 1
+                elif o['name'] == 'tessaratoma':
+                    detectedObjectCount[4] = detectedObjectCount[4] + 1
+        
+        f.close()
+
+        dominantObject = 0
+        for i in range(1, len(detectedObjectCount)):
+            if detectedObjectCount[dominantObject] < detectedObjectCount[i]:
+                dominantObject = i
+        
+        if dominantObject == 0:
+            dominantObject = 'egg'
+        elif dominantObject == 1:
+            dominantObject = 'larval_before'
+        elif dominantObject == 2:
+            dominantObject = 'larval_after'
+        elif dominantObject == 3:
+            dominantObject = 'juvenile'
+        elif dominantObject == 4:
+            dominantObject = 'tessaratoma'
+
+        statisticsDictionary = {
+            "detection_output_path": detectionOutputPath,
+            "detected_directory": self.tab1_picture_path,
+            "dominant_object": dominantObject,
+            "objects_count": {"egg": detectedObjectCount[0], "larval_before": detectedObjectCount[1], "larval_after": detectedObjectCount[2], "juvenile": detectedObjectCount[3], "tessaratoma": detectedObjectCount[4]}}
+
+        with open(detectionOutputPath + 'statistics.json', 'w') as outfile:
+            outfile.write(json.dumps(statisticsDictionary, indent=4))
+        
+        self.tab1_state.setText(self.tr('Statistics data saved successfully'))
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+
         self.tab1_state.setText(self.tr('Ready'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         return
