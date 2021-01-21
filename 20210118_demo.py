@@ -16,13 +16,13 @@ import os
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1280, 720)
+        MainWindow.resize(1080, 720)
 
         # Tab1 -  test demo
         self.centralwidget = QtWidgets.QWidget(MainWindow) # parent is MainWindow
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget) # parent is centralWidget
-        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1280, 720))
+        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1080, 720))
         self.tabWidget.setObjectName("tabWidget")
         self.tab1 = QtWidgets.QWidget() # declaration for tab, no inheritance needed
         self.tab1.setObjectName("tab1")
@@ -391,13 +391,33 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             "detection_output_path": detectionOutputPath,
             "detected_directory": self.tab1_picture_path,
             "dominant_object": dominantObject,
-            "objects_count": {"egg": detectedObjectCount[0], "larval_before": detectedObjectCount[1], "larval_after": detectedObjectCount[2], "juvenile": detectedObjectCount[3], "tessaratoma": detectedObjectCount[4]}}
+            "objects_count": {"egg": detectedObjectCount[0], "larval_before": detectedObjectCount[1], "larval_after": detectedObjectCount[2], "juvenile": detectedObjectCount[3], "tessaratoma": detectedObjectCount[4]}
+        }
 
         with open(detectionOutputPath + 'statistics.json', 'w') as outfile:
             outfile.write(json.dumps(statisticsDictionary, indent=4))
         
         self.tab1_state.setText(self.tr('Statistics data saved successfully'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+
+        statisticsResultToShow = 'Time: ' + date + '\n' + \
+                                 'Dominant object: ' + dominantObject + '\n' + \
+                                 'Object count: ' + '\n' + \
+                                 '    ' + 'egg: ' + str(detectedObjectCount[0]) + ' detected\n' + \
+                                 '    ' + 'larval_before: ' + str(detectedObjectCount[1]) + ' detected\n' + \
+                                 '    ' + 'larval_after: ' + str(detectedObjectCount[2]) + ' detected\n' + \
+                                 '    ' + 'juvenile: ' + str(detectedObjectCount[3]) + ' detected\n' + \
+                                 '    ' + 'tessaratoma: ' + str(detectedObjectCount[4]) + ' detected\n'
+
+        # statisticsResultDialog = QtWidgets.QMessageBox(self, self.tr('Statistic result'), self.tr(statisticsResultToShow), QtWidgets.QMessageBox.StandardButton.Ok, self.tab1)
+        statisticsResultMessage = QtWidgets.QMessageBox()
+        statisticsResultMessage.setWindowTitle(self.tr('Statistic result'))
+        statisticsResultMessage.setText(self.tr('DOMINANT OBJECT: ' + dominantObject.upper()))
+        statisticsResultMessage.setInformativeText(self.tr(statisticsResultToShow))
+        statisticsResultMessage.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+        statisticsResultMessage.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
+
+        statisticsResultMessage.exec()
 
         self.tab1_state.setText(self.tr('Ready'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
