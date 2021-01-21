@@ -16,44 +16,28 @@ import os
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1080, 720)
+        MainWindow.resize(960, 720)
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Base, brush)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Window, brush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Base, brush)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Window, brush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Base, brush)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+        MainWindow.setPalette(palette)
 
         # Tab1 -  test demo
         self.centralwidget = QtWidgets.QWidget(MainWindow) # parent is MainWindow
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget) # parent is centralWidget
-        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1080, 720))
+        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 960, 720))
         self.tabWidget.setObjectName("tabWidget")
         self.tab1 = QtWidgets.QWidget() # declaration for tab, no inheritance needed
         self.tab1.setObjectName("tab1")
         
-        # Left grid for original picture
-        '''
-        self.gridLayoutWidget = QtWidgets.QWidget(self.tab1)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 90, 201, 191))
-        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
-        self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
-        self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout.setObjectName("gridLayout")
-        '''
-        self.tab1_left_picture = QtWidgets.QLabel(self.tab1)
-        self.tab1_left_picture.setObjectName("tab1_left_picture")
-        #self.gridLayout.addWidget(self.tab1_left_picture, 0, 0, 1, 1)
-        
-        # Right grid for detected picture
-        '''
-        self.gridLayoutWidget_2 = QtWidgets.QWidget(self.tab1)
-        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(240, 90, 201, 191))
-        self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
-        self.gridLayout_2 = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
-        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.gridLayout_2.setObjectName("gridLayout_2")
-        '''
-        self.tab1_right_picture = QtWidgets.QLabel(self.tab1)
-        self.tab1_right_picture.setObjectName("tab1_right_picture")
-        #self.gridLayout_2.addWidget(self.tab1_right_picture, 0, 0, 1, 1)
-
-        # Label for selecting picture
+        # Label for selecting picture instructions
         self.tab1_picture_label = QtWidgets.QLabel(self.tab1)
         self.tab1_picture_label.setObjectName("tab1_picture_label")
         self.tab1_picture_label_font = QtGui.QFont()
@@ -74,17 +58,69 @@ class Ui_MainWindow(object):
         # Running state
         self.tab1_state = QtWidgets.QLabel(self.tab1)
         self.tab1_state.setObjectName("tab1_state")
-        
+
+        # Button for performing the test
+        self.tab1_test_button = QtWidgets.QPushButton(self.tab1) # parent is tab
+        self.tab1_test_button.setMouseTracking(True)
+        self.tab1_test_button.setObjectName("tab1_test_button")
+
         # Seperate line for buttons and pictures
         self.tab1_line = QtWidgets.QFrame(self.tab1) # parent is tab
         self.tab1_line.setFrameShape(QtWidgets.QFrame.HLine)
         self.tab1_line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.tab1_line.setObjectName("tab1_line")
 
-        # Button for performing the test
-        self.tab1_test_button = QtWidgets.QPushButton(self.tab1) # parent is tab
-        self.tab1_test_button.setMouseTracking(True)
-        self.tab1_test_button.setObjectName("tab1_test_button")
+        # Label for showing statistics data
+        self.tab1_statistics_data_label = QtWidgets.QLabel(self.tab1)
+        self.tab1_statistics_data_label.setFixedHeight(57)
+        self.tab1_statistics_data_label.setObjectName("tab1_statistics_data_label")
+
+        # Left grid for original picture
+        '''
+        self.gridLayoutWidget = QtWidgets.QWidget(self.tab1)
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(10, 90, 201, 191))
+        self.gridLayoutWidget.setObjectName("gridLayoutWidget")
+        self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
+        self.gridLayout.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout.setObjectName("gridLayout")
+        '''
+        self.tab1_left_picture = QtWidgets.QLabel(self.tab1)
+        self.tab1_left_picture.setObjectName("tab1_left_picture")
+        self.tab1_left_picture.setFixedHeight(400)
+        self.tab1_left_picture.setFixedWidth(420)
+        #self.gridLayout.addWidget(self.tab1_left_picture, 0, 0, 1, 1)
+        self.tab1_left_picture_navigate_button = QtWidgets.QPushButton(self.tab1)
+        self.tab1_left_picture_navigate_button.setEnabled(False)
+        self.tab1_left_picture_navigate_button.setMouseTracking(True)
+        self.tab1_left_picture_navigate_button.setFixedWidth(51)
+        self.tab1_left_picture_navigate_button.setFixedHeight(400)
+        self.tab1_left_picture_navigate_button.setObjectName("tab1_left_picture_navigate_button")
+        
+        # Right grid for detected picture
+        '''
+        self.gridLayoutWidget_2 = QtWidgets.QWidget(self.tab1)
+        self.gridLayoutWidget_2.setGeometry(QtCore.QRect(240, 90, 201, 191))
+        self.gridLayoutWidget_2.setObjectName("gridLayoutWidget_2")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.gridLayoutWidget_2)
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        '''
+        self.tab1_right_picture = QtWidgets.QLabel(self.tab1)
+        self.tab1_right_picture.setObjectName("tab1_right_picture")
+        self.tab1_right_picture.setFixedHeight(400)
+        self.tab1_right_picture.setFixedWidth(420)
+        #self.gridLayout_2.addWidget(self.tab1_right_picture, 0, 0, 1, 1)
+        self.tab1_right_picture_navigate_button = QtWidgets.QPushButton(self.tab1)
+        self.tab1_right_picture_navigate_button.setEnabled(False)
+        self.tab1_right_picture_navigate_button.setMouseTracking(True)
+        self.tab1_right_picture_navigate_button.setFixedWidth(51)
+        self.tab1_right_picture_navigate_button.setFixedHeight(400)
+        self.tab1_right_picture_navigate_button.setObjectName("tab1_right_picture_navigate_button")
+
+        self.tab1_picture_navigate_button_font = QtGui.QFont()
+        self.tab1_picture_navigate_button_font.setPointSize(14)
+        self.tab1_left_picture_navigate_button.setFont(self.tab1_picture_navigate_button_font)
+        self.tab1_right_picture_navigate_button.setFont(self.tab1_picture_navigate_button_font)
 
         # Nesting layout
         self.tab1_verticalLayout = QtWidgets.QVBoxLayout(self.tab1)  # parent is tab. In order to line up widgets under self.tab1???
@@ -92,10 +128,12 @@ class Ui_MainWindow(object):
         self.tab1_picture_instruction_widget_layout = QtWidgets.QHBoxLayout(self.tab1_picture_instruction_widget)
         self.tab1_picture_selection_widget = QtWidgets.QWidget()
         self.tab1_picture_selection_widget_layout = QtWidgets.QHBoxLayout(self.tab1_picture_selection_widget)  # parent is tab. In order to line up widgets under tab1_picture_path_widget???
+        self.tab1_test_widget = QtWidgets.QWidget()
+        self.tab1_test_widget_layout = QtWidgets.QVBoxLayout(self.tab1_test_widget)  # parent is tab. In order to line up widgets under tab1_test_widget???
+        self.tab1_statistics_data_widget = QtWidgets.QWidget()
+        self.tab1_statistics_data_widget_layout = QtWidgets.QHBoxLayout(self.tab1_statistics_data_widget)
         self.tab1_picture_widget = QtWidgets.QWidget()
         self.tab1_picture_widget_layout = QtWidgets.QHBoxLayout(self.tab1_picture_widget) # parent is tab. In order to line up widgets under tab1_picture_widget???
-        self.tab1_test_widget = QtWidgets.QWidget()
-        self.tab1_test_widget_layout = QtWidgets.QVBoxLayout(self.tab1_test_widget) # parent is tab. In order to line up widgets under tab1_test_widget???
 
         # picture path widget
         self.tab1_picture_instruction_widget_layout.addWidget(self.tab1_picture_label)
@@ -103,19 +141,26 @@ class Ui_MainWindow(object):
         self.tab1_picture_selection_widget_layout.addWidget(self.tab1_picture_button)
         self.tab1_picture_selection_widget_layout.addWidget(self.tab1_picture_path_lineEdit)
 
-        # pichture showing widget
-        self.tab1_picture_widget_layout.addWidget(self.tab1_left_picture)
-        self.tab1_picture_widget_layout.addWidget(self.tab1_right_picture)
-
         # detection widget
         self.tab1_test_widget_layout.addWidget(self.tab1_test_button)
         self.tab1_test_widget_layout.addWidget(self.tab1_state)
+
+        # statistics data widget
+        self.tab1_statistics_data_widget_layout.addWidget(self.tab1_statistics_data_label)
+
+        # pichture showing widget
+        self.tab1_picture_widget_layout.addWidget(self.tab1_left_picture_navigate_button)
+        self.tab1_picture_widget_layout.addWidget(self.tab1_left_picture)
+        self.tab1_picture_widget_layout.addWidget(self.tab1_right_picture)
+        self.tab1_picture_widget_layout.addWidget(self.tab1_right_picture_navigate_button)
+        self.tab1_picture_widget_layout.setAlignment(QtCore.Qt.AlignHCenter)
 
         # whole layout
         self.tab1_verticalLayout.addWidget(self.tab1_picture_instruction_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_picture_selection_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_test_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_line)
+        self.tab1_verticalLayout.addWidget(self.tab1_statistics_data_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_picture_widget)
         self.tab1_verticalLayout.setAlignment(QtCore.Qt.AlignTop)
         
@@ -205,7 +250,9 @@ class Ui_MainWindow(object):
         self.tab1_picture_button.setText(_translate("MainWindow", "Browse"))
         self.tab1_test_button.setText(_translate("MainWindow", "Detect"))
         self.tab1_state.setText(_translate("MainWindow", "Ready"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), _translate("MainWindow", "Model Test Demo"))
+        self.tab1_left_picture_navigate_button.setText(_translate("MainWindow", "<"))
+        self.tab1_right_picture_navigate_button.setText(_translate("MainWindow", ">"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), _translate("MainWindow", "Detection"))
         
         # tab 2
         #self.tab2_pic_button.setText(_translate("MainWindow", "Select PIC"))
@@ -223,23 +270,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Signal Setting
         self.tab1_picture_button.clicked.connect(self.on_tab1_picture_button_Clicked)
         self.tab1_test_button.clicked.connect(self.on_tab1_test_button_Clicked)
+        self.tab1_left_picture_navigate_button.clicked.connect(self.on_tab1_left_picutre_navigate_button_Clicked)
+        self.tab1_right_picture_navigate_button.clicked.connect(self.on_tab1_right_picutre_navigate_button_Clicked)
 
-        self.dateCount = 0
+        # variables for showing pictures
+        self.navigateCount = 0
         self.originalPictureAddresses = []
         self.detectedPictureAddresses = []
+
 
     def tr(self, text):
         return QtCore.QObject.tr(self, text)
 
+
     def on_tab1_picture_button_Clicked(self):
-        # path_to_file, _ = QtWidgets.QFileDialog.getOpenFileName(self, 
-        #         self.tr("Load Image"), self.tr("~/Desktop/"), self.tr("Images (*.jpg)"))
         source = QtWidgets.QFileDialog.getExistingDirectory(self, self.tr('Open directory'), '/home/mmnlab/')
         if source:
             self.tab1_picture_path_lineEdit.setText(source)
-            '''left_pixmap = QtGui.QPixmap(path_to_file)
-            left_pixmap = left_pixmap.scaled(550, 225, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-            self.tab1_left_picture.setPixmap(left_pixmap)'''
             self.tab1_picture_path = source
             self.tab1_state.setText(self.tr('Selected directory: ' + source))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -248,6 +295,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.tab1_state.setText(self.tr('No directory selected'))
                 QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         return
+
 
     def on_tab1_test_button_Clicked(self):
         if self.tab1_picture_path == '':
@@ -269,7 +317,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.originalPictureAddresses.sort()
 
-        # darknetPath = 'github_repositories/VG_AlexeyAB_darknet/'
         # make directory to store detected samples and detection log
         detectionOutputPath = os.path.abspath('.') + '/detection_output/'
         if os.path.isdir(detectionOutputPath) is False:
@@ -304,13 +351,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_state.setText(self.tr('Statistics log file created'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
-        '''movie = QtGui.QMovie('loading.gif')
-        movie.setCacheMode(QtGui.QMovie.CacheAll)
-        movie.setSpeed(100)
-        movie.setScaledSize(QtCore.QSize(50,50))
-        self.tab1_state.setMovie(movie)
-        movie.start()'''
-
         # run detection
         ### batch images detector (darknet) provided by vincentgong7 ###
         self.tab1_state.setText(self.tr('Detection started, please wait...'))
@@ -338,16 +378,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.detectedPictureAddresses.sort()
 
-        '''img_path = "/home/mmnlab/Desktop/joey/20200430/darknet/predictions.jpg"
-        right_pixmap = QtGui.QPixmap(img_path)
-        right_pixmap = right_pixmap.scaled(550, 225, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        self.tab1_right_picture.setPixmap(right_pixmap)'''
-        
-        '''check = 'check.jpg'
-        state_pixmap = QtGui.QPixmap(check)
-        state_pixmap = state_pixmap.scaled(50, 50, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        self.tab1_state.setPixmap(state_pixmap) '''
-
+        # statistics data
         self.tab1_state.setText(self.tr('Generating statistics data'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
@@ -400,8 +431,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_state.setText(self.tr('Statistics data saved successfully'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
-        statisticsResultToShow = 'Time: ' + date + '\n' + \
-                                 'Dominant object: ' + dominantObject + '\n' + \
+        # show statistics data in message box
+        statisticsDataToShow = 'Time: ' + date + '\n' + \
+                                 'DOMINANT OBJECT: ' + dominantObject.upper() + '\n' + \
                                  'Object count: ' + '\n' + \
                                  '    ' + 'egg: ' + str(detectedObjectCount[0]) + ' detected\n' + \
                                  '    ' + 'larval_before: ' + str(detectedObjectCount[1]) + ' detected\n' + \
@@ -409,22 +441,62 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                  '    ' + 'juvenile: ' + str(detectedObjectCount[3]) + ' detected\n' + \
                                  '    ' + 'tessaratoma: ' + str(detectedObjectCount[4]) + ' detected\n'
 
-        # statisticsResultDialog = QtWidgets.QMessageBox(self, self.tr('Statistic result'), self.tr(statisticsResultToShow), QtWidgets.QMessageBox.StandardButton.Ok, self.tab1)
-        statisticsResultMessage = QtWidgets.QMessageBox()
-        statisticsResultMessage.setWindowTitle(self.tr('Statistic result'))
-        statisticsResultMessage.setText(self.tr('DOMINANT OBJECT: ' + dominantObject.upper()))
-        statisticsResultMessage.setInformativeText(self.tr(statisticsResultToShow))
-        statisticsResultMessage.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
-        statisticsResultMessage.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
+        # show statistics data in main window
+        self.tab1_statistics_data_label.setText(QtCore.QCoreApplication.translate("MainWindow", statisticsDataToShow.replace('detected\n', 'detected')))
 
-        statisticsResultMessage.exec()
+        # show pictures
+        left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
+        left_pixmap = left_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        self.tab1_left_picture.setPixmap(left_pixmap)
+        right_pixmap = QtGui.QPixmap(self.detectedPictureAddresses[self.navigateCount])
+        right_pixmap = right_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        self.tab1_right_picture.setPixmap(right_pixmap)
+
+        statisticsDataMessage = QtWidgets.QMessageBox()
+        statisticsDataMessage.setWindowTitle(self.tr('Statistic result'))
+        statisticsDataMessage.setText(self.tr('DOMINANT OBJECT: ' + dominantObject.upper()))
+        statisticsDataMessage.setInformativeText(self.tr(statisticsDataToShow))
+        statisticsDataMessage.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
+        statisticsDataMessage.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
+
+        statisticsDataMessage.exec()
+
+        self.tab1_left_picture_navigate_button.setEnabled(True)
+        self.tab1_right_picture_navigate_button.setEnabled(True)
+
+        print(self.tab1_statistics_data_label.geometry())
 
         self.tab1_state.setText(self.tr('Ready'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         return
 
 
+    def on_tab1_left_picutre_navigate_button_Clicked(self):
+        if self.navigateCount == 0:
+            return
+        else:
+            self.navigateCount = self.navigateCount - 1
+            left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
+            left_pixmap = left_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+            self.tab1_left_picture.setPixmap(left_pixmap)
+            right_pixmap = QtGui.QPixmap(self.detectedPictureAddresses[self.navigateCount])
+            right_pixmap = right_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+            self.tab1_right_picture.setPixmap(right_pixmap)
+        return
+            
 
+    def on_tab1_right_picutre_navigate_button_Clicked(self):
+        if self.navigateCount == len(self.detectedPictureAddresses) - 1:
+            return
+        else:
+            self.navigateCount = self.navigateCount + 1
+            left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
+            left_pixmap = left_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+            self.tab1_left_picture.setPixmap(left_pixmap)
+            right_pixmap = QtGui.QPixmap(self.detectedPictureAddresses[self.navigateCount])
+            right_pixmap = right_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+            self.tab1_right_picture.setPixmap(right_pixmap)
+        return
 
 
 if __name__ == "__main__":
