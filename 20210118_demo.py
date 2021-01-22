@@ -276,7 +276,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # variables for showing pictures
         self.navigateCount = 0
         self.originalPictureAddresses = []
-        self.detectedPictureAddresses = []
+        self.detectionOutputPath = ''
 
 
     def tr(self, text):
@@ -287,7 +287,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         source = QtWidgets.QFileDialog.getExistingDirectory(self, self.tr('Open directory'), '/home/mmnlab/')
         if source:
             self.tab1_picture_path_lineEdit.setText(source)
-            self.tab1_picture_path = source
+            self.tab1_picture_path = source + '/'
             self.tab1_state.setText(self.tr('Selected directory: ' + source))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         elif source == '':
@@ -298,54 +298,42 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def on_tab1_test_button_Clicked(self):
+        # protection
         if self.tab1_picture_path == '':
             print("No directory selected")
             self.tab1_state.setText(self.tr('No directory selected'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
             return
-        
-        # collecting paths to all the pictures waiting to run detection
-        self.tab1_state.setText(self.tr('Collecting paths'))
-        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-        for f in os.listdir(self.tab1_picture_path):
-            if (f.lower().__contains__('.jpg')):
-                self.originalPictureAddresses.append(self.tab1_picture_path + '/' + f)
-            elif (f.lower().__contains__('.jpeg')):
-                self.originalPictureAddresses.append(self.tab1_picture_path + '/' + f)
-            elif (f.lower().__contains__('.png')):
-                self.originalPictureAddresses.append(self.tab1_picture_path + '/' + f)
-        
-        self.originalPictureAddresses.sort()
 
-        # make directory to store detected samples and detection log
-        detectionOutputPath = os.path.abspath('.') + '/detection_output/'
-        if os.path.isdir(detectionOutputPath) is False:
-            os.mkdir(detectionOutputPath)
-            self.tab1_state.setText(self.tr('Created directory: ' + detectionOutputPath))
+        # create directory to store detected samples and detection log
+        self.detectionOutputPath = os.path.abspath('.') + '/detection_output/'
+        if os.path.isdir(self.detectionOutputPath) is False:
+            os.mkdir(self.detectionOutputPath)
+            self.tab1_state.setText(self.tr('Directory: ' + self.detectionOutputPath + ' created'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         else:
-            self.tab1_state.setText(self.tr('Directory: ' + detectionOutputPath + ' already existed'))
+            self.tab1_state.setText(self.tr('Directory: ' + self.detectionOutputPath + ' already existed'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         date = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
         resultDirectoryName = date.replace('/', '').replace(':', '').replace(' ', '_')
-        
-        detectionOutputPath = detectionOutputPath + resultDirectoryName + '/'
-        os.mkdir(detectionOutputPath)
+        self.detectionOutputPath = self.detectionOutputPath + resultDirectoryName + '/'
+        os.mkdir(self.detectionOutputPath)
 
-        self.tab1_state.setText(self.tr('Created directory: ' + detectionOutputPath))
+        self.tab1_state.setText(self.tr('Created directory: ' + self.detectionOutputPath))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # create empty detection log file
         commands = ['touch',
-                    detectionOutputPath + 'detection_results.json']
+                    self.detectionOutputPath + 'detection_results.json']
         os.system(' '.join(commands))
 
         self.tab1_state.setText(self.tr('Detection log file created'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+        
         # create empty statistics log file
         commands = ['touch',
-                    detectionOutputPath + 'statistics.json']
+                    self.detectionOutputPath + 'statistics.json']
         os.system(' '.join(commands))
 
         self.tab1_state.setText(self.tr('Statistics log file created'))
@@ -359,24 +347,29 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     'data/obj.data',
                     'cfg/yolov4-custom.cfg',
                     'weights/20200509_20000iterations_random0_sub32_wh480/yolov4-custom_20000.weights',
-                    'io_folder ' + self.tab1_picture_path + '/',
-                    detectionOutputPath,
-                    '-out ' + detectionOutputPath + '/detection_results.json',
+                    'io_folder ' + self.tab1_picture_path,
+                    self.detectionOutputPath,
+                    '-out ' + self.detectionOutputPath + 'detection_results.json',
                     '-dont_show']
         os.system(' '.join(commands))
+        
         self.tab1_state.setText(self.tr('Detection finished'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
-        # collecting paths to all the detected pictures
-        for f in os.listdir(detectionOutputPath):
+        # collecting paths to all the pictures waiting to run detection
+        self.originalPictureAddresses = []
+
+        self.tab1_state.setText(self.tr('Collecting paths'))
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+        for f in os.listdir(self.tab1_picture_path):
             if (f.lower().__contains__('.jpg')):
-                self.detectedPictureAddresses.append(detectionOutputPath + '/' + f)
+                self.originalPictureAddresses.append(self.tab1_picture_path + f)
             elif (f.lower().__contains__('.jpeg')):
-                self.detectedPictureAddresses.append(detectionOutputPath + '/' + f)
+                self.originalPictureAddresses.append(self.tab1_picture_path + f)
             elif (f.lower().__contains__('.png')):
-                self.detectedPictureAddresses.append(detectionOutputPath + '/' + f)
+                self.originalPictureAddresses.append(self.tab1_picture_path + f)
         
-        self.detectedPictureAddresses.sort()
+        self.originalPictureAddresses.sort()
 
         # statistics data
         self.tab1_state.setText(self.tr('Generating statistics data'))
@@ -384,7 +377,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         detectedObjectCount = [0, 0, 0, 0, 0]
 
-        f = open(detectionOutputPath + 'detection_results.json')
+        f = open(self.detectionOutputPath + 'detection_results.json')
         openedResult = json.load(f)
         for r in openedResult:
             for o in r['objects']:
@@ -419,13 +412,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         statisticsDictionary = {
             "time": date,
-            "detection_output_path": detectionOutputPath,
+            "detection_output_path": self.detectionOutputPath,
             "detected_directory": self.tab1_picture_path,
             "dominant_object": dominantObject,
             "objects_count": {"egg": detectedObjectCount[0], "larval_before": detectedObjectCount[1], "larval_after": detectedObjectCount[2], "juvenile": detectedObjectCount[3], "tessaratoma": detectedObjectCount[4]}
         }
 
-        with open(detectionOutputPath + 'statistics.json', 'w') as outfile:
+        with open(self.detectionOutputPath + 'statistics.json', 'w') as outfile:
             outfile.write(json.dumps(statisticsDictionary, indent=4))
         
         self.tab1_state.setText(self.tr('Statistics data saved successfully'))
@@ -448,7 +441,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
         left_pixmap = left_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         self.tab1_left_picture.setPixmap(left_pixmap)
-        right_pixmap = QtGui.QPixmap(self.detectedPictureAddresses[self.navigateCount])
+        right_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount].replace(self.tab1_picture_path, self.detectionOutputPath))
         right_pixmap = right_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         self.tab1_right_picture.setPixmap(right_pixmap)
 
@@ -479,21 +472,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
             left_pixmap = left_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
             self.tab1_left_picture.setPixmap(left_pixmap)
-            right_pixmap = QtGui.QPixmap(self.detectedPictureAddresses[self.navigateCount])
+            right_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount].replace(self.tab1_picture_path, self.detectionOutputPath))
             right_pixmap = right_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
             self.tab1_right_picture.setPixmap(right_pixmap)
         return
             
 
     def on_tab1_right_picutre_navigate_button_Clicked(self):
-        if self.navigateCount == len(self.detectedPictureAddresses) - 1:
+        if self.navigateCount == len(self.originalPictureAddresses) - 1:
             return
         else:
             self.navigateCount = self.navigateCount + 1
             left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
             left_pixmap = left_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
             self.tab1_left_picture.setPixmap(left_pixmap)
-            right_pixmap = QtGui.QPixmap(self.detectedPictureAddresses[self.navigateCount])
+            right_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount].replace(self.tab1_picture_path, self.detectionOutputPath))
             right_pixmap = right_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
             self.tab1_right_picture.setPixmap(right_pixmap)
         return
