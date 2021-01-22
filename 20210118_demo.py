@@ -16,7 +16,7 @@ import os
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(960, 720)
+        MainWindow.resize(1280, 800)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -32,7 +32,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow) # parent is MainWindow
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget) # parent is centralWidget
-        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 960, 720))
+        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1280, 800))
         self.tabWidget.setObjectName("tabWidget")
         self.tab1 = QtWidgets.QWidget() # declaration for tab, no inheritance needed
         self.tab1.setObjectName("tab1")
@@ -46,7 +46,7 @@ class Ui_MainWindow(object):
         
         # Button for selecting picture
         self.tab1_picture_button = QtWidgets.QPushButton(self.tab1)  # parent is tab, which declares at line 26
-        self.tab1_picture_button.setFixedWidth(120)
+        self.tab1_picture_button.setFixedWidth(140)
         self.tab1_picture_button.setMouseTracking(True)
         self.tab1_picture_button.setObjectName("tab1_picture_button")
 
@@ -84,17 +84,23 @@ class Ui_MainWindow(object):
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
         self.gridLayout.setObjectName("gridLayout")
         '''
+        palette = QtGui.QPalette()
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Button, brush)
+
         self.tab1_left_picture = QtWidgets.QLabel(self.tab1)
         self.tab1_left_picture.setObjectName("tab1_left_picture")
-        self.tab1_left_picture.setFixedHeight(400)
-        self.tab1_left_picture.setFixedWidth(420)
+        self.tab1_left_picture.setFixedHeight(480)
+        self.tab1_left_picture.setFixedWidth(560)
         #self.gridLayout.addWidget(self.tab1_left_picture, 0, 0, 1, 1)
         self.tab1_left_picture_navigate_button = QtWidgets.QPushButton(self.tab1)
         self.tab1_left_picture_navigate_button.setEnabled(False)
         self.tab1_left_picture_navigate_button.setMouseTracking(True)
         self.tab1_left_picture_navigate_button.setFixedWidth(51)
-        self.tab1_left_picture_navigate_button.setFixedHeight(400)
+        self.tab1_left_picture_navigate_button.setFixedHeight(480)
         self.tab1_left_picture_navigate_button.setObjectName("tab1_left_picture_navigate_button")
+        self.tab1_left_picture_navigate_button.setPalette(palette)
         
         # Right grid for detected picture
         '''
@@ -107,15 +113,16 @@ class Ui_MainWindow(object):
         '''
         self.tab1_right_picture = QtWidgets.QLabel(self.tab1)
         self.tab1_right_picture.setObjectName("tab1_right_picture")
-        self.tab1_right_picture.setFixedHeight(400)
-        self.tab1_right_picture.setFixedWidth(420)
+        self.tab1_right_picture.setFixedHeight(480)
+        self.tab1_right_picture.setFixedWidth(560)
         #self.gridLayout_2.addWidget(self.tab1_right_picture, 0, 0, 1, 1)
         self.tab1_right_picture_navigate_button = QtWidgets.QPushButton(self.tab1)
         self.tab1_right_picture_navigate_button.setEnabled(False)
         self.tab1_right_picture_navigate_button.setMouseTracking(True)
         self.tab1_right_picture_navigate_button.setFixedWidth(51)
-        self.tab1_right_picture_navigate_button.setFixedHeight(400)
+        self.tab1_right_picture_navigate_button.setFixedHeight(480)
         self.tab1_right_picture_navigate_button.setObjectName("tab1_right_picture_navigate_button")
+        self.tab1_right_picture_navigate_button.setPalette(palette)
 
         self.tab1_picture_navigate_button_font = QtGui.QFont()
         self.tab1_picture_navigate_button_font.setPointSize(14)
@@ -273,6 +280,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_left_picture_navigate_button.clicked.connect(self.on_tab1_left_picutre_navigate_button_Clicked)
         self.tab1_right_picture_navigate_button.clicked.connect(self.on_tab1_right_picutre_navigate_button_Clicked)
 
+        # variables for line edit style
+        self.lineEditOriginalStyle = self.tab1_picture_path_lineEdit.styleSheet()
+
         # variables for showing pictures
         self.navigateCount = 0
         self.originalPictureAddresses = []
@@ -288,10 +298,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if source:
             self.tab1_picture_path_lineEdit.setText(source)
             self.tab1_picture_path = source + '/'
+            self.tab1_picture_path_lineEdit.setStyleSheet(self.lineEditOriginalStyle)
             self.tab1_state.setText(self.tr('Selected directory: ' + source))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         elif source == '':
             if self.tab1_picture_path_lineEdit.text() == '':
+                self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
                 self.tab1_state.setText(self.tr('No directory selected'))
                 QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         return
@@ -300,7 +312,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def on_tab1_test_button_Clicked(self):
         # protection
         if self.tab1_picture_path == '':
-            print("No directory selected")
+            self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
             self.tab1_state.setText(self.tr('No directory selected'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
             return
@@ -438,26 +450,23 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_statistics_data_label.setText(QtCore.QCoreApplication.translate("MainWindow", statisticsDataToShow.replace('detected\n', 'detected')))
 
         # show pictures
+        self.navigateCount = 0
         left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
-        left_pixmap = left_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        left_pixmap = left_pixmap.scaled(560, 480, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         self.tab1_left_picture.setPixmap(left_pixmap)
-        right_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount].replace(self.tab1_picture_path, self.detectionOutputPath))
-        right_pixmap = right_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        right_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount].replace(self.tab1_picture_path, self.detectionOutputPath).replace('.jpeg', '.jpg').replace('.png', '.jpg'))
+        right_pixmap = right_pixmap.scaled(560, 480, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         self.tab1_right_picture.setPixmap(right_pixmap)
 
         statisticsDataMessage = QtWidgets.QMessageBox()
         statisticsDataMessage.setWindowTitle(self.tr('Statistic result'))
-        statisticsDataMessage.setText(self.tr('DOMINANT OBJECT: ' + dominantObject.upper()))
         statisticsDataMessage.setInformativeText(self.tr(statisticsDataToShow))
         statisticsDataMessage.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
         statisticsDataMessage.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
 
         statisticsDataMessage.exec()
 
-        self.tab1_left_picture_navigate_button.setEnabled(True)
         self.tab1_right_picture_navigate_button.setEnabled(True)
-
-        print(self.tab1_statistics_data_label.geometry())
 
         self.tab1_state.setText(self.tr('Ready'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -465,30 +474,38 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def on_tab1_left_picutre_navigate_button_Clicked(self):
+        self.navigateCount = self.navigateCount - 1
+        left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
+        left_pixmap = left_pixmap.scaled(560, 480, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        self.tab1_left_picture.setPixmap(left_pixmap)
+        right_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount].replace(self.tab1_picture_path, self.detectionOutputPath).replace('.jpeg', '.jpg').replace('.png', '.jpg'))
+        right_pixmap = right_pixmap.scaled(560, 480, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        self.tab1_right_picture.setPixmap(right_pixmap)
+        
         if self.navigateCount == 0:
-            return
-        else:
-            self.navigateCount = self.navigateCount - 1
-            left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
-            left_pixmap = left_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-            self.tab1_left_picture.setPixmap(left_pixmap)
-            right_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount].replace(self.tab1_picture_path, self.detectionOutputPath))
-            right_pixmap = right_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-            self.tab1_right_picture.setPixmap(right_pixmap)
+            self.tab1_left_picture_navigate_button.setEnabled(False)
+        
+        if self.tab1_right_picture_navigate_button.isEnabled() == False:
+            self.tab1_right_picture_navigate_button.setEnabled(True)
+        
         return
             
 
     def on_tab1_right_picutre_navigate_button_Clicked(self):
+        self.navigateCount = self.navigateCount + 1
+        left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
+        left_pixmap = left_pixmap.scaled(560, 480, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        self.tab1_left_picture.setPixmap(left_pixmap)
+        right_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount].replace(self.tab1_picture_path, self.detectionOutputPath).replace('.jpeg', '.jpg').replace('.png', '.jpg'))
+        right_pixmap = right_pixmap.scaled(560, 480, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        self.tab1_right_picture.setPixmap(right_pixmap)
+        
         if self.navigateCount == len(self.originalPictureAddresses) - 1:
-            return
-        else:
-            self.navigateCount = self.navigateCount + 1
-            left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
-            left_pixmap = left_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-            self.tab1_left_picture.setPixmap(left_pixmap)
-            right_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount].replace(self.tab1_picture_path, self.detectionOutputPath))
-            right_pixmap = right_pixmap.scaled(400, 400, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-            self.tab1_right_picture.setPixmap(right_pixmap)
+            self.tab1_right_picture_navigate_button.setEnabled(False)
+        
+        if self.tab1_left_picture_navigate_button.isEnabled() == False:
+            self.tab1_left_picture_navigate_button.setEnabled(True)
+                
         return
 
 
