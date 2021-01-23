@@ -304,7 +304,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         elif source == '':
             if self.tab1_picture_path_lineEdit.text() == '':
                 self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
-                self.tab1_state.setText(self.tr('No directory selected'))
+                self.tab1_state.setText(self.tr('No directory selected. Please select a directory to run the detection'))
                 QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         return
 
@@ -313,7 +313,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # protection
         if self.tab1_picture_path == '':
             self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
-            self.tab1_state.setText(self.tr('No directory selected'))
+            self.tab1_state.setText(self.tr('No directory selected. Please select a directory before running the detection'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
             return
 
@@ -351,7 +351,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_state.setText(self.tr('Statistics log file created'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
-        # run detection
+        # run the detection
         ### batch images detector (darknet) provided by vincentgong7 ###
         self.tab1_state.setText(self.tr('Detection started, please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -368,7 +368,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_state.setText(self.tr('Detection finished'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
-        # collecting paths to all the pictures waiting to run detection
+        # collecting paths to all the pictures waiting to run the detection
         self.originalPictureAddresses = []
 
         self.tab1_state.setText(self.tr('Collecting paths'))
