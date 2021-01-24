@@ -46,6 +46,7 @@ class Ui_MainWindow(object):
 
         # ComboBox for selecting orchard
         self.tab1_orchard_comboBox = QtWidgets.QComboBox(self.tab1)
+        self.tab1_orchard_comboBox.setObjectName('tab1_orchard_comboBox')
         self.tab1_orchard_comboBox.addItem('Orchard 1')
         self.tab1_orchard_comboBox.addItem('Orchard 2')
         self.tab1_orchard_comboBox.addItem('Orchard 3')
@@ -69,8 +70,8 @@ class Ui_MainWindow(object):
         self.tab1_picture_path = ''
         
         # Running state
-        self.tab1_state = QtWidgets.QLabel(self.tab1)
-        self.tab1_state.setObjectName("tab1_state")
+        self.tab1_state_label = QtWidgets.QLabel(self.tab1)
+        self.tab1_state_label.setObjectName("tab1_state_label")
 
         # Button for performing the test
         self.tab1_test_button = QtWidgets.QPushButton(self.tab1)  # parent is tab
@@ -162,7 +163,7 @@ class Ui_MainWindow(object):
 
         # detection widget
         self.tab1_test_widget_layout.addWidget(self.tab1_test_button)
-        self.tab1_test_widget_layout.addWidget(self.tab1_state)
+        self.tab1_test_widget_layout.addWidget(self.tab1_state_label)
 
         # statistics data widget
         self.tab1_statistics_data_widget_layout.addWidget(self.tab1_statistics_data_label)
@@ -187,44 +188,55 @@ class Ui_MainWindow(object):
         
         # Add tab1 and things above into the tabWidget
         self.tabWidget.addTab(self.tab1, "")
-        '''
+        
+
         # Tab2 - records
-        self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("tab_2")
+        self.tab2 = QtWidgets.QWidget()
+        self.tab2.setObjectName("tab2")
         
-        # Seperate line for buttons and pictures
-        self.tab2_line = QtWidgets.QFrame(self.tab_2)
-        self.tab2_line.setGeometry(QtCore.QRect(0, 40, 461, 16))
-        self.tab2_line.setFrameShape(QtWidgets.QFrame.HLine)
-        self.tab2_line.setFrameShadow(QtWidgets.QFrame.Sunken)
-        self.tab2_line.setObjectName("tab2_line")
+        # Instructions for selecting orchard
+        self.tab2_orchard_label = QtWidgets.QLabel(self.tab2)
+        self.tab2_orchard_label.setObjectName("tab2_orchard_label")
+        self.tab2_orchard_label_font = QtGui.QFont()
+        self.tab2_orchard_label_font.setPointSize(12)
+        self.tab2_orchard_label.setFont(self.tab1_orchard_label_font)
+
+        # ComboBox for selecting orchard
+        self.tab2_orchard_comboBox = QtWidgets.QComboBox(self.tab2)
+        self.tab2_orchard_comboBox.setObjectName('tab2_orchard_comboBox')
+        self.tab2_orchard_comboBox.addItem('Orchard 1')
+        self.tab2_orchard_comboBox.addItem('Orchard 2')
+        self.tab2_orchard_comboBox.addItem('Orchard 3')
+
+        # Running state
+        self.tab2_state_label = QtWidgets.QLabel(self.tab2)
+        self.tab2_state_label.setObjectName('tab2_state_label')
         
-        # Button for selecting the picture
-        self.tab2_pic_button = QtWidgets.QPushButton(self.tab_2)
-        self.tab2_pic_button.setGeometry(QtCore.QRect(20, 10, 75, 23))
-        self.tab2_pic_button.setMouseTracking(True)
-        self.tab2_pic_button.setObjectName("tab2_pic_button")
-        # Text for showing the path of the pic
-        self.tab2_pic_path = QtWidgets.QLineEdit(self.tab_2)
-        self.tab2_pic_path.setGeometry(QtCore.QRect(110, 10, 331, 21))
-        self.tab2_pic_path.setObjectName("tab2_pic_path")
-        
-        # Button for performing the transformation
-        self.tab2_transformation_button = QtWidgets.QPushButton(self.tab_2)
-        self.tab2_transformation_button.setGeometry(QtCore.QRect(190, 90, 75, 23))
-        self.tab2_transformation_button.setMouseTracking(True)
-        self.tab2_transformation_button.setObjectName("tab2_transformation_button")
-        
-        self.pushButton_5 = QtWidgets.QPushButton(self.tab_2)
-        self.pushButton_5.setGeometry(QtCore.QRect(20, 60, 75, 23))
-        self.pushButton_5.setMouseTracking(True)
-        self.pushButton_5.setObjectName("pushButton_5")
-        self.textBrowser_4 = QtWidgets.QLineEdit(self.tab_2)
-        self.textBrowser_4.setGeometry(QtCore.QRect(110, 60, 331, 21))
-        self.textBrowser_4.setObjectName("textBrowser_4")
-        '''
-        
-        #self.tabWidget.addTab(self.tab_2, "")
+        # LineEdit for showing statistics data
+        self.tab2_orchard_statistics_data_textEdit = QtWidgets.QTextEdit(self.tab2)
+        self.tab2_orchard_statistics_data_textEdit.setReadOnly(True)
+        self.tab2_orchard_statistics_data_textEdit.setObjectName('tab2_orchard_statistics_data_textEdit')
+        self.tab2_orchard_statistics_data_textEdit.setFixedHeight(640)
+
+        # nesting layout
+        self.tab2_verticalLayout = QtWidgets.QVBoxLayout(self.tab2)  # parent is tab. In order to line up widgets under self.tab1???
+        self.tab2_orchard_widget = QtWidgets.QWidget()
+        self.tab2_orchard_widget_layout = QtWidgets.QVBoxLayout(self.tab2_orchard_widget)
+
+        # orchard comboBox and lineEdit
+        self.tab2_orchard_widget_layout.addWidget(self.tab2_orchard_comboBox)
+        self.tab2_orchard_widget_layout.addWidget(self.tab2_state_label)
+        self.tab2_orchard_widget_layout.addWidget(self.tab2_orchard_statistics_data_textEdit)
+        self.tab2_orchard_widget_layout.setAlignment(QtCore.Qt.AlignTop)
+
+        # whole layout
+        self.tab2_verticalLayout.addWidget(self.tab2_orchard_label)
+        self.tab2_verticalLayout.addWidget(self.tab2_orchard_widget)
+        self.tab2_verticalLayout.setAlignment(QtCore.Qt.AlignTop)
+
+        # Add tab2 and things above into the tabWidget
+        self.tabWidget.addTab(self.tab2, "")
+
         MainWindow.setCentralWidget(self.centralwidget)
         # self.menubar = QtWidgets.QMenuBar(MainWindow)
         # self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
@@ -248,16 +260,15 @@ class Ui_MainWindow(object):
         self.tab1_picture_label.setText(_translate("MainWindow", "Click \"Browse\" to select the directory containing the pictures to detect"))
         self.tab1_picture_button.setText(_translate("MainWindow", "Browse"))
         self.tab1_test_button.setText(_translate("MainWindow", "DETECT"))
-        self.tab1_state.setText(_translate("MainWindow", "Ready"))
+        self.tab1_state_label.setText(_translate("MainWindow", "Ready"))
         self.tab1_left_picture_navigate_button.setText(_translate("MainWindow", "<"))
         self.tab1_right_picture_navigate_button.setText(_translate("MainWindow", ">"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), _translate("MainWindow", "Detection"))
         
         # tab 2
-        #self.tab2_pic_button.setText(_translate("MainWindow", "Select PIC"))
-        #self.tab2_transformation_button.setText(_translate("MainWindow", "Transform!"))
-        #self.pushButton_5.setText(_translate("MainWindow", "Mode"))
-        #self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Data Augmentation Demo"))
+        self.tab2_orchard_label.setText(_translate("MainWindow", "Select the orchard"))
+        self.tab2_state_label.setText(_translate("MainWindow", "Ready"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab2), _translate("MainWindow", "Statistics data"))
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -267,10 +278,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # Initialize UI
         self.setupUi(self)
         # Signal Setting
-        self.tab1_picture_button.clicked.connect(self.on_tab1_picture_button_Clicked)
-        self.tab1_test_button.clicked.connect(self.on_tab1_test_button_Clicked)
-        self.tab1_left_picture_navigate_button.clicked.connect(self.on_tab1_left_picutre_navigate_button_Clicked)
-        self.tab1_right_picture_navigate_button.clicked.connect(self.on_tab1_right_picutre_navigate_button_Clicked)
+        self.tabWidget.currentChanged['int'].connect(self.on_tabWidget_changed)
+
+        self.tab1_picture_button.clicked.connect(self.on_tab1_picture_button_clicked)
+        self.tab1_test_button.clicked.connect(self.on_tab1_test_button_clicked)
+        self.tab1_left_picture_navigate_button.clicked.connect(self.on_tab1_left_picutre_navigate_button_clicked)
+        self.tab1_right_picture_navigate_button.clicked.connect(self.on_tab1_right_picutre_navigate_button_clicked)
+        
+        self.tab2_orchard_comboBox.currentIndexChanged.connect(self.on_tab2_comboBox_changed)
 
         # variables for line edit style
         self.lineEditOriginalStyle = self.tab1_picture_path_lineEdit.styleSheet()
@@ -281,31 +296,84 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.detectionOutputPath = ''
 
 
+    def on_tabWidget_changed(self, index):
+        if index == 0:
+            self.tab1_state_label.setText(self.tr('Ready'))
+        elif index == 1:
+            self.tab2_orchard_statistics_data_textEdit.clear()
+
+            self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
+            QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+
+            orchardName = self.tab2_orchard_comboBox.currentText().replace(' ', '_')
+            detectionOutputPath = os.path.abspath('.') + '/detection_output'
+            
+            if os.path.exists(detectionOutputPath) is False:
+                self.tab2_orchard_statistics_data_textEdit.append(self.tr('No data to show'))
+                self.tab2_state_label.setText(self.tr('Ready'))
+                QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+                return
+
+            detectionOutputs = os.listdir(detectionOutputPath)
+            detectionOutputs.sort(reverse=True)
+
+            statisticsDataAppended = 0
+            for f in detectionOutputs:
+                if (f.__contains__(orchardName)):
+                    statisticsDataAppended = 1
+                    f = open(detectionOutputPath + '/' + f + '/statistics.json')
+                    openedStatisticsData = json.load(f)
+
+                    self.tab2_orchard_statistics_data_textEdit.append(self.tr(
+                                 'Time: ' + openedStatisticsData['time'] + '\n' + \
+                                 'Orchard: ' + openedStatisticsData['orchard'] + '\n' + \
+                                 'DOMINANT OBJECT: ' + openedStatisticsData['dominant_object'].upper() + '\n' + \
+                                 'Object count: ' + '\n' + \
+                                 '    ' + 'egg: ' + str(openedStatisticsData['objects_count']['egg']) + ' detected\n' + \
+                                 '    ' + 'larval_before: ' + str(openedStatisticsData['objects_count']['larval_before']) + ' detected\n' + \
+                                 '    ' + 'larval_after: ' + str(openedStatisticsData['objects_count']['larval_after']) + ' detected\n' + \
+                                 '    ' + 'juvenile: ' + str(openedStatisticsData['objects_count']['juvenile']) + ' detected\n' + \
+                                 '    ' + 'tessaratoma: ' + str(openedStatisticsData['objects_count']['tessaratoma']) + ' detected\n' + \
+                                 '--------------------\n'
+                    ))
+                    f.close()
+            
+            self.tab2_orchard_statistics_data_textEdit.verticalScrollBar().setValue(0)
+
+            if statisticsDataAppended == 0:
+                self.tab2_orchard_statistics_data_textEdit.append(self.tr('No data to show'))
+            
+            self.tab2_state_label.setText(self.tr('Ready'))
+            QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+            
+        return
+
+    
     def tr(self, text):
         return QtCore.QObject.tr(self, text)
 
 
-    def on_tab1_picture_button_Clicked(self):
+    def on_tab1_picture_button_clicked(self):
         source = QtWidgets.QFileDialog.getExistingDirectory(self, self.tr('Open directory'), '/home/mmnlab/')
         if source:
             self.tab1_picture_path_lineEdit.setText(source)
             self.tab1_picture_path = source + '/'
             self.tab1_picture_path_lineEdit.setStyleSheet(self.lineEditOriginalStyle)
-            self.tab1_state.setText(self.tr('Selected directory: ' + source))
+            self.tab1_state_label.setText(self.tr('Selected directory: ' + source))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         elif source == '':
             if self.tab1_picture_path_lineEdit.text() == '':
                 self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
-                self.tab1_state.setText(self.tr('No directory selected. Please select a directory to run the detection'))
+                self.tab1_state_label.setText(self.tr('No directory selected. Please select a directory to run the detection'))
                 QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         return
 
 
-    def on_tab1_test_button_Clicked(self):
+    def on_tab1_test_button_clicked(self):
         # protection
         if self.tab1_picture_path == '':
             self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
-            self.tab1_state.setText(self.tr('No directory selected. Please select a directory before running the detection'))
+            self.tab1_state_label.setText(self.tr('No directory selected. Please select a directory before running the detection'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
             return
 
@@ -313,10 +381,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.detectionOutputPath = os.path.abspath('.') + '/detection_output/'
         if os.path.isdir(self.detectionOutputPath) is False:
             os.mkdir(self.detectionOutputPath)
-            self.tab1_state.setText(self.tr('Directory: ' + self.detectionOutputPath + ' created'))
+            self.tab1_state_label.setText(self.tr('Directory: ' + self.detectionOutputPath + ' created'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         else:
-            self.tab1_state.setText(self.tr('Directory: ' + self.detectionOutputPath + ' already existed'))
+            self.tab1_state_label.setText(self.tr('Directory: ' + self.detectionOutputPath + ' already existed'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         date = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
@@ -324,7 +392,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.detectionOutputPath = self.detectionOutputPath + resultDirectoryName + '/'
         os.mkdir(self.detectionOutputPath)
 
-        self.tab1_state.setText(self.tr('Created directory: ' + self.detectionOutputPath))
+        self.tab1_state_label.setText(self.tr('Created directory: ' + self.detectionOutputPath))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # create empty detection log file
@@ -332,7 +400,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.detectionOutputPath + 'detection_results.json']
         os.system(' '.join(commands))
 
-        self.tab1_state.setText(self.tr('Detection log file created'))
+        self.tab1_state_label.setText(self.tr('Detection log file created'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         # create empty statistics log file
@@ -340,12 +408,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.detectionOutputPath + 'statistics.json']
         os.system(' '.join(commands))
 
-        self.tab1_state.setText(self.tr('Statistics log file created'))
+        self.tab1_state_label.setText(self.tr('Statistics log file created'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # run the detection
         ### batch images detector (darknet) provided by vincentgong7 ###
-        self.tab1_state.setText(self.tr('Detection started, please wait...'))
+        self.tab1_state_label.setText(self.tr('Detection started, please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         commands = ['./darknet detector batch',
                     'data/obj.data',
@@ -357,13 +425,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     '-dont_show']
         os.system(' '.join(commands))
         
-        self.tab1_state.setText(self.tr('Detection finished'))
+        self.tab1_state_label.setText(self.tr('Detection finished'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # collecting paths to all the pictures waiting to run the detection
         self.originalPictureAddresses = []
 
-        self.tab1_state.setText(self.tr('Collecting paths'))
+        self.tab1_state_label.setText(self.tr('Collecting paths'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         for f in os.listdir(self.tab1_picture_path):
             if (f.lower().__contains__('.jpg')):
@@ -376,7 +444,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.originalPictureAddresses.sort()
 
         # statistics data
-        self.tab1_state.setText(self.tr('Generating statistics data'))
+        self.tab1_state_label.setText(self.tr('Generating statistics data'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         detectedObjectCount = [0, 0, 0, 0, 0]
@@ -426,7 +494,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         with open(self.detectionOutputPath + 'statistics.json', 'w') as outfile:
             outfile.write(json.dumps(statisticsDictionary, indent=4))
         
-        self.tab1_state.setText(self.tr('Statistics data saved successfully'))
+        self.tab1_state_label.setText(self.tr('Statistics data saved successfully'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # show statistics data in message box
@@ -462,12 +530,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.tab1_right_picture_navigate_button.setEnabled(True)
 
-        self.tab1_state.setText(self.tr('Ready'))
+        self.tab1_state_label.setText(self.tr('Ready'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         return
 
 
-    def on_tab1_left_picutre_navigate_button_Clicked(self):
+    def on_tab1_left_picutre_navigate_button_clicked(self):
         self.navigateCount = self.navigateCount - 1
         left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
         left_pixmap = left_pixmap.scaled(560, 416, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
@@ -485,7 +553,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return
             
 
-    def on_tab1_right_picutre_navigate_button_Clicked(self):
+    def on_tab1_right_picutre_navigate_button_clicked(self):
         self.navigateCount = self.navigateCount + 1
         left_pixmap = QtGui.QPixmap(self.originalPictureAddresses[self.navigateCount])
         left_pixmap = left_pixmap.scaled(560, 416, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
@@ -501,6 +569,57 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tab1_left_picture_navigate_button.setEnabled(True)
                 
         return
+
+    
+    def on_tab2_comboBox_changed(self):
+        self.tab2_orchard_statistics_data_textEdit.clear()
+
+        self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+
+        orchardName = self.tab2_orchard_comboBox.currentText().replace(' ', '_')
+        detectionOutputPath = os.path.abspath('.') + '/detection_output'
+        
+        if os.path.exists(detectionOutputPath) is False:
+            self.tab2_orchard_statistics_data_textEdit.append(self.tr('No data to show'))
+            self.tab2_state_label.setText(self.tr('Ready'))
+            QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+            return
+
+        detectionOutputs = os.listdir(detectionOutputPath)
+        detectionOutputs.sort(reverse=True)
+
+        statisticsDataAppended = 0
+        for f in detectionOutputs:
+            if (f.__contains__(orchardName)):
+                statisticsDataAppended = 1
+                f = open(os.path.abspath('.') + '/detection_output/' + f + '/statistics.json')
+                openedStatisticsData = json.load(f)
+
+                self.tab2_orchard_statistics_data_textEdit.append(self.tr(
+                                'Time: ' + openedStatisticsData['time'] + '\n' + \
+                                'Orchard: ' + openedStatisticsData['orchard'] + '\n' + \
+                                'DOMINANT OBJECT: ' + openedStatisticsData['dominant_object'].upper() + '\n' + \
+                                'Object count: ' + '\n' + \
+                                '    ' + 'egg: ' + str(openedStatisticsData['objects_count']['egg']) + ' detected\n' + \
+                                '    ' + 'larval_before: ' + str(openedStatisticsData['objects_count']['larval_before']) + ' detected\n' + \
+                                '    ' + 'larval_after: ' + str(openedStatisticsData['objects_count']['larval_after']) + ' detected\n' + \
+                                '    ' + 'juvenile: ' + str(openedStatisticsData['objects_count']['juvenile']) + ' detected\n' + \
+                                '    ' + 'tessaratoma: ' + str(openedStatisticsData['objects_count']['tessaratoma']) + ' detected\n' + \
+                                '--------------------\n'
+                ))
+                f.close()
+
+        self.tab2_orchard_statistics_data_textEdit.verticalScrollBar().setValue(0)
+
+        if statisticsDataAppended == 0:
+            self.tab2_orchard_statistics_data_textEdit.append(self.tr('No data to show'))
+
+        self.tab2_state_label.setText(self.tr('Ready'))
+        QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
+        
+        return
+        
 
 
 if __name__ == "__main__":
