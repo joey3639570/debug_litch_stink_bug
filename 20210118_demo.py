@@ -48,9 +48,11 @@ class Ui_MainWindow(object):
         # ComboBox for selecting orchard
         self.tab1_orchard_comboBox = QtWidgets.QComboBox(self.tab1)
         self.tab1_orchard_comboBox.setObjectName('tab1_orchard_comboBox')
+        self.tab1_orchard_comboBox.setPlaceholderText('--Select orchard--')
         self.tab1_orchard_comboBox.addItem('Orchard 1')
         self.tab1_orchard_comboBox.addItem('Orchard 2')
         self.tab1_orchard_comboBox.addItem('Orchard 3')
+        self.tab1_orchard_comboBox.setCurrentIndex(-1)
         
         # Instructions for selecting picture
         self.tab1_picture_instruction_label = QtWidgets.QLabel(self.tab1)
@@ -224,9 +226,11 @@ class Ui_MainWindow(object):
         # ComboBox for selecting orchard
         self.tab2_orchard_comboBox = QtWidgets.QComboBox(self.tab2)
         self.tab2_orchard_comboBox.setObjectName('tab2_orchard_comboBox')
+        # self.tab2_orchard_comboBox.setPlaceholderText('--Select orchard--')
         self.tab2_orchard_comboBox.addItem('Orchard 1')
         self.tab2_orchard_comboBox.addItem('Orchard 2')
         self.tab2_orchard_comboBox.addItem('Orchard 3')
+        # self.tab2_orchard_comboBox.setCurrentIndex(-1)
 
         # Running state
         self.tab2_state_label = QtWidgets.QLabel(self.tab2)
@@ -398,7 +402,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "Tessaratoma Recognition"))
 
         # tab 1
-        self.tab1_orchard_instruction_label.setText(_translate("MainWindow", "1. Select the orchard"))
+        self.tab1_orchard_instruction_label.setText(_translate("MainWindow", "1. Select orchard"))
         self.tab1_picture_instruction_label.setText(_translate("MainWindow", "2. Click \"Browse\" to select the directory containing the pictures to detect"))
         self.tab1_picture_button.setText(_translate("MainWindow", "Browse"))
         self.tab1_test_button.setText(_translate("MainWindow", "DETECT"))
@@ -408,7 +412,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), _translate("MainWindow", "Detection"))
         
         # tab 2
-        self.tab2_orchard_instruction_label.setText(_translate("MainWindow", "1. Select the orchard"))
+        self.tab2_orchard_instruction_label.setText(_translate("MainWindow", "1. Select orchard"))
         self.tab2_state_label.setText(_translate("MainWindow", "Ready"))
         self.tab2_date_instruction_label.setText(_translate("MainWindow", "2. Select the date"))
         self.tab2_left_date_navigate_button.setText(_translate("MainWindow", "<"))
@@ -445,6 +449,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabWidget.currentChanged['int'].connect(self.on_tabWidget_changed)
 
         # tab1
+        self.tab1_orchard_comboBox.currentIndexChanged.connect(self.on_tab1_comboBox_changed)
         self.tab1_picture_button.clicked.connect(self.on_tab1_picture_button_clicked)
         self.tab1_test_button.clicked.connect(self.on_tab1_test_button_clicked)
         self.tab1_left_picture_navigate_button.clicked.connect(self.on_tab1_left_picutre_navigate_button_clicked)
@@ -475,6 +480,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         rightPicture.setPixmap(rightPixmap)
 
         return
+    
+
+    def collect_original_picutre_addresses(self, detectedDirectory, originalPictureAddresses):
+        for f in os.listdir(detectedDirectory):
+            if (f.lower().__contains__('.jpg')):
+                originalPictureAddresses.append(detectedDirectory + f)
+            elif (f.lower().__contains__('.jpeg')):
+                originalPictureAddresses.append(detectedDirectory + f)
+            elif (f.lower().__contains__('.png')):
+                originalPictureAddresses.append(detectedDirectory + f)
+        
+        originalPictureAddresses.sort()
+
+        return
 
 
     # functions for tabWidget
@@ -497,13 +516,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tab2_left_date_navigate_button.setEnabled(False)
             self.tab2_right_date_navigate_button.setEnabled(False)
             self.tab2_dateNavigateCount = 0
+            self.tab2_pictureNavigateCount = 0
             self.tab2_detectionOutputPaths = []
+            self.tab2_originalPictureAddresses = []
 
             self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
             
             # collect detection records of selected orchard
-            collect_output_paths_return = self.tab2_collect_output_paths()
+            collect_output_paths_return = self.tab2_collect_output_paths_of_selected_orchard()
 
             # 1: "detection_output" directory does not exist, 2: there isn't any detection records for selected orchard
             if collect_output_paths_return == 1:
@@ -521,6 +542,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
             self.tab2_originalPictureDirectoryPath = openedStatisticalData['detected_directory']
             
+            self.collect_original_picutre_addresses(self.tab2_originalPictureDirectoryPath, self.tab2_originalPictureAddresses)
             self.tab2_update_statistical_data(openedStatisticalData)
 
             self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
@@ -539,6 +561,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tab2_state_label.setText(self.tr('Ready'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
             
+        return
+
+    
+    def on_tab1_comboBox_changed(self):
+        if self.tab1_picture_path_lineEdit.text() != '':
+            self.tab1_test_button.setEnabled(True)
+        
         return
 
 
@@ -561,7 +590,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 self.tab1_picture_instruction_label.setText(self.tr('2. Click \"Browse\" to select the directory containing the pictures to detect'))
                 self.tab1_picture_instruction_label.setStyleSheet("color: black;")
                 self.tab1_picture_path_lineEdit.setStyleSheet(self.lineEditOriginalStyle)
-                self.tab1_test_button.setEnabled(True)
+                if self.tab1_orchard_comboBox.currentIndex() == -1:
+                    self.tab1_orchard_instruction_label.setStyleSheet("color: red;")
+                    self.tab1_test_button.setEnabled(False)
+                else:
+                    self.tab1_orchard_instruction_label.setStyleSheet("color: black;")
+                    self.tab1_test_button.setEnabled(True)
 
             self.tab1_state_label.setText(self.tr('Selected directory: ' + source))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -579,7 +613,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def on_tab1_test_button_clicked(self):
-        # protection for there's no directy selected
+        # protection for the situation that there's no directy selected
         if self.tab1_picture_path == '':
             # prompt when no directory is selected
             self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
@@ -608,7 +642,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_pictureNavigateCount = 0
         self.tab1_originalPictureAddresses = []
 
-        # protection for there isn't any picture in the directory
+        # protection for the situation that there isn't any picture in the directory
         if len(os.listdir(self.tab1_originalPictureDirectoryPath)) == 0:
             self.tab1_orchard_comboBox.setEnabled(True)
             self.tab1_picture_button.setEnabled(True)
@@ -672,15 +706,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # collecting paths to all the pictures waiting to run the detection
         self.tab1_state_label.setText(self.tr('Collecting paths'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-        for f in os.listdir(self.tab1_originalPictureDirectoryPath):
-            if (f.lower().__contains__('.jpg')):
-                self.tab1_originalPictureAddresses.append(self.tab1_originalPictureDirectoryPath + f)
-            elif (f.lower().__contains__('.jpeg')):
-                self.tab1_originalPictureAddresses.append(self.tab1_originalPictureDirectoryPath + f)
-            elif (f.lower().__contains__('.png')):
-                self.tab1_originalPictureAddresses.append(self.tab1_originalPictureDirectoryPath + f)
-        
-        self.tab1_originalPictureAddresses.sort()
+        self.collect_original_picutre_addresses(self.tab1_originalPictureDirectoryPath, self.tab1_originalPictureAddresses)
 
         self.tab1_state_label.setText(self.tr('Paths collected'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -840,13 +866,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_left_date_navigate_button.setEnabled(False)
         self.tab2_right_date_navigate_button.setEnabled(False)
         self.tab2_dateNavigateCount = 0
+        self.tab2_pictureNavigateCount = 0
         self.tab2_detectionOutputPaths = []
+        self.tab2_originalPictureAddresses = []
 
         self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         # collect detection records of selected orchard
-        collect_output_paths_return = self.tab2_collect_output_paths()
+        collect_output_paths_return = self.tab2_collect_output_paths_of_selected_orchard()
 
         # 1: "detection_output" directory does not exist, 2: there isn't any detection records for selected orchard
         if collect_output_paths_return == 1:
@@ -864,6 +892,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.tab2_originalPictureDirectoryPath = openedStatisticalData['detected_directory']
 
+        self.collect_original_picutre_addresses(self.tab2_originalPictureDirectoryPath, self.tab2_originalPictureAddresses)
         self.tab2_update_statistical_data(openedStatisticalData)
 
         self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
@@ -889,6 +918,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_left_picture_navigate_button.setEnabled(False)
         self.tab2_right_picture_navigate_button.setEnabled(False)
         self.tab2_pictureNavigateCount = 0
+        self.tab2_originalPictureAddresses = []
 
         self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -902,6 +932,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.tab2_originalPictureDirectoryPath = openedStatisticalData['detected_directory']
 
+        self.collect_original_picutre_addresses(self.tab2_originalPictureDirectoryPath, self.tab2_originalPictureAddresses)
         self.tab2_update_statistical_data(openedStatisticalData)
 
         self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
@@ -929,6 +960,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_left_picture_navigate_button.setEnabled(False)
         self.tab2_right_picture_navigate_button.setEnabled(False)
         self.tab2_pictureNavigateCount = 0
+        self.tab2_originalPictureAddresses = []
 
         self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -942,6 +974,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.tab2_originalPictureDirectoryPath = openedStatisticalData['detected_directory']
 
+        self.collect_original_picutre_addresses(self.tab2_originalPictureDirectoryPath, self.tab2_originalPictureAddresses)
         self.tab2_update_statistical_data(openedStatisticalData)
 
         self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
@@ -1002,22 +1035,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     
     def tab2_update_statistical_data(self, openedStatisticalData):
-        self.tab2_originalPictureAddresses = []
-        self.tab2_pictureNavigateCount = 0
-        
         detectedObjectTotal = openedStatisticalData['objects_count']['egg'] + openedStatisticalData['objects_count']['larval_before'] + openedStatisticalData['objects_count']['larval_after'] + \
                                 openedStatisticalData['objects_count']['juvenile'] + openedStatisticalData['objects_count']['tessaratoma']
-
-        # collect paths
-        for f in os.listdir(openedStatisticalData['detected_directory']):
-            if (f.lower().__contains__('.jpg')):
-                self.tab2_originalPictureAddresses.append(openedStatisticalData['detected_directory'] + f)
-            elif (f.lower().__contains__('.jpeg')):
-                self.tab2_originalPictureAddresses.append(openedStatisticalData['detected_directory'] + f)
-            elif (f.lower().__contains__('.png')):
-                self.tab2_originalPictureAddresses.append(openedStatisticalData['detected_directory'] + f)
-        
-        self.tab2_originalPictureAddresses.sort()
 
         # update the information shown on the main window
         self.tab2_date_label.setText(self.tr(openedStatisticalData['time'] + ' , at ' + openedStatisticalData['orchard']))
@@ -1034,7 +1053,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return
     
 
-    def tab2_collect_output_paths(self):
+    def tab2_collect_output_paths_of_selected_orchard(self):
         orchardName = self.tab2_orchard_comboBox.currentText().replace(' ', '_')
         detectionOutputDirectory = os.path.abspath('.') + '/detection_output'
         
