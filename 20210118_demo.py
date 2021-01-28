@@ -38,14 +38,14 @@ class Ui_MainWindow(object):
         self.tab1 = QtWidgets.QWidget() # declaration for tab, no inheritance needed
         self.tab1.setObjectName("tab1")
 
-        # Instructions for selecting orchard
+        # Instructions for orchard selecting
         self.tab1_orchard_instruction_label = QtWidgets.QLabel(self.tab1)
         self.tab1_orchard_instruction_label.setObjectName("tab1_orchard_instruction_label")
         self.tab1_orchard_instruction_label_font = QtGui.QFont()
         self.tab1_orchard_instruction_label_font.setPointSize(12)
         self.tab1_orchard_instruction_label.setFont(self.tab1_orchard_instruction_label_font)
 
-        # ComboBox for selecting orchard
+        # ComboBox for orchard selecting
         self.tab1_orchard_comboBox = QtWidgets.QComboBox(self.tab1)
         self.tab1_orchard_comboBox.setObjectName('tab1_orchard_comboBox')
         self.tab1_orchard_comboBox.setPlaceholderText('--Select orchard--')
@@ -54,16 +54,16 @@ class Ui_MainWindow(object):
         self.tab1_orchard_comboBox.addItem('Orchard 3')
         self.tab1_orchard_comboBox.setCurrentIndex(-1)
         
-        # Instructions for selecting picture
-        self.tab1_picture_instruction_label = QtWidgets.QLabel(self.tab1)
-        self.tab1_picture_instruction_label.setObjectName("tab1_picture_instruction_label")
-        self.tab1_picture_instruction_label.setFont(self.tab1_orchard_instruction_label_font) # reuse the font object to reduce the use of memory
+        # Instructions for picture selecting
+        self.tab1_picture_path_instruction_label = QtWidgets.QLabel(self.tab1)
+        self.tab1_picture_path_instruction_label.setObjectName("tab1_picture_path_instruction_label")
+        self.tab1_picture_path_instruction_label.setFont(self.tab1_orchard_instruction_label_font) # reuse the font object to reduce the use of memory
         
-        # Button for selecting picture
-        self.tab1_picture_button = QtWidgets.QPushButton(self.tab1)  # parent is tab, which declares at line 26
-        self.tab1_picture_button.setFixedWidth(140)
-        self.tab1_picture_button.setMouseTracking(True)
-        self.tab1_picture_button.setObjectName("tab1_picture_button")
+        # Button for picture selecting
+        self.tab1_picture_path_button = QtWidgets.QPushButton(self.tab1)  # parent is tab, which declares at line 26
+        self.tab1_picture_path_button.setFixedWidth(140)
+        self.tab1_picture_path_button.setMouseTracking(True)
+        self.tab1_picture_path_button.setObjectName("tab1_picture_path_button")
 
         # Text for showing the path of the pic
         self.tab1_picture_path_lineEdit = QtWidgets.QLineEdit(self.tab1) # parent is tab
@@ -171,7 +171,7 @@ class Ui_MainWindow(object):
         self.tab1_orchard_widget_layout.addWidget(self.tab1_orchard_comboBox)
 
         # picture path widget
-        self.tab1_picture_selection_widget_layout.addWidget(self.tab1_picture_button)
+        self.tab1_picture_selection_widget_layout.addWidget(self.tab1_picture_path_button)
         self.tab1_picture_selection_widget_layout.addWidget(self.tab1_picture_path_lineEdit)
 
         # detection widget
@@ -199,7 +199,7 @@ class Ui_MainWindow(object):
         # whole layout
         self.tab1_verticalLayout.addWidget(self.tab1_orchard_instruction_label)
         self.tab1_verticalLayout.addWidget(self.tab1_orchard_widget)
-        self.tab1_verticalLayout.addWidget(self.tab1_picture_instruction_label)
+        self.tab1_verticalLayout.addWidget(self.tab1_picture_path_instruction_label)
         self.tab1_verticalLayout.addWidget(self.tab1_picture_selection_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_test_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_line)
@@ -216,21 +216,21 @@ class Ui_MainWindow(object):
         self.tab2 = QtWidgets.QWidget()
         self.tab2.setObjectName("tab2")
         
-        # Instruction for selecting orchard
+        # Instruction for orchard selecting
         self.tab2_orchard_instruction_label = QtWidgets.QLabel(self.tab2)
         self.tab2_orchard_instruction_label.setObjectName("tab2_orchard_instruction_label")
         self.tab2_orchard_instruction_label_font = QtGui.QFont()
         self.tab2_orchard_instruction_label_font.setPointSize(12)
         self.tab2_orchard_instruction_label.setFont(self.tab2_orchard_instruction_label_font)
 
-        # ComboBox for selecting orchard
+        # ComboBox for orchard selecting
         self.tab2_orchard_comboBox = QtWidgets.QComboBox(self.tab2)
         self.tab2_orchard_comboBox.setObjectName('tab2_orchard_comboBox')
-        # self.tab2_orchard_comboBox.setPlaceholderText('--Select orchard--')
+        self.tab2_orchard_comboBox.setPlaceholderText('--Select orchard--')
         self.tab2_orchard_comboBox.addItem('Orchard 1')
         self.tab2_orchard_comboBox.addItem('Orchard 2')
         self.tab2_orchard_comboBox.addItem('Orchard 3')
-        # self.tab2_orchard_comboBox.setCurrentIndex(-1)
+        self.tab2_orchard_comboBox.setCurrentIndex(-1)
 
         # Running state
         self.tab2_state_label = QtWidgets.QLabel(self.tab2)
@@ -403,8 +403,9 @@ class Ui_MainWindow(object):
 
         # tab 1
         self.tab1_orchard_instruction_label.setText(_translate("MainWindow", "1. Select orchard"))
-        self.tab1_picture_instruction_label.setText(_translate("MainWindow", "2. Click \"Browse\" to select the directory containing the pictures to detect"))
-        self.tab1_picture_button.setText(_translate("MainWindow", "Browse"))
+        self.tab1_orchard_instruction_label.setStyleSheet("color: rgb(0, 146, 208);")
+        self.tab1_picture_path_instruction_label.setText(_translate("MainWindow", "2. Click \"Browse\" to select the directory containing the pictures to detect"))
+        self.tab1_picture_path_button.setText(_translate("MainWindow", "Browse"))
         self.tab1_test_button.setText(_translate("MainWindow", "DETECT"))
         self.tab1_state_label.setText(_translate("MainWindow", "Ready"))
         self.tab1_left_picture_navigate_button.setText(_translate("MainWindow", "<"))
@@ -413,6 +414,7 @@ class Ui_MainWindow(object):
         
         # tab 2
         self.tab2_orchard_instruction_label.setText(_translate("MainWindow", "1. Select orchard"))
+        self.tab2_orchard_instruction_label.setStyleSheet("color: rgb(0, 146, 208);")
         self.tab2_state_label.setText(_translate("MainWindow", "Ready"))
         self.tab2_date_instruction_label.setText(_translate("MainWindow", "2. Select the date"))
         self.tab2_left_date_navigate_button.setText(_translate("MainWindow", "<"))
@@ -449,14 +451,14 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tabWidget.currentChanged['int'].connect(self.on_tabWidget_changed)
 
         # tab1
-        self.tab1_orchard_comboBox.currentIndexChanged.connect(self.on_tab1_comboBox_changed)
-        self.tab1_picture_button.clicked.connect(self.on_tab1_picture_button_clicked)
+        self.tab1_orchard_comboBox.currentIndexChanged.connect(self.on_tab1_orchard_comboBox_changed)
+        self.tab1_picture_path_button.clicked.connect(self.on_tab1_picture_button_clicked)
         self.tab1_test_button.clicked.connect(self.on_tab1_test_button_clicked)
         self.tab1_left_picture_navigate_button.clicked.connect(self.on_tab1_left_picutre_navigate_button_clicked)
         self.tab1_right_picture_navigate_button.clicked.connect(self.on_tab1_right_picutre_navigate_button_clicked)
         
         # tab2
-        self.tab2_orchard_comboBox.currentIndexChanged.connect(self.on_tab2_comboBox_changed)
+        self.tab2_orchard_comboBox.currentIndexChanged.connect(self.on_tab2_orchard_comboBox_changed)
         self.tab2_left_picture_navigate_button.clicked.connect(self.on_tab2_left_picutre_navigate_button_clicked)
         self.tab2_right_picture_navigate_button.clicked.connect(self.on_tab2_right_picutre_navigate_button_clicked)
         self.tab2_left_date_navigate_button.clicked.connect(self.on_tab2_left_date_navigate_button_clicked)
@@ -498,112 +500,59 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     # functions for tabWidget
     def on_tabWidget_changed(self, index):
-        if index == 1: # "statistical data" tab
-            # remove old information, initialize variables, and disable buttons
-            self.tab2_date_label.clear()
-            self.tab2_statistical_data_count_label.clear()
-            self.tab2_statistical_data_dominant_label.clear()
-            self.tab2_statistical_data_egg_label.clear()
-            self.tab2_statistical_data_larval_before_label.clear()
-            self.tab2_statistical_data_larval_after_label.clear()
-            self.tab2_statistical_data_juvenile_label.clear()
-            self.tab2_statistical_data_tessaratoma_label.clear()
-            self.tab2_left_picture.clear()
-            self.tab2_right_picture.clear()
-            self.tab2_orchard_comboBox.setEnabled(False)
-            self.tab2_left_picture_navigate_button.setEnabled(False)
-            self.tab2_right_picture_navigate_button.setEnabled(False)
-            self.tab2_left_date_navigate_button.setEnabled(False)
-            self.tab2_right_date_navigate_button.setEnabled(False)
-            self.tab2_dateNavigateCount = 0
-            self.tab2_pictureNavigateCount = 0
-            self.tab2_detectionOutputPaths = []
-            self.tab2_originalPictureAddresses = []
-
-            self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
-            QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-            
-            # collect detection records of selected orchard
-            collect_output_paths_return = self.tab2_collect_output_paths_of_selected_orchard()
-
-            # 1: "detection_output" directory does not exist, 2: there isn't any detection records for selected orchard
-            if collect_output_paths_return == 1:
-                self.tab2_orchard_comboBox.setEnabled(True)
-                self.tab2_date_label.setText(self.tr('No data to show'))
-                self.tab2_statistical_data_dominant_label.setText(self.tr('No data to show'))
-                self.tab2_state_label.setText(self.tr('Ready'))
-                QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-                return
-            
-            # read the statistics.json
-            f = open(self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount] + 'statistics.json')
-            openedStatisticalData = json.load(f)
-            f.close()
-
-            self.tab2_originalPictureDirectoryPath = openedStatisticalData['detected_directory']
-            
-            self.collect_original_picutre_addresses(self.tab2_originalPictureDirectoryPath, self.tab2_originalPictureAddresses)
-            self.tab2_update_statistical_data(openedStatisticalData)
-
-            self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
-                                self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount].replace(self.tab2_originalPictureDirectoryPath, self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount]).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
-                                self.tab2_left_picture,
-                                self.tab2_right_picture)
-
-            # re-enable buttons
-            self.tab2_orchard_comboBox.setEnabled(True)
-            if len(self.tab2_detectionOutputPaths) > 1:
-                self.tab2_right_date_navigate_button.setEnabled(True)
-            
-            if len(self.tab2_originalPictureAddresses) > 1:
-                self.tab2_right_picture_navigate_button.setEnabled(True)
-            
-            self.tab2_state_label.setText(self.tr('Ready'))
-            QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-            
+        if index == 1 and self.tab2_orchard_comboBox.currentIndex() != -1:  # "statistical data" tab
+            self.on_tab2_orchard_comboBox_changed()
         return
 
     
-    def on_tab1_comboBox_changed(self):
-        if self.tab1_picture_path_lineEdit.text() != '':
+    def on_tab1_orchard_comboBox_changed(self):
+        self.tab1_orchard_instruction_label.setStyleSheet("color: black;")
+        if self.tab1_picture_path_lineEdit.text() == '':
+            self.tab1_picture_path_instruction_label.setStyleSheet("color: rgb(0, 146, 208);")
+        else:
             self.tab1_test_button.setEnabled(True)
-        
         return
 
 
     # functions for tab1
     def on_tab1_picture_button_clicked(self):
         # dialog for selecting directory
-        source = QtWidgets.QFileDialog.getExistingDirectory(self, self.tr('Select directory'), '/home/mmnlab/')
+        path = QtWidgets.QFileDialog.getExistingDirectory(self, self.tr('Select directory'), '/home/mmnlab/')
 
-        if source:
-            self.tab1_picture_path_lineEdit.setText(source)
-            self.tab1_picture_path = source + '/'
+        if path:
+            # update picture path when a directory is selected
+            self.tab1_picture_path_lineEdit.setText(path)
+            self.tab1_picture_path = path + '/'
             self.tab1_picture_path_lineEdit.setStyleSheet(self.lineEditOriginalStyle)
             
-            if len(os.listdir(source)) == 0:
-                self.tab1_picture_instruction_label.setText(self.tr('2. The directory is empty. Please select another one'))
-                self.tab1_picture_instruction_label.setStyleSheet("color: red;")
+            if len(os.listdir(path)) == 0:
+                # show some prompts when the selected directory is empty
+                self.tab1_picture_path_instruction_label.setText(self.tr('2. The directory is empty. Please select another one'))
+                self.tab1_picture_path_instruction_label.setStyleSheet("color: red;")
                 self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
                 self.tab1_test_button.setEnabled(False)
             else:
-                self.tab1_picture_instruction_label.setText(self.tr('2. Click \"Browse\" to select the directory containing the pictures to detect'))
-                self.tab1_picture_instruction_label.setStyleSheet("color: black;")
+                # remove the prompts
+                self.tab1_picture_path_instruction_label.setText(self.tr('2. Click \"Browse\" to select the directory containing the pictures to detect'))
+                self.tab1_picture_path_instruction_label.setStyleSheet("color: black;")
                 self.tab1_picture_path_lineEdit.setStyleSheet(self.lineEditOriginalStyle)
+                # check the state of the comboBox for orchard selecting
                 if self.tab1_orchard_comboBox.currentIndex() == -1:
+                    # show some prompts when orchard is not selected
                     self.tab1_orchard_instruction_label.setStyleSheet("color: red;")
                     self.tab1_test_button.setEnabled(False)
                 else:
+                    # remove the prompts for orchard selecting
                     self.tab1_orchard_instruction_label.setStyleSheet("color: black;")
                     self.tab1_test_button.setEnabled(True)
 
-            self.tab1_state_label.setText(self.tr('Selected directory: ' + source))
+            self.tab1_state_label.setText(self.tr('Selected directory: ' + path))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-        elif source == '':
+        elif path == '':
+            # show some prompts when no directory is selected
             if self.tab1_picture_path_lineEdit.text() == '':
-                # prompt when no directory is selected
-                self.tab1_picture_instruction_label.setText(self.tr('2. No directory selected. Please select a directory to run the detection'))
-                self.tab1_picture_instruction_label.setStyleSheet("color: red;")
+                self.tab1_picture_path_instruction_label.setText(self.tr('2. No directory selected. Please select a directory to run the detection'))
+                self.tab1_picture_path_instruction_label.setStyleSheet("color: red;")
                 self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
 
                 self.tab1_state_label.setText(self.tr('No directory selected. Please select a directory to run the detection'))
@@ -613,16 +562,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 
     def on_tab1_test_button_clicked(self):
-        # protection for the situation that there's no directy selected
+        # deprecated
+        '''# protection for the situation that there's no directy selected
         if self.tab1_picture_path == '':
             # prompt when no directory is selected
             self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
 
             self.tab1_state_label.setText(self.tr('No directory selected. Please select a directory before running the detection'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-            return
+            return'''
+        # deprecated
 
-        # initialization
+        # remove old information
         self.tab1_statistical_data_date_label.clear()
         self.tab1_statistical_data_dominant_label.clear()
         self.tab1_statistical_data_egg_label.clear()
@@ -632,25 +583,32 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_statistical_data_tessaratoma_label.clear()
         self.tab1_left_picture.clear()
         self.tab1_right_picture.clear()
+
+        # disable buttons
         self.tab1_orchard_comboBox.setEnabled(False)
-        self.tab1_picture_button.setEnabled(False)
+        self.tab1_picture_path_button.setEnabled(False)
         self.tab1_picture_path_lineEdit.setEnabled(False)
         self.tab1_test_button.setEnabled(False)
         self.tab1_left_picture_navigate_button.setEnabled(False)
         self.tab1_right_picture_navigate_button.setEnabled(False)
-        self.tab1_originalPictureDirectoryPath = self.tab1_picture_path
+        
+        # initialize variables
         self.tab1_pictureNavigateCount = 0
         self.tab1_originalPictureAddresses = []
 
-        # protection for the situation that there isn't any picture in the directory
+        self.tab1_originalPictureDirectoryPath = self.tab1_picture_path
+
+        # deprecated
+        '''# protection for the situation that there isn't any picture in the directory
         if len(os.listdir(self.tab1_originalPictureDirectoryPath)) == 0:
             self.tab1_orchard_comboBox.setEnabled(True)
-            self.tab1_picture_button.setEnabled(True)
+            self.tab1_picture_path_button.setEnabled(True)
             self.tab1_picture_path_lineEdit.setEnabled(True)
             self.tab1_test_button.setEnabled(True)
             self.tab1_statistical_data_dominant_label.setText(self.tr('The directory: ' + self.tab1_originalPictureDirectoryPath + ' is empty'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-            return
+            return'''
+        # deprecated
 
         # create directory to store detected samples and detection log
         self.tab1_detectionOutputPath = os.path.abspath('.') + '/detection_output/'
@@ -800,7 +758,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # re-enable buttons
         self.tab1_orchard_comboBox.setEnabled(True)
-        self.tab1_picture_button.setEnabled(True)
+        self.tab1_picture_path_button.setEnabled(True)
         self.tab1_picture_path_lineEdit.setEnabled(True)
         self.tab1_test_button.setEnabled(True)
         if len(self.tab1_originalPictureAddresses) > 1:
@@ -848,8 +806,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         return
 
     
-    def on_tab2_comboBox_changed(self):
-        # remove old information, initialize variables, and disable buttons
+    def on_tab2_orchard_comboBox_changed(self):
+        # remove old information
         self.tab2_date_label.clear()
         self.tab2_statistical_data_count_label.clear()
         self.tab2_statistical_data_dominant_label.clear()
@@ -860,15 +818,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_statistical_data_tessaratoma_label.clear()
         self.tab2_left_picture.clear()
         self.tab2_right_picture.clear()
+
+        # disable buttons
         self.tab2_orchard_comboBox.setEnabled(False)
         self.tab2_left_picture_navigate_button.setEnabled(False)
         self.tab2_right_picture_navigate_button.setEnabled(False)
         self.tab2_left_date_navigate_button.setEnabled(False)
         self.tab2_right_date_navigate_button.setEnabled(False)
+        
+        # initialize variables
         self.tab2_dateNavigateCount = 0
         self.tab2_pictureNavigateCount = 0
         self.tab2_detectionOutputPaths = []
         self.tab2_originalPictureAddresses = []
+        self.tab2_orchard_instruction_label.setStyleSheet("color: black;")
 
         self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -894,7 +857,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.collect_original_picutre_addresses(self.tab2_originalPictureDirectoryPath, self.tab2_originalPictureAddresses)
         self.tab2_update_statistical_data(openedStatisticalData)
-
         self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
                             self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount].replace(self.tab2_originalPictureDirectoryPath, self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount]).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
                             self.tab2_left_picture,
@@ -934,7 +896,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.collect_original_picutre_addresses(self.tab2_originalPictureDirectoryPath, self.tab2_originalPictureAddresses)
         self.tab2_update_statistical_data(openedStatisticalData)
-
         self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
                             self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount].replace(self.tab2_originalPictureDirectoryPath, self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount]).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
                             self.tab2_left_picture,
@@ -976,7 +937,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.collect_original_picutre_addresses(self.tab2_originalPictureDirectoryPath, self.tab2_originalPictureAddresses)
         self.tab2_update_statistical_data(openedStatisticalData)
-
         self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
                             self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount].replace(self.tab2_originalPictureDirectoryPath, self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount]).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
                             self.tab2_left_picture,
@@ -1057,6 +1017,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         orchardName = self.tab2_orchard_comboBox.currentText().replace(' ', '_')
         detectionOutputDirectory = os.path.abspath('.') + '/detection_output'
         
+        # return 1 if the directory "detection_output" doesn't exist
         if os.path.exists(detectionOutputDirectory) is False:
             return 1
         
@@ -1066,9 +1027,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         self.tab2_detectionOutputPaths.sort(reverse=True)
 
+        # return 1 if there isn't any detection record
         if len(self.tab2_detectionOutputPaths) == 0:
             return 1
         
+        # return 0 if there is at least one detection record
         return 0
 
         
