@@ -48,11 +48,6 @@ class Ui_MainWindow(object):
         # ComboBox for orchard selecting
         self.tab1_orchard_comboBox = QtWidgets.QComboBox(self.tab1)
         self.tab1_orchard_comboBox.setObjectName('tab1_orchard_comboBox')
-        self.tab1_orchard_comboBox.setPlaceholderText('--Select orchard--')
-        self.tab1_orchard_comboBox.addItem('Orchard 1')
-        self.tab1_orchard_comboBox.addItem('Orchard 2')
-        self.tab1_orchard_comboBox.addItem('Orchard 3')
-        self.tab1_orchard_comboBox.setCurrentIndex(-1)
         
         # Instructions for picture selecting
         self.tab1_picture_path_instruction_label = QtWidgets.QLabel(self.tab1)
@@ -127,13 +122,13 @@ class Ui_MainWindow(object):
 
         self.tab1_left_picture = QtWidgets.QLabel(self.tab1)
         self.tab1_left_picture.setObjectName("tab1_left_picture")
-        self.tab1_left_picture.setFixedHeight(406)
+        self.tab1_left_picture.setFixedHeight(380)
         self.tab1_left_picture.setFixedWidth(560)
         self.tab1_left_picture_navigate_button = QtWidgets.QPushButton(self.tab1)
         self.tab1_left_picture_navigate_button.setEnabled(False)
         self.tab1_left_picture_navigate_button.setMouseTracking(True)
         self.tab1_left_picture_navigate_button.setFixedWidth(51)
-        self.tab1_left_picture_navigate_button.setFixedHeight(406)
+        self.tab1_left_picture_navigate_button.setFixedHeight(380)
         self.tab1_left_picture_navigate_button.setObjectName("tab1_left_picture_navigate_button")
         self.tab1_left_picture_navigate_button.setPalette(palette)
         self.tab1_left_picture_navigate_button.setFont(self.tab1_picture_navigate_button_font)
@@ -141,13 +136,13 @@ class Ui_MainWindow(object):
         # Right grid for detected picture
         self.tab1_right_picture = QtWidgets.QLabel(self.tab1)
         self.tab1_right_picture.setObjectName("tab1_right_picture")
-        self.tab1_right_picture.setFixedHeight(406)
+        self.tab1_right_picture.setFixedHeight(380)
         self.tab1_right_picture.setFixedWidth(560)
         self.tab1_right_picture_navigate_button = QtWidgets.QPushButton(self.tab1)
         self.tab1_right_picture_navigate_button.setEnabled(False)
         self.tab1_right_picture_navigate_button.setMouseTracking(True)
         self.tab1_right_picture_navigate_button.setFixedWidth(51)
-        self.tab1_right_picture_navigate_button.setFixedHeight(406)
+        self.tab1_right_picture_navigate_button.setFixedHeight(380)
         self.tab1_right_picture_navigate_button.setObjectName("tab1_right_picture_navigate_button")
         self.tab1_right_picture_navigate_button.setPalette(palette)
         self.tab1_right_picture_navigate_button.setFont(self.tab1_picture_navigate_button_font)
@@ -226,11 +221,6 @@ class Ui_MainWindow(object):
         # ComboBox for orchard selecting
         self.tab2_orchard_comboBox = QtWidgets.QComboBox(self.tab2)
         self.tab2_orchard_comboBox.setObjectName('tab2_orchard_comboBox')
-        self.tab2_orchard_comboBox.setPlaceholderText('--Select orchard--')
-        self.tab2_orchard_comboBox.addItem('Orchard 1')
-        self.tab2_orchard_comboBox.addItem('Orchard 2')
-        self.tab2_orchard_comboBox.addItem('Orchard 3')
-        self.tab2_orchard_comboBox.setCurrentIndex(-1)
 
         # Running state
         self.tab2_state_label = QtWidgets.QLabel(self.tab2)
@@ -398,30 +388,42 @@ class Ui_MainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
  
     def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Tessaratoma Recognition"))
+        MainWindow.setWindowTitle(QtCore.QCoreApplication.translate('MainWindow', 'Tessaratoma Detection'))
 
         # tab 1
-        self.tab1_orchard_instruction_label.setText(_translate("MainWindow", "1. Select orchard"))
+        self.tab1_orchard_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '1. Select orchard'))
         self.tab1_orchard_instruction_label.setStyleSheet("color: rgb(0, 146, 208);")
-        self.tab1_picture_path_instruction_label.setText(_translate("MainWindow", "2. Click \"Browse\" to select the directory containing the pictures to detect"))
-        self.tab1_picture_path_button.setText(_translate("MainWindow", "Browse"))
-        self.tab1_test_button.setText(_translate("MainWindow", "DETECT"))
-        self.tab1_state_label.setText(_translate("MainWindow", "Ready"))
-        self.tab1_left_picture_navigate_button.setText(_translate("MainWindow", "<"))
-        self.tab1_right_picture_navigate_button.setText(_translate("MainWindow", ">"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), _translate("MainWindow", "Detection"))
+        self.tab1_orchard_comboBox.setPlaceholderText(QtCore.QCoreApplication.translate('MainWindow', '--Select orchard--'))
+        self.tab1_orchard_comboBox.addItem(QtCore.QCoreApplication.translate('MainWindow', 'Orchard 1'))
+        self.tab1_orchard_comboBox.addItem(QtCore.QCoreApplication.translate('MainWindow', 'Orchard 2'))
+        self.tab1_orchard_comboBox.addItem(QtCore.QCoreApplication.translate('MainWindow', 'Orchard 3'))
+        self.tab1_orchard_comboBox.setCurrentIndex(-1)
+        self.tab1_picture_path_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '2. Click \"Browse\" to select the directory containing the pictures to detect'))
+        self.tab1_picture_path_button.setText(QtCore.QCoreApplication.translate('MainWindow', 'Browse'))
+        self.tab1_test_button.setText(QtCore.QCoreApplication.translate('MainWindow', 'DETECT'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
+        self.tab1_left_picture_navigate_button.setText(QtCore.QCoreApplication.translate('MainWindow', '<'))
+        self.tab1_right_picture_navigate_button.setText(QtCore.QCoreApplication.translate('MainWindow', '>'))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab1), QtCore.QCoreApplication.translate('MainWindow', 'Detection'))
         
         # tab 2
-        self.tab2_orchard_instruction_label.setText(_translate("MainWindow", "1. Select orchard"))
+        self.tab2_orchard_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '1. Select orchard'))
         self.tab2_orchard_instruction_label.setStyleSheet("color: rgb(0, 146, 208);")
-        self.tab2_state_label.setText(_translate("MainWindow", "Ready"))
-        self.tab2_date_instruction_label.setText(_translate("MainWindow", "2. Select the date"))
-        self.tab2_left_date_navigate_button.setText(_translate("MainWindow", "<"))
-        self.tab2_right_date_navigate_button.setText(_translate("MainWindow", ">"))
-        self.tab2_left_picture_navigate_button.setText(_translate("MainWindow", "<"))
-        self.tab2_right_picture_navigate_button.setText(_translate("MainWindow", ">"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab2), _translate("MainWindow", "Statistical data"))
+        self.tab2_orchard_comboBox.setPlaceholderText(QtCore.QCoreApplication.translate('MainWindow', '--Select orchard--'))
+        self.tab2_orchard_comboBox.addItem(QtCore.QCoreApplication.translate('MainWindow', 'Orchard 1'))
+        self.tab2_orchard_comboBox.addItem(QtCore.QCoreApplication.translate('MainWindow', 'Orchard 2'))
+        self.tab2_orchard_comboBox.addItem(QtCore.QCoreApplication.translate('MainWindow', 'Orchard 3'))
+        self.tab2_orchard_comboBox.setCurrentIndex(-1)
+        self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
+        self.tab2_date_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '2. Select the date'))
+        self.tab2_left_date_navigate_button.setText(QtCore.QCoreApplication.translate('MainWindow', '<'))
+        self.tab2_right_date_navigate_button.setText(QtCore.QCoreApplication.translate('MainWindow', '>'))
+        self.tab2_left_picture_navigate_button.setText(QtCore.QCoreApplication.translate('MainWindow', '<'))
+        self.tab2_right_picture_navigate_button.setText(QtCore.QCoreApplication.translate('MainWindow', '>'))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab2), QtCore.QCoreApplication.translate('MainWindow', 'Statistical data'))
+
+    '''def tr(self, text):
+        return QtCore.QObject.tr(self, text)'''
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -469,8 +471,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     
     # generic functions
-    def tr(self, text):
-        return QtCore.QObject.tr(self, text)
+    '''def tr(self, text):
+        return QtCore.QObject.tr(self, text)'''
 
 
     def update_pictures(self, leftPictureAddress, rightPictureAddress, leftPicture, rightPicture):
@@ -517,7 +519,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     # functions for tab1
     def on_tab1_picture_button_clicked(self):
         # dialog for selecting directory
-        path = QtWidgets.QFileDialog.getExistingDirectory(self, self.tr('Select directory'), '/home/mmnlab/')
+        path = QtWidgets.QFileDialog.getExistingDirectory(self, QtCore.QCoreApplication.translate('MainWindow', 'Select directory'), '/home/mmnlab/')
 
         if path:
             # update picture path when a directory is selected
@@ -527,13 +529,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             
             if len(os.listdir(path)) == 0:
                 # show some prompts when the selected directory is empty
-                self.tab1_picture_path_instruction_label.setText(self.tr('2. The directory is empty. Please select another one'))
+                self.tab1_picture_path_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '2. The directory is empty. Please select another one'))
                 self.tab1_picture_path_instruction_label.setStyleSheet("color: red;")
                 self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
                 self.tab1_test_button.setEnabled(False)
             else:
                 # remove the prompts
-                self.tab1_picture_path_instruction_label.setText(self.tr('2. Click \"Browse\" to select the directory containing the pictures to detect'))
+                self.tab1_picture_path_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '2. Click \"Browse\" to select the directory containing the pictures to detect'))
                 self.tab1_picture_path_instruction_label.setStyleSheet("color: black;")
                 self.tab1_picture_path_lineEdit.setStyleSheet(self.lineEditOriginalStyle)
                 # check the state of the comboBox for orchard selecting
@@ -546,16 +548,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.tab1_orchard_instruction_label.setStyleSheet("color: black;")
                     self.tab1_test_button.setEnabled(True)
 
-            self.tab1_state_label.setText(self.tr('Selected directory: ' + path))
+            self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Selected directory: ') + path)
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         elif path == '':
             # show some prompts when no directory is selected
             if self.tab1_picture_path_lineEdit.text() == '':
-                self.tab1_picture_path_instruction_label.setText(self.tr('2. No directory selected. Please select a directory to run the detection'))
+                self.tab1_picture_path_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '2. No directory selected. Please select a directory to run the detection'))
                 self.tab1_picture_path_instruction_label.setStyleSheet("color: red;")
                 self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
 
-                self.tab1_state_label.setText(self.tr('No directory selected. Please select a directory to run the detection'))
+                self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'No directory selected. Please select a directory to run the detection'))
                 QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         return
@@ -568,7 +570,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             # prompt when no directory is selected
             self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
 
-            self.tab1_state_label.setText(self.tr('No directory selected. Please select a directory before running the detection'))
+            self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'No directory selected. Please select a directory before running the detection'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
             return'''
         # deprecated
@@ -605,7 +607,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             self.tab1_picture_path_button.setEnabled(True)
             self.tab1_picture_path_lineEdit.setEnabled(True)
             self.tab1_test_button.setEnabled(True)
-            self.tab1_statistical_data_dominant_label.setText(self.tr('The directory: ' + self.tab1_originalPictureDirectoryPath + ' is empty'))
+            self.tab1_statistical_data_dominant_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'The directory: ' + self.tab1_originalPictureDirectoryPath + ' is empty'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
             return'''
         # deprecated
@@ -614,18 +616,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_detectionOutputPath = os.path.abspath('.') + '/detection_output/'
         if os.path.isdir(self.tab1_detectionOutputPath) is False:
             os.mkdir(self.tab1_detectionOutputPath)
-            self.tab1_state_label.setText(self.tr('Directory: ' + self.tab1_detectionOutputPath + ' created'))
+            self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Directory: ') + self.tab1_detectionOutputPath + QtCore.QCoreApplication.translate('MainWindow', ' created'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         else:
-            self.tab1_state_label.setText(self.tr('Directory: ' + self.tab1_detectionOutputPath + ' already existed'))
+            self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Directory: ') + self.tab1_detectionOutputPath + QtCore.QCoreApplication.translate('MainWindow', ' already existed'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         date = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
-        resultDirectoryName = self.tab1_orchard_comboBox.currentText().replace(' ', '_') + '_' + date.replace('/', '').replace(':', '').replace(' ', '_')
+        resultDirectoryName = 'Orchard_' + str(self.tab1_orchard_comboBox.currentIndex() + 1) + '_' + date.replace('/', '').replace(':', '').replace(' ', '_')
         self.tab1_detectionOutputPath = self.tab1_detectionOutputPath + resultDirectoryName + '/'
         os.mkdir(self.tab1_detectionOutputPath)
 
-        self.tab1_state_label.setText(self.tr('Directory: ' + self.tab1_detectionOutputPath + ' created'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Directory: ') + self.tab1_detectionOutputPath + QtCore.QCoreApplication.translate('MainWindow', ' created'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # create empty detection log file
@@ -633,7 +635,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.tab1_detectionOutputPath + 'detection_results.json']
         os.system(' '.join(commands))
 
-        self.tab1_state_label.setText(self.tr('Detection log file created'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Detection log file created'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         # create empty statistics log file
@@ -641,12 +643,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     self.tab1_detectionOutputPath + 'statistics.json']
         os.system(' '.join(commands))
 
-        self.tab1_state_label.setText(self.tr('Statistics log file created'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Statistics log file created'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # run the detection
         ### batch images detector (darknet) provided by vincentgong7 ###
-        self.tab1_state_label.setText(self.tr('Detection started, please wait...'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Detection started, please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         commands = ['./darknet detector batch',
                     'data/obj.data',
@@ -658,19 +660,19 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                     '-dont_show']
         os.system(' '.join(commands))
         
-        self.tab1_state_label.setText(self.tr('Detection finished'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Detection finished'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # collecting paths to all the pictures waiting to run the detection
-        self.tab1_state_label.setText(self.tr('Collecting paths'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Collecting paths'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         self.collect_original_picutre_addresses(self.tab1_originalPictureDirectoryPath, self.tab1_originalPictureAddresses)
 
-        self.tab1_state_label.setText(self.tr('Paths collected'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Paths collected'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # statistical data
-        self.tab1_state_label.setText(self.tr('Generating statistical data'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Generating statistical data'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         detectedObjectCount = [0, 0, 0, 0, 0]
@@ -711,7 +713,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         statisticsDictionary = {
             "time": date,
-            "orchard": self.tab1_orchard_comboBox.currentText(), 
+            "orchard": 'Orchard_' + str(self.tab1_orchard_comboBox.currentIndex() + 1), 
             "detection_result_path": self.tab1_detectionOutputPath + 'detection_results.json',
             "detected_directory": self.tab1_originalPictureDirectoryPath,
             "dominant_object": dominantObject,
@@ -721,16 +723,16 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         with open(self.tab1_detectionOutputPath + 'statistics.json', 'w') as outfile:
             outfile.write(json.dumps(statisticsDictionary, indent=4))
         
-        self.tab1_state_label.setText(self.tr('Statistical data saved successfully'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Statistical data saved successfully'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
-        statisticalDataToShow = date + ' , at ' + statisticsDictionary['orchard'] + '\n' + \
-                                 'DOMINANT OBJECT: ' + dominantObject.upper() + '\n' + \
+        '''statisticalDataToShow = date + ' , at ' + statisticsDictionary['orchard'] + '\n' + \
+                                 'DOMINANT OBJECT: ' + dominantObject + '\n' + \
                                  '    ' + 'egg: ' + str(detectedObjectCount[0]) + ' (' + str(round(detectedObjectCount[0]/detectedObjectTotal*100, 1)) + '%)\n' + \
                                  '    ' + 'larval_before: ' + str(detectedObjectCount[1]) + ' (' + str(round(detectedObjectCount[1]/detectedObjectTotal*100, 1)) + '%)\n' + \
                                  '    ' + 'larval_after: ' + str(detectedObjectCount[2]) + ' (' + str(round(detectedObjectCount[2]/detectedObjectTotal*100, 1)) + '%)\n' + \
                                  '    ' + 'juvenile: ' + str(detectedObjectCount[3]) + ' (' + str(round(detectedObjectCount[3]/detectedObjectTotal*100, 1)) + '%)\n' + \
-                                 '    ' + 'tessaratoma: ' + str(detectedObjectCount[4]) + ' (' + str(round(detectedObjectCount[4]/detectedObjectTotal*100, 1)) + '%)\n'
+                                 '    ' + 'tessaratoma: ' + str(detectedObjectCount[4]) + ' (' + str(round(detectedObjectCount[4]/detectedObjectTotal*100, 1)) + '%)\n'''
 
         # show pictures
         self.update_pictures(self.tab1_originalPictureAddresses[self.tab1_pictureNavigateCount],
@@ -739,19 +741,25 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                             self.tab1_right_picture)
 
         # show statistical data in main window
-        self.tab1_statistical_data_date_label.setText(self.tr(date + ' , at ' + statisticsDictionary['orchard'] + ' . ' + str(len(self.tab1_originalPictureAddresses)) + ' pictures , ' + str(detectedObjectTotal) + ' objects.'))
-        self.tab1_statistical_data_dominant_label.setText(self.tr('DOMINANT OBJECT: ' + dominantObject.upper()))
+        self.tab1_statistical_data_date_label.setText(date + QtCore.QCoreApplication.translate('MainWindow', ' , at ') + statisticsDictionary['orchard'] + QtCore.QCoreApplication.translate('MainWindow', ' . ') + str(len(self.tab1_originalPictureAddresses)) + QtCore.QCoreApplication.translate('MainWindow', ' pictures , ') + str(detectedObjectTotal) + QtCore.QCoreApplication.translate('MainWindow', ' objects.'))
+        self.tab1_statistical_data_dominant_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'DOMINANT OBJECT: ') + dominantObject)
         
-        self.tab1_statistical_data_egg_label.setText(self.tr('egg: ' + str(detectedObjectCount[0]) + ' (' + str(round(detectedObjectCount[0]/detectedObjectTotal*100, 1)) + '%)'))
-        self.tab1_statistical_data_larval_before_label.setText(self.tr('larval_before: ' + str(detectedObjectCount[1]) + ' (' + str(round(detectedObjectCount[1]/detectedObjectTotal*100, 1)) + '%)'))
-        self.tab1_statistical_data_larval_after_label.setText(self.tr('larval_after: ' + str(detectedObjectCount[2]) + ' (' + str(round(detectedObjectCount[2]/detectedObjectTotal*100, 1)) + '%)'))
-        self.tab1_statistical_data_juvenile_label.setText(self.tr('juvenile: ' + str(detectedObjectCount[3]) + ' (' + str(round(detectedObjectCount[3]/detectedObjectTotal*100, 1)) + '%)'))
-        self.tab1_statistical_data_tessaratoma_label.setText(self.tr('tessaratoma: ' + str(detectedObjectCount[4]) + ' (' + str(round(detectedObjectCount[4]/detectedObjectTotal*100, 1)) + '%)'))
+        self.tab1_statistical_data_egg_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'egg: ') + str(detectedObjectCount[0]) + ' (' + str(round(detectedObjectCount[0]/detectedObjectTotal*100, 1)) + '%)')
+        self.tab1_statistical_data_larval_before_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'larval_before: ') + str(detectedObjectCount[1]) + ' (' + str(round(detectedObjectCount[1]/detectedObjectTotal*100, 1)) + '%)')
+        self.tab1_statistical_data_larval_after_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'larval_after: ') + str(detectedObjectCount[2]) + ' (' + str(round(detectedObjectCount[2]/detectedObjectTotal*100, 1)) + '%)')
+        self.tab1_statistical_data_juvenile_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'juvenile: ') + str(detectedObjectCount[3]) + ' (' + str(round(detectedObjectCount[3]/detectedObjectTotal*100, 1)) + '%)')
+        self.tab1_statistical_data_tessaratoma_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'tessaratoma: ') + str(detectedObjectCount[4]) + ' (' + str(round(detectedObjectCount[4]/detectedObjectTotal*100, 1)) + '%)')
 
         # show statistical data in message box
         statisticalDataMessage = QtWidgets.QMessageBox()
-        statisticalDataMessage.setWindowTitle(self.tr('Statistical result'))
-        statisticalDataMessage.setInformativeText(self.tr(statisticalDataToShow))
+        statisticalDataMessage.setWindowTitle(QtCore.QCoreApplication.translate('MainWindow', 'Statistical result'))
+        statisticalDataMessage.setInformativeText(date + QtCore.QCoreApplication.translate('MainWindow', ' , at ') + statisticsDictionary['orchard'] + '\n' + \
+                                                                                                    QtCore.QCoreApplication.translate('MainWindow', 'DOMINANT OBJECT: ') + dominantObject + '\n' + \
+                                                                                                    '    ' + QtCore.QCoreApplication.translate('MainWindow', 'egg: ') + str(detectedObjectCount[0]) + ' (' + str(round(detectedObjectCount[0]/detectedObjectTotal*100, 1)) + '%)\n' + \
+                                                                                                    '    ' + QtCore.QCoreApplication.translate('MainWindow', 'larval_before: ') + str(detectedObjectCount[1]) + ' (' + str(round(detectedObjectCount[1]/detectedObjectTotal*100, 1)) + '%)\n' + \
+                                                                                                    '    ' + QtCore.QCoreApplication.translate('MainWindow', 'larval_after: ') + str(detectedObjectCount[2]) + ' (' + str(round(detectedObjectCount[2]/detectedObjectTotal*100, 1)) + '%)\n' + \
+                                                                                                    '    ' + QtCore.QCoreApplication.translate('MainWindow', 'juvenile: ') + str(detectedObjectCount[3]) + ' (' + str(round(detectedObjectCount[3]/detectedObjectTotal*100, 1)) + '%)\n' + \
+                                                                                                    '    ' + QtCore.QCoreApplication.translate('MainWindow', 'tessaratoma: ') + str(detectedObjectCount[4]) + ' (' + str(round(detectedObjectCount[4]/detectedObjectTotal*100, 1)) + '%)\n')
         statisticalDataMessage.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
         statisticalDataMessage.setDefaultButton(QtWidgets.QMessageBox.StandardButton.Ok)
         statisticalDataMessage.exec()
@@ -764,7 +772,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if len(self.tab1_originalPictureAddresses) > 1:
             self.tab1_right_picture_navigate_button.setEnabled(True)
 
-        self.tab1_state_label.setText(self.tr('Ready'))
+        self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         return
@@ -833,7 +841,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_originalPictureAddresses = []
         self.tab2_orchard_instruction_label.setStyleSheet("color: black;")
 
-        self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
+        self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Loading. Please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         # collect detection records of selected orchard
@@ -842,9 +850,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # 1: "detection_output" directory does not exist, 2: there isn't any detection records for selected orchard
         if collect_output_paths_return == 1:
             self.tab2_orchard_comboBox.setEnabled(True)
-            self.tab2_date_label.setText(self.tr('No data to show'))
-            self.tab2_statistical_data_dominant_label.setText(self.tr('No data to show'))
-            self.tab2_state_label.setText(self.tr('Ready'))
+            self.tab2_date_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'No data to show'))
+            self.tab2_statistical_data_dominant_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'No data to show'))
+            self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
             QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
             return
 
@@ -870,7 +878,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if len(self.tab2_originalPictureAddresses) > 1:
             self.tab2_right_picture_navigate_button.setEnabled(True)
     
-        self.tab2_state_label.setText(self.tr('Ready'))
+        self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         return
@@ -882,7 +890,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_pictureNavigateCount = 0
         self.tab2_originalPictureAddresses = []
 
-        self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
+        self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Loading. Please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         self.tab2_dateNavigateCount = self.tab2_dateNavigateCount - 1
@@ -911,7 +919,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if len(self.tab2_originalPictureAddresses) > 1:
                 self.tab2_right_picture_navigate_button.setEnabled(True)
 
-        self.tab2_state_label.setText(self.tr('Ready'))
+        self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         return
@@ -923,7 +931,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_pictureNavigateCount = 0
         self.tab2_originalPictureAddresses = []
 
-        self.tab2_state_label.setText(self.tr('Loading. Please wait...'))
+        self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Loading. Please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         self.tab2_dateNavigateCount = self.tab2_dateNavigateCount + 1
@@ -952,7 +960,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if len(self.tab2_originalPictureAddresses) > 1:
                 self.tab2_right_picture_navigate_button.setEnabled(True)
 
-        self.tab2_state_label.setText(self.tr('Ready'))
+        self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         return
@@ -999,22 +1007,22 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                 openedStatisticalData['objects_count']['juvenile'] + openedStatisticalData['objects_count']['tessaratoma']
 
         # update the information shown on the main window
-        self.tab2_date_label.setText(self.tr(openedStatisticalData['time'] + ' , at ' + openedStatisticalData['orchard']))
+        self.tab2_date_label.setText(openedStatisticalData['time'] + QtCore.QCoreApplication.translate('MainWindow', ' , at ') + openedStatisticalData['orchard'])
 
-        self.tab2_statistical_data_count_label.setText(self.tr(str(len(self.tab2_originalPictureAddresses)) + ' pictures , ' + str(detectedObjectTotal) + ' objects.'))
-        self.tab2_statistical_data_dominant_label.setText(self.tr('DOMINANT OBJECT: ' + openedStatisticalData['dominant_object'].upper()))
+        self.tab2_statistical_data_count_label.setText(str(len(self.tab2_originalPictureAddresses)) + QtCore.QCoreApplication.translate('MainWindow', ' pictures , ') + str(detectedObjectTotal) + QtCore.QCoreApplication.translate('MainWindow', ' objects.'))
+        self.tab2_statistical_data_dominant_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'DOMINANT OBJECT: ') + openedStatisticalData['dominant_object'])
         
-        self.tab2_statistical_data_egg_label.setText(self.tr('egg: ' + str(openedStatisticalData['objects_count']['egg']) + ' (' + str(round(int(openedStatisticalData['objects_count']['egg'])/detectedObjectTotal*100, 1)) + '%)'))
-        self.tab2_statistical_data_larval_before_label.setText(self.tr('larval_before: ' + str(openedStatisticalData['objects_count']['larval_before']) + ' (' + str(round(int(openedStatisticalData['objects_count']['larval_before'])/detectedObjectTotal*100, 1)) + '%)'))
-        self.tab2_statistical_data_larval_after_label.setText(self.tr('larval_after: ' + str(openedStatisticalData['objects_count']['larval_after']) + ' (' + str(round(int(openedStatisticalData['objects_count']['larval_after'])/detectedObjectTotal*100, 1)) + '%)'))
-        self.tab2_statistical_data_juvenile_label.setText(self.tr('juvenile: ' + str(openedStatisticalData['objects_count']['juvenile']) + ' (' + str(round(int(openedStatisticalData['objects_count']['juvenile'])/detectedObjectTotal*100, 1)) + '%)'))
-        self.tab2_statistical_data_tessaratoma_label.setText(self.tr('tessaratoma: ' + str(openedStatisticalData['objects_count']['tessaratoma']) + ' (' + str(round(int(openedStatisticalData['objects_count']['tessaratoma'])/detectedObjectTotal*100, 1)) + '%)'))
+        self.tab2_statistical_data_egg_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'egg: ') + str(openedStatisticalData['objects_count']['egg']) + ' (' + str(round(int(openedStatisticalData['objects_count']['egg'])/detectedObjectTotal*100, 1)) + '%)')
+        self.tab2_statistical_data_larval_before_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'larval_before: ') + str(openedStatisticalData['objects_count']['larval_before']) + ' (' + str(round(int(openedStatisticalData['objects_count']['larval_before'])/detectedObjectTotal*100, 1)) + '%)')
+        self.tab2_statistical_data_larval_after_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'larval_after: ') + str(openedStatisticalData['objects_count']['larval_after']) + ' (' + str(round(int(openedStatisticalData['objects_count']['larval_after'])/detectedObjectTotal*100, 1)) + '%)')
+        self.tab2_statistical_data_juvenile_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'juvenile: ') + str(openedStatisticalData['objects_count']['juvenile']) + ' (' + str(round(int(openedStatisticalData['objects_count']['juvenile'])/detectedObjectTotal*100, 1)) + '%)')
+        self.tab2_statistical_data_tessaratoma_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'tessaratoma: ') + str(openedStatisticalData['objects_count']['tessaratoma']) + ' (' + str(round(int(openedStatisticalData['objects_count']['tessaratoma'])/detectedObjectTotal*100, 1)) + '%)')
         
         return
     
 
     def tab2_collect_output_paths_of_selected_orchard(self):
-        orchardName = self.tab2_orchard_comboBox.currentText().replace(' ', '_')
+        orchardName = 'Orchard_' + str(self.tab2_orchard_comboBox.currentIndex() + 1)
         detectionOutputDirectory = os.path.abspath('.') + '/detection_output'
         
         # return 1 if the directory "detection_output" doesn't exist
@@ -1039,6 +1047,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    translator = QtCore.QTranslator(app)
+    translator.load('zh-tw')
+    app.installTranslator(translator)
     main_window = MainWindow()
     main_window.show()
     sys.exit(app.exec_())
