@@ -20,17 +20,17 @@
     <message>
         <location filename="20210118_demo.py" line="397"/>
         <source>Orchard 1</source>
-        <translation>果園 1</translation>
+        <translation>果園1</translation>
     </message>
     <message>
         <location filename="20210118_demo.py" line="398"/>
         <source>Orchard 2</source>
-        <translation>果園 2</translation>
+        <translation>果園2</translation>
     </message>
     <message>
         <location filename="20210118_demo.py" line="399"/>
         <source>Orchard 3</source>
-        <translation>果園 3</translation>
+        <translation>果園3</translation>
     </message>
     <message>
         <location filename="20210118_demo.py" line="401"/>
@@ -70,17 +70,17 @@
     <message>
         <location filename="20210118_demo.py" line="413"/>
         <source>Orchard 1</source>
-        <translation>果園 1</translation>
+        <translation>果園1</translation>
     </message>
     <message>
         <location filename="20210118_demo.py" line="414"/>
         <source>Orchard 2</source>
-        <translation>果園 2</translation>
+        <translation>果園2</translation>
     </message>
     <message>
         <location filename="20210118_demo.py" line="415"/>
         <source>Orchard 3</source>
-        <translation>果園 3</translation>
+        <translation>果園3</translation>
     </message>
     <message>
         <location filename="20210118_demo.py" line="417"/>
@@ -97,284 +97,289 @@
         <translation>統計資料</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="522"/>
+        <location filename="20210118_demo.py" line="515"/>
         <source>Select directory</source>
         <translation>選擇資料夾</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="532"/>
+        <location filename="20210118_demo.py" line="525"/>
         <source>2. The directory is empty. Please select another one</source>
         <translation>2. 資料夾中沒有任何項目，請選擇另一個資料夾</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="538"/>
+        <location filename="20210118_demo.py" line="531"/>
         <source>2. Click \"Browse\" to select the directory containing the pictures to detect</source>
         <translation>2. 點選 \"瀏覽\" 以選擇要偵測的相片資料夾</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="551"/>
+        <location filename="20210118_demo.py" line="544"/>
         <source>Selected directory: </source>
         <translation>選擇的資料夾：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="556"/>
+        <location filename="20210118_demo.py" line="549"/>
         <source>2. No directory selected. Please select a directory to run the detection</source>
         <translation>2. 尚未選擇任何資料夾，開始偵測前請先選擇資料夾</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="560"/>
+        <location filename="20210118_demo.py" line="553"/>
         <source>No directory selected. Please select a directory to run the detection</source>
         <translation>尚未選擇任何資料夾，開始偵測前請先選擇資料夾</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="619"/>
+        <location filename="20210118_demo.py" line="589"/>
         <source>Directory: </source>
         <translation>資料夾：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="619"/>
+        <location filename="20210118_demo.py" line="590"/>
         <source> created</source>
         <translation> 已建立</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="622"/>
+        <location filename="20210118_demo.py" line="593"/>
         <source>Directory: </source>
         <translation>資料夾：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="622"/>
+        <location filename="20210118_demo.py" line="594"/>
         <source> already existed</source>
         <translation> 已經存在</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="630"/>
+        <location filename="20210118_demo.py" line="602"/>
         <source>Directory: </source>
         <translation>資料夾：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="630"/>
+        <location filename="20210118_demo.py" line="603"/>
         <source> created</source>
         <translation> 已建立</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="638"/>
+        <location filename="20210118_demo.py" line="611"/>
         <source>Detection log file created</source>
         <translation>偵測記錄檔已建立</translation>
     </message><message>
-        <location filename="20210118_demo.py" line="646"/>
+        <location filename="20210118_demo.py" line="619"/>
         <source>Statistics log file created</source>
         <translation>統計資料紀錄檔已建立</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="651"/>
+        <location filename="20210118_demo.py" line="624"/>
         <source>Detection started, please wait...</source>
         <translation>已開始偵測目標，請稍候...</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="663"/>
+        <location filename="20210118_demo.py" line="636"/>
         <source>Detection finished</source>
         <translation>完成偵測</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="667"/>
+        <location filename="20210118_demo.py" line="640"/>
         <source>Collecting paths</source>
         <translation>正在收集路徑</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="671"/>
+        <location filename="20210118_demo.py" line="644"/>
         <source>Paths collected</source>
         <translation>路徑收集完成</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="675"/>
+        <location filename="20210118_demo.py" line="648"/>
         <source>Generating statistical data</source>
         <translation>正在產生統計資料</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="726"/>
+        <location filename="20210118_demo.py" line="699"/>
         <source>Statistical data saved successfully</source>
         <translation>統計資料已成功儲存</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="744"/>
+        <location filename="20210118_demo.py" line="709"/>
         <source> , at </source>
         <translation> ，在</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="744"/>
+        <location filename="20210118_demo.py" line="710"/>
         <source> . </source>
         <translation>。</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="744"/>
+        <location filename="20210118_demo.py" line="711"/>
         <source> pictures , </source>
         <translation>張相片，</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="744"/>
-        <source> objects.</source>
-        <translation>個目標。</translation>
+        <location filename="20210118_demo.py" line="712"/>
+        <source> bugs.</source>
+        <translation>隻荔枝椿象。</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="745"/>
+        <location filename="20210118_demo.py" line="714"/>
         <source>DOMINANT OBJECT: </source>
         <translation>數量最多的齡期：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="747"/>
+        <location filename="20210118_demo.py" line="716"/>
         <source>egg: </source>
         <translation>卵：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="748"/>
+        <location filename="20210118_demo.py" line="719"/>
         <source>larval_before: </source>
         <translation>剛孵化的若蟲：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="749"/>
+        <location filename="20210118_demo.py" line="722"/>
         <source>larval_after: </source>
         <translation>一齡若蟲：</translation>
     </message><message>
-        <location filename="20210118_demo.py" line="750"/>
+        <location filename="20210118_demo.py" line="725"/>
         <source>juvenile: </source>
         <translation>二至五齡若蟲：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="751"/>
+        <location filename="20210118_demo.py" line="728"/>
         <source>tessaratoma: </source>
         <translation>成蟲：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="755"/>
+        <location filename="20210118_demo.py" line="733"/>
         <source>Statistical result</source>
         <translation>統計結果</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="756"/>
+        <location filename="20210118_demo.py" line="734"/>
         <source> , at </source>
         <translation> ，在</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="757"/>
+        <location filename="20210118_demo.py" line="735"/>
         <source>DOMINANT OBJECT: </source>
         <translation>數量最多的齡期：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="758"/>
+        <location filename="20210118_demo.py" line="736"/>
         <source>egg: </source>
         <translation>卵：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="759"/>
+        <location filename="20210118_demo.py" line="737"/>
         <source>larval_before: </source>
         <translation>剛孵化的若蟲：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="760"/>
+        <location filename="20210118_demo.py" line="738"/>
         <source>larval_after: </source>
         <translation>一齡若蟲：</translation>
     </message><message>
-        <location filename="20210118_demo.py" line="761"/>
+        <location filename="20210118_demo.py" line="739"/>
         <source>juvenile: </source>
         <translation>二至五齡若蟲：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="762"/>
+        <location filename="20210118_demo.py" line="740"/>
         <source>tessaratoma: </source>
         <translation>成蟲：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="776"/>
+        <location filename="20210118_demo.py" line="759"/>
         <source>Ready</source>
         <translation>就緒</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="845"/>
+        <location filename="20210118_demo.py" line="828"/>
         <source>Loading. Please wait...</source>
         <translation>讀取中，請稍候...</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="854"/>
+        <location filename="20210118_demo.py" line="837"/>
         <source>No data to show</source>
         <translation>沒有資料可以顯示</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="855"/>
+        <location filename="20210118_demo.py" line="838"/>
         <source>No data to show</source>
         <translation>沒有資料可以顯示</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="856"/>
+        <location filename="20210118_demo.py" line="839"/>
         <source>Ready</source>
         <translation>就緒</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="882"/>
+        <location filename="20210118_demo.py" line="865"/>
         <source>Ready</source>
         <translation>就緒</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="894"/>
+        <location filename="20210118_demo.py" line="877"/>
         <source>Loading. Please wait...</source>
         <translation>讀取中，請稍候...</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="923"/>
+        <location filename="20210118_demo.py" line="906"/>
         <source>Ready</source>
         <translation>就緒</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="935"/>
+        <location filename="20210118_demo.py" line="918"/>
         <source>Loading. Please wait...</source>
         <translation>讀取中，請稍候...</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="964"/>
+        <location filename="20210118_demo.py" line="947"/>
         <source>Ready</source>
         <translation>就緒</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="1011"/>
+        <location filename="20210118_demo.py" line="994"/>
         <source> , at </source>
         <translation> ，在</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="1013"/>
+        <location filename="20210118_demo.py" line="994"/>
+        <source>Orchard </source>
+        <translation>果園</translation>
+    </message>
+    <message>
+        <location filename="20210118_demo.py" line="997"/>
         <source> pictures , </source>
         <translation>張相片，</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="1013"/>
-        <source> objects.</source>
-        <translation>個目標。</translation>
+        <location filename="20210118_demo.py" line="998"/>
+        <source> bugs.</source>
+        <translation>隻荔枝椿象。</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="1014"/>
+        <location filename="20210118_demo.py" line="999"/>
         <source>DOMINANT OBJECT: </source>
         <translation>數量最多的齡期：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="1016"/>
+        <location filename="20210118_demo.py" line="1001"/>
         <source>egg: </source>
         <translation>卵：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="1017"/>
+        <location filename="20210118_demo.py" line="1004"/>
         <source>larval_before: </source>
         <translation>剛孵化的若蟲：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="1018"/>
+        <location filename="20210118_demo.py" line="1007"/>
         <source>larval_after: </source>
         <translation>一齡若蟲：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="1019"/>
+        <location filename="20210118_demo.py" line="1010"/>
         <source>juvenile: </source>
         <translation>二至五齡若蟲：</translation>
     </message>
     <message>
-        <location filename="20210118_demo.py" line="1020"/>
+        <location filename="20210118_demo.py" line="1013"/>
         <source>tessaratoma: </source>
         <translation>成蟲：</translation>
     </message>
