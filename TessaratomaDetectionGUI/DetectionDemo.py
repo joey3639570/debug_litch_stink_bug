@@ -70,6 +70,9 @@ class Ui_MainWindow(object):
         self.tab1_state_label.setObjectName("tab1_state_label")
 
         # Button for performing the test
+        self.tab1_test_instruction_label = QtWidgets.QLabel(self.tab1)
+        self.tab1_test_instruction_label.setObjectName("tab1_test_instruction_label")
+        self.tab1_test_instruction_label.setFont(self.tab1_orchard_instruction_label_font)
         self.tab1_test_button = QtWidgets.QPushButton(self.tab1)  # parent is tab
         self.tab1_test_button.setMouseTracking(True)
         self.tab1_test_button.setObjectName("tab1_test_button")
@@ -122,13 +125,13 @@ class Ui_MainWindow(object):
 
         self.tab1_left_picture = QtWidgets.QLabel(self.tab1)
         self.tab1_left_picture.setObjectName("tab1_left_picture")
-        self.tab1_left_picture.setFixedHeight(380)
+        self.tab1_left_picture.setFixedHeight(350)
         self.tab1_left_picture.setFixedWidth(560)
         self.tab1_left_picture_navigate_button = QtWidgets.QPushButton(self.tab1)
         self.tab1_left_picture_navigate_button.setEnabled(False)
         self.tab1_left_picture_navigate_button.setMouseTracking(True)
         self.tab1_left_picture_navigate_button.setFixedWidth(51)
-        self.tab1_left_picture_navigate_button.setFixedHeight(380)
+        self.tab1_left_picture_navigate_button.setFixedHeight(350)
         self.tab1_left_picture_navigate_button.setObjectName("tab1_left_picture_navigate_button")
         self.tab1_left_picture_navigate_button.setPalette(palette)
         self.tab1_left_picture_navigate_button.setFont(self.tab1_picture_navigate_button_font)
@@ -136,13 +139,13 @@ class Ui_MainWindow(object):
         # Right grid for detected picture
         self.tab1_right_picture = QtWidgets.QLabel(self.tab1)
         self.tab1_right_picture.setObjectName("tab1_right_picture")
-        self.tab1_right_picture.setFixedHeight(380)
+        self.tab1_right_picture.setFixedHeight(350)
         self.tab1_right_picture.setFixedWidth(560)
         self.tab1_right_picture_navigate_button = QtWidgets.QPushButton(self.tab1)
         self.tab1_right_picture_navigate_button.setEnabled(False)
         self.tab1_right_picture_navigate_button.setMouseTracking(True)
         self.tab1_right_picture_navigate_button.setFixedWidth(51)
-        self.tab1_right_picture_navigate_button.setFixedHeight(380)
+        self.tab1_right_picture_navigate_button.setFixedHeight(350)
         self.tab1_right_picture_navigate_button.setObjectName("tab1_right_picture_navigate_button")
         self.tab1_right_picture_navigate_button.setPalette(palette)
         self.tab1_right_picture_navigate_button.setFont(self.tab1_picture_navigate_button_font)
@@ -196,6 +199,7 @@ class Ui_MainWindow(object):
         self.tab1_verticalLayout.addWidget(self.tab1_orchard_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_picture_path_instruction_label)
         self.tab1_verticalLayout.addWidget(self.tab1_picture_selection_widget)
+        self.tab1_verticalLayout.addWidget(self.tab1_test_instruction_label)
         self.tab1_verticalLayout.addWidget(self.tab1_test_widget)
         self.tab1_verticalLayout.addWidget(self.tab1_line)
         self.tab1_verticalLayout.addWidget(self.tab1_statistical_data_widget)
@@ -374,14 +378,6 @@ class Ui_MainWindow(object):
         self.tabWidget.addTab(self.tab2, "")
 
         MainWindow.setCentralWidget(self.centralwidget)
-        # self.menubar = QtWidgets.QMenuBar(MainWindow)
-        # self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 22))
-        # self.menubar.setObjectName("menubar")
-        # MainWindow.setMenuBar(self.menubar)
-        # self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        # self.statusbar.setObjectName("statusbar")
-        # MainWindow.setStatusBar(self.statusbar)
-        
 
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
@@ -400,6 +396,7 @@ class Ui_MainWindow(object):
         self.tab1_orchard_comboBox.setCurrentIndex(-1)
         self.tab1_picture_path_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '2. Click \"Browse\" to select the directory containing the pictures to detect'))
         self.tab1_picture_path_button.setText(QtCore.QCoreApplication.translate('MainWindow', 'Browse'))
+        self.tab1_test_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '3. Click \"DETECT\" to start detecting bugs'))
         self.tab1_test_button.setText(QtCore.QCoreApplication.translate('MainWindow', 'DETECT'))
         self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
         self.tab1_left_picture_navigate_button.setText(QtCore.QCoreApplication.translate('MainWindow', '<'))
@@ -539,6 +536,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                 else:
                     # remove the prompts for orchard selecting
                     self.tab1_orchard_instruction_label.setStyleSheet("color: black;")
+                    self.tab1_test_instruction_label.setStyleSheet("color: rgb(0, 146, 208);")
                     self.tab1_test_button.setEnabled(True)
 
             self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Selected directory: ') + path)
@@ -546,17 +544,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         elif path == '':
             # show some prompts when no directory is selected
             if self.tab1_picture_path_lineEdit.text() == '':
-                self.tab1_picture_path_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '2. No directory selected. Please select a directory to run the detection'))
+                self.tab1_picture_path_instruction_label.setText(QtCore.QCoreApplication.translate('MainWindow', '2. No directory selected. Please select a directory to start detecting bugs'))
                 self.tab1_picture_path_instruction_label.setStyleSheet("color: red;")
                 self.tab1_picture_path_lineEdit.setStyleSheet("border: 1px solid red;")
 
-                self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'No directory selected. Please select a directory to run the detection'))
+                self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'No directory selected. Please select a directory to start detecting bugs'))
                 QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         
         return
 
 
     def on_tab1_test_button_clicked(self):
+        # remove prompt
+        self.tab1_test_instruction_label.setStyleSheet("color: black;")
+        
         # remove old information
         self.tab1_statistical_data_date_label.clear()
         self.tab1_statistical_data_dominant_label.clear()
@@ -669,20 +670,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         detectedObjectTotal = sum(detectedObjectCount)
         dominantObject = 0
+        dominantObjectName = ''
         for i in range(1, len(detectedObjectCount)):
             if detectedObjectCount[dominantObject] < detectedObjectCount[i]:
                 dominantObject = i
         
         if dominantObject == 0:
-            dominantObject = 'egg'
+            dominantObjectName = QtCore.QCoreApplication.translate('MainWindow', 'egg')
         elif dominantObject == 1:
-            dominantObject = 'larval_before'
+            dominantObjectName = QtCore.QCoreApplication.translate('MainWindow','larval_before')
         elif dominantObject == 2:
-            dominantObject = 'larval_after'
+            dominantObjectName = QtCore.QCoreApplication.translate('MainWindow','larval_after')
         elif dominantObject == 3:
-            dominantObject = 'juvenile'
+            dominantObjectName = QtCore.QCoreApplication.translate('MainWindow','juvenile')
         elif dominantObject == 4:
-            dominantObject = 'tessaratoma'
+            dominantObjectName = QtCore.QCoreApplication.translate('MainWindow','tessaratoma')
 
         statisticsDictionary = {
             "time": date,
@@ -711,20 +713,25 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
                                                         QtCore.QCoreApplication.translate('MainWindow', ' pictures , ') + str(detectedObjectTotal) + \
                                                         QtCore.QCoreApplication.translate('MainWindow', ' bugs.'))
         
-        self.tab1_statistical_data_dominant_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'DOMINANT OBJECT: ') + dominantObject)
+        self.tab1_statistical_data_dominant_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'DOMINANT OBJECT: ') + dominantObjectName)
         
+        self.tab1_statistical_data_egg_label.setStyleSheet("background-color: rgb(255, 191, 255);")
         self.tab1_statistical_data_egg_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'egg: ') + str(detectedObjectCount[0]) + ' (' + \
                                                         str(round(detectedObjectCount[0]/detectedObjectTotal*100, 1)) + '%)')
         
+        self.tab1_statistical_data_larval_before_label.setStyleSheet("background-color: rgb(255, 255, 149);")
         self.tab1_statistical_data_larval_before_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'larval_before: ') + str(detectedObjectCount[1]) + ' (' + \
                                                                 str(round(detectedObjectCount[1]/detectedObjectTotal*100, 1)) + '%)')
         
+        self.tab1_statistical_data_larval_after_label.setStyleSheet("background-color: rgb(191, 255, 255);")
         self.tab1_statistical_data_larval_after_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'larval_after: ') + str(detectedObjectCount[2]) + ' (' + \
                                                                 str(round(detectedObjectCount[2]/detectedObjectTotal*100, 1)) + '%)')
         
+        self.tab1_statistical_data_juvenile_label.setStyleSheet("background-color: rgb(255, 191, 191);")
         self.tab1_statistical_data_juvenile_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'juvenile: ') + str(detectedObjectCount[3]) + ' (' + \
                                                             str(round(detectedObjectCount[3]/detectedObjectTotal*100, 1)) + '%)')
         
+        self.tab1_statistical_data_tessaratoma_label.setStyleSheet("background-color: rgb(191, 255, 191);")
         self.tab1_statistical_data_tessaratoma_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'tessaratoma: ') + str(detectedObjectCount[4]) + ' (' + \
                                                                 str(round(detectedObjectCount[4]/detectedObjectTotal*100, 1)) + '%)')
 
@@ -732,7 +739,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         statisticalDataMessage = QtWidgets.QMessageBox()
         statisticalDataMessage.setWindowTitle(QtCore.QCoreApplication.translate('MainWindow', 'Statistical result'))
         statisticalDataMessage.setInformativeText(date + QtCore.QCoreApplication.translate('MainWindow', ' , at ') + self.tab1_orchard_comboBox.currentText() + '\n' + \
-                                                    QtCore.QCoreApplication.translate('MainWindow', 'DOMINANT OBJECT: ') + dominantObject + '\n' + \
+                                                    QtCore.QCoreApplication.translate('MainWindow', 'DOMINANT OBJECT: ') + dominantObjectName + '\n' + \
                                                     '    ' + QtCore.QCoreApplication.translate('MainWindow', 'egg: ') + str(detectedObjectCount[0]) + ' (' + \
                                                             str(round(detectedObjectCount[0]/detectedObjectTotal*100, 1)) + '%)\n' + \
                                                     '    ' + QtCore.QCoreApplication.translate('MainWindow', 'larval_before: ') + str(detectedObjectCount[1]) + ' (' + \
@@ -987,29 +994,48 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     
     def tab2_update_statistical_data(self, openedStatisticalData):
+        dominantObjectName = ''
+        
         detectedObjectTotal = openedStatisticalData['objects_count']['egg'] + openedStatisticalData['objects_count']['larval_before'] + openedStatisticalData['objects_count']['larval_after'] + \
                                 openedStatisticalData['objects_count']['juvenile'] + openedStatisticalData['objects_count']['tessaratoma']
-
+        
+        if openedStatisticalData['dominant_object'] == 0:
+            dominantObjectName = QtCore.QCoreApplication.translate('MainWindow', 'egg')
+        elif openedStatisticalData['dominant_object'] == 1:
+            dominantObjectName = QtCore.QCoreApplication.translate('MainWindow','larval_before')
+        elif openedStatisticalData['dominant_object'] == 2:
+            dominantObjectName = QtCore.QCoreApplication.translate('MainWindow','larval_after')
+        elif openedStatisticalData['dominant_object'] == 3:
+            dominantObjectName = QtCore.QCoreApplication.translate('MainWindow','juvenile')
+        elif openedStatisticalData['dominant_object'] == 4:
+            dominantObjectName = QtCore.QCoreApplication.translate('MainWindow', 'tessaratoma')
+        
         # update the information shown on the main window
         self.tab2_dateAndOrchard_label.setText(openedStatisticalData['time'] + QtCore.QCoreApplication.translate('MainWindow', ' , at ') + QtCore.QCoreApplication.translate('MainWindow', 'Orchard ') + \
                                                 str(openedStatisticalData['orchard']))
 
         self.tab2_statistical_data_count_label.setText(str(len(self.tab2_originalPictureAddresses)) + QtCore.QCoreApplication.translate('MainWindow', ' pictures , ') + \
                                                         str(detectedObjectTotal) + QtCore.QCoreApplication.translate('MainWindow', ' bugs.'))
-        self.tab2_statistical_data_dominant_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'DOMINANT OBJECT: ') + openedStatisticalData['dominant_object'])
+
+        self.tab2_statistical_data_dominant_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'DOMINANT OBJECT: ') + dominantObjectName)
         
+        self.tab2_statistical_data_egg_label.setStyleSheet("background-color: rgb(255, 191, 255);")
         self.tab2_statistical_data_egg_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'egg: ') + str(openedStatisticalData['objects_count']['egg']) + ' (' + \
                                                         str(round(int(openedStatisticalData['objects_count']['egg']) / detectedObjectTotal * 100, 1)) + '%)')
         
+        self.tab2_statistical_data_larval_before_label.setStyleSheet("background-color: rgb(255, 255, 149);")
         self.tab2_statistical_data_larval_before_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'larval_before: ') + str(openedStatisticalData['objects_count']['larval_before']) + ' (' + \
                                                                 str(round(int(openedStatisticalData['objects_count']['larval_before'])/detectedObjectTotal*100, 1)) + '%)')
         
+        self.tab2_statistical_data_larval_after_label.setStyleSheet("background-color: rgb(191, 255, 255);")
         self.tab2_statistical_data_larval_after_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'larval_after: ') + str(openedStatisticalData['objects_count']['larval_after']) + ' (' + \
                                                                 str(round(int(openedStatisticalData['objects_count']['larval_after'])/detectedObjectTotal*100, 1)) + '%)')
         
+        self.tab2_statistical_data_juvenile_label.setStyleSheet("background-color: rgb(255, 191, 191);")
         self.tab2_statistical_data_juvenile_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'juvenile: ') + str(openedStatisticalData['objects_count']['juvenile']) + ' (' + \
                                                             str(round(int(openedStatisticalData['objects_count']['juvenile'])/detectedObjectTotal*100, 1)) + '%)')
         
+        self.tab2_statistical_data_tessaratoma_label.setStyleSheet("background-color: rgb(191, 255, 191);")
         self.tab2_statistical_data_tessaratoma_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'tessaratoma: ') + str(openedStatisticalData['objects_count']['tessaratoma']) + ' (' + \
                                                             str(round(int(openedStatisticalData['objects_count']['tessaratoma'])/detectedObjectTotal*100, 1)) + '%)')
         
