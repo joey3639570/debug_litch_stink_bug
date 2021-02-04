@@ -16,7 +16,7 @@ import os
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1000, 800)
+        MainWindow.resize(1066, 800)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -32,7 +32,7 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow) # parent is MainWindow
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget) # parent is centralWidget
-        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1000, 800))
+        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 1066, 800))
         self.tabWidget.setObjectName("tabWidget")
         self.tabWidget.setStyleSheet("QTabBar::tab {height: 30px;}")
         self.tab1 = QtWidgets.QWidget() # declaration for tab, no inheritance needed
@@ -114,19 +114,20 @@ class Ui_MainWindow(object):
         self.tab1_statistical_data_tessaratoma_label.setFont(self.tab1_statistical_data_label_font)
         self.tab1_statistical_data_tessaratoma_label.setAlignment(QtGui.Qt.AlignHCenter)
 
-        # Left grid for original picture
+        # grid for picture
+        self.tab1_picture = QtWidgets.QLabel(self.tab1)
+        self.tab1_picture.setObjectName("tab1_picture")
+        self.tab1_picture.setFixedHeight(350)
+        self.tab1_picture.setFixedWidth(928)
+
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Button, brush)
 
+        # navigate buttons for pictures
         self.tab1_picture_navigate_button_font = QtGui.QFont()
         self.tab1_picture_navigate_button_font.setPointSize(14)
-
-        '''self.tab1_left_picture = QtWidgets.QLabel(self.tab1)
-        self.tab1_left_picture.setObjectName("tab1_left_picture")
-        self.tab1_left_picture.setFixedHeight(350)
-        self.tab1_left_picture.setFixedWidth(560)'''
         self.tab1_left_picture_navigate_button = QtWidgets.QPushButton(self.tab1)
         self.tab1_left_picture_navigate_button.setEnabled(False)
         self.tab1_left_picture_navigate_button.setMouseTracking(True)
@@ -136,11 +137,6 @@ class Ui_MainWindow(object):
         self.tab1_left_picture_navigate_button.setPalette(palette)
         self.tab1_left_picture_navigate_button.setFont(self.tab1_picture_navigate_button_font)
         
-        # Right grid for detected picture
-        self.tab1_right_picture = QtWidgets.QLabel(self.tab1)
-        self.tab1_right_picture.setObjectName("tab1_right_picture")
-        self.tab1_right_picture.setFixedHeight(350)
-        self.tab1_right_picture.setFixedWidth(560)
         self.tab1_right_picture_navigate_button = QtWidgets.QPushButton(self.tab1)
         self.tab1_right_picture_navigate_button.setEnabled(False)
         self.tab1_right_picture_navigate_button.setMouseTracking(True)
@@ -189,10 +185,8 @@ class Ui_MainWindow(object):
 
         # pichture showing widget
         self.tab1_picture_widget_layout.addWidget(self.tab1_left_picture_navigate_button)
-        # self.tab1_picture_widget_layout.addWidget(self.tab1_left_picture)
-        self.tab1_picture_widget_layout.addWidget(self.tab1_right_picture)
+        self.tab1_picture_widget_layout.addWidget(self.tab1_picture)
         self.tab1_picture_widget_layout.addWidget(self.tab1_right_picture_navigate_button)
-        self.tab1_picture_widget_layout.setAlignment(QtCore.Qt.AlignHCenter)
 
         # whole layout
         self.tab1_verticalLayout.addWidget(self.tab1_orchard_instruction_label)
@@ -294,29 +288,26 @@ class Ui_MainWindow(object):
         self.tab2_statistical_data_tessaratoma_label.setFont(self.tab1_statistical_data_label_font) # reuse the font object to reduce the use of memory
         self.tab2_statistical_data_tessaratoma_label.setAlignment(QtGui.Qt.AlignHCenter)
 
-        # Left grid for original picture
-        '''self.tab2_left_picture = QtWidgets.QLabel(self.tab2)
-        self.tab2_left_picture.setObjectName("tab2_left_picture")
-        self.tab2_left_picture.setFixedHeight(406)
-        self.tab2_left_picture.setFixedWidth(560)'''
+        # grid for pictures
+        self.tab2_picture = QtWidgets.QLabel(self.tab2)
+        self.tab2_picture.setObjectName("tab2_right_picture")
+        self.tab2_picture.setFixedHeight(420)
+        self.tab2_picture.setFixedWidth(928)
+
+        # navigate buttons for pictures
         self.tab2_left_picture_navigate_button = QtWidgets.QPushButton(self.tab2)
         self.tab2_left_picture_navigate_button.setEnabled(False)
         self.tab2_left_picture_navigate_button.setMouseTracking(True)
         self.tab2_left_picture_navigate_button.setFixedWidth(60)
-        self.tab2_left_picture_navigate_button.setFixedHeight(406)
+        self.tab2_left_picture_navigate_button.setFixedHeight(420)
         self.tab2_left_picture_navigate_button.setObjectName("tab2_left_picture_navigate_button")
         self.tab2_left_picture_navigate_button.setPalette(palette)
         
-        # Right grid for detected picture
-        self.tab2_right_picture = QtWidgets.QLabel(self.tab2)
-        self.tab2_right_picture.setObjectName("tab2_right_picture")
-        self.tab2_right_picture.setFixedHeight(406)
-        self.tab2_right_picture.setFixedWidth(560)
         self.tab2_right_picture_navigate_button = QtWidgets.QPushButton(self.tab2)
         self.tab2_right_picture_navigate_button.setEnabled(False)
         self.tab2_right_picture_navigate_button.setMouseTracking(True)
         self.tab2_right_picture_navigate_button.setFixedWidth(60)
-        self.tab2_right_picture_navigate_button.setFixedHeight(406)
+        self.tab2_right_picture_navigate_button.setFixedHeight(420)
         self.tab2_right_picture_navigate_button.setObjectName("tab2_right_picture_navigate_button")
         self.tab2_right_picture_navigate_button.setPalette(palette)
 
@@ -346,10 +337,8 @@ class Ui_MainWindow(object):
 
         # picture showing widget
         self.tab2_picture_widget_layout.addWidget(self.tab2_left_picture_navigate_button)
-        # self.tab2_picture_widget_layout.addWidget(self.tab2_left_picture)
-        self.tab2_picture_widget_layout.addWidget(self.tab2_right_picture)
+        self.tab2_picture_widget_layout.addWidget(self.tab2_picture)
         self.tab2_picture_widget_layout.addWidget(self.tab2_right_picture_navigate_button)
-        self.tab2_picture_widget_layout.setAlignment(QtCore.Qt.AlignHCenter)
 
         # statistical data widget for objects
         self.tab2_statistical_data_objects_widget_layout.addWidget(self.tab2_statistical_data_egg_label)
@@ -431,7 +420,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # variables for showing pictures in tab1
         self.tab1_detectionOutputPath = ''
         self.tab1_originalPictureDirectoryPath = ''
-        self.tab1_originalPictureAddresses = []
+        self.tab1_detectedPictureAddresses = []
         self.tab1_pictureNavigateCount = 0
 
         # variables for showing statistical data
@@ -439,7 +428,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_dateNavigateCount = 0
         
         self.tab2_originalPictureDirectoryPath = ''
-        self.tab2_originalPictureAddresses = []
+        self.tab2_detectedPictureAddresses = []
         self.tab2_pictureNavigateCount = 0
 
         # Signal Setting
@@ -465,27 +454,21 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
     
     # generic functions
-    def update_pictures(self, leftPictureAddress, rightPicture):
-        # leftPixmap = QtGui.QPixmap(leftPictureAddress)
-        # leftPixmap = leftPixmap.scaled(560, 406, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        # leftPicture.setPixmap(leftPixmap)
-        rightPixmap = QtGui.QPixmap(leftPictureAddress)
-        rightPixmap = rightPixmap.scaled(560, 406, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        rightPicture.setPixmap(rightPixmap)
+    def update_pictures(self, pictureAddress, picture, width, height):
+        pixmap = QtGui.QPixmap(pictureAddress)
+        pixmap = pixmap.scaled(width, height, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
+        picture.setPixmap(pixmap)
+        picture.setAlignment(QtCore.Qt.AlignCenter)
 
         return
     
 
-    def collect_original_picutre_addresses(self, detectedDirectory, originalPictureAddresses):
+    def collect_original_picutre_addresses(self, detectedDirectory, pictureAddresses):
         for f in os.listdir(detectedDirectory):
             if (f.lower().__contains__('.jpg')):
-                originalPictureAddresses.append(detectedDirectory + f)
-            '''elif (f.lower().__contains__('.jpeg')):
-                originalPictureAddresses.append(detectedDirectory + f)
-            elif (f.lower().__contains__('.png')):
-                originalPictureAddresses.append(detectedDirectory + f)'''
+                pictureAddresses.append(detectedDirectory + f)
         
-        originalPictureAddresses.sort()
+        pictureAddresses.sort()
 
         return
 
@@ -566,8 +549,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_statistical_data_larval_after_label.clear()
         self.tab1_statistical_data_juvenile_label.clear()
         self.tab1_statistical_data_tessaratoma_label.clear()
-        # self.tab1_left_picture.clear()
-        self.tab1_right_picture.clear()
+        self.tab1_picture.clear()
 
         # disable buttons
         self.tab1_orchard_comboBox.setEnabled(False)
@@ -579,7 +561,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         
         # initialize variables
         self.tab1_pictureNavigateCount = 0
-        self.tab1_originalPictureAddresses = []
+        self.tab1_detectedPictureAddresses = []
 
         self.tab1_originalPictureDirectoryPath = self.tab1_picture_path
 
@@ -640,7 +622,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         # collecting paths to all the detected pictures
         self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Collecting paths'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
-        self.collect_original_picutre_addresses(self.tab1_detectionOutputPath, self.tab1_originalPictureAddresses)
+        self.collect_original_picutre_addresses(self.tab1_detectionOutputPath, self.tab1_detectedPictureAddresses)
 
         self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Paths collected'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -702,14 +684,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
 
         # show pictures
-        self.update_pictures(self.tab1_originalPictureAddresses[self.tab1_pictureNavigateCount],
-                            # self.tab1_originalPictureAddresses[self.tab1_pictureNavigateCount].replace(self.tab1_originalPictureDirectoryPath, self.tab1_detectionOutputPath).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
-                            # self.tab1_left_picture,
-                            self.tab1_right_picture)
+        self.update_pictures(self.tab1_detectedPictureAddresses[self.tab1_pictureNavigateCount],
+                            self.tab1_picture, 
+                            928, 350)
 
         # show statistical data in main window
         self.tab1_statistical_data_date_label.setText(date + QtCore.QCoreApplication.translate('MainWindow', ' , at ') + self.tab1_orchard_comboBox.currentText() + \
-                                                        QtCore.QCoreApplication.translate('MainWindow', ' . ') + str(len(self.tab1_originalPictureAddresses)) + \
+                                                        QtCore.QCoreApplication.translate('MainWindow', ' . ') + str(len(self.tab1_detectedPictureAddresses)) + \
                                                         QtCore.QCoreApplication.translate('MainWindow', ' pictures , ') + str(detectedObjectTotal) + \
                                                         QtCore.QCoreApplication.translate('MainWindow', ' bugs.'))
         
@@ -760,7 +741,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab1_picture_path_button.setEnabled(True)
         self.tab1_picture_path_lineEdit.setEnabled(True)
         self.tab1_test_button.setEnabled(True)
-        if len(self.tab1_originalPictureAddresses) > 1:
+        if len(self.tab1_detectedPictureAddresses) > 1:
             self.tab1_right_picture_navigate_button.setEnabled(True)
 
         self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
@@ -772,10 +753,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def on_tab1_left_picutre_navigate_button_clicked(self):
         self.tab1_pictureNavigateCount = self.tab1_pictureNavigateCount - 1
         
-        self.update_pictures(self.tab1_originalPictureAddresses[self.tab1_pictureNavigateCount],
-                            # self.tab1_originalPictureAddresses[self.tab1_pictureNavigateCount].replace(self.tab1_originalPictureDirectoryPath, self.tab1_detectionOutputPath).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
-                            # self.tab1_left_picture,
-                            self.tab1_right_picture)
+        self.update_pictures(self.tab1_detectedPictureAddresses[self.tab1_pictureNavigateCount],
+                            self.tab1_picture, 
+                            928, 350)
         
         # control buttons
         if self.tab1_pictureNavigateCount == 0:
@@ -790,13 +770,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def on_tab1_right_picutre_navigate_button_clicked(self):
         self.tab1_pictureNavigateCount = self.tab1_pictureNavigateCount + 1
 
-        self.update_pictures(self.tab1_originalPictureAddresses[self.tab1_pictureNavigateCount],
-                            # self.tab1_originalPictureAddresses[self.tab1_pictureNavigateCount].replace(self.tab1_originalPictureDirectoryPath, self.tab1_detectionOutputPath).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
-                            # self.tab1_left_picture,
-                            self.tab1_right_picture)
+        self.update_pictures(self.tab1_detectedPictureAddresses[self.tab1_pictureNavigateCount],
+                            self.tab1_picture,
+                            928, 350)
         
         # control buttons
-        if self.tab1_pictureNavigateCount == len(self.tab1_originalPictureAddresses) - 1:
+        if self.tab1_pictureNavigateCount == len(self.tab1_detectedPictureAddresses) - 1:
             self.tab1_right_picture_navigate_button.setEnabled(False)
         
         if self.tab1_left_picture_navigate_button.isEnabled() == False:
@@ -816,7 +795,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_statistical_data_juvenile_label.clear()
         self.tab2_statistical_data_tessaratoma_label.clear()
         # self.tab2_left_picture.clear()
-        self.tab2_right_picture.clear()
+        self.tab2_picture.clear()
 
         # disable buttons
         self.tab2_orchard_comboBox.setEnabled(False)
@@ -829,7 +808,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_dateNavigateCount = 0
         self.tab2_pictureNavigateCount = 0
         self.tab2_detectionOutputPaths = []
-        self.tab2_originalPictureAddresses = []
+        self.tab2_detectedPictureAddresses = []
         self.tab2_orchard_instruction_label.setStyleSheet("color: black;")
 
         self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Loading. Please wait...'))
@@ -854,19 +833,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.tab2_originalPictureDirectoryPath = openedStatisticalData['detected_directory']
 
-        self.collect_original_picutre_addresses(self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount], self.tab2_originalPictureAddresses)
+        self.collect_original_picutre_addresses(self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount], self.tab2_detectedPictureAddresses)
         self.tab2_update_statistical_data(openedStatisticalData)
-        self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
-                            # self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount],
-                            # self.tab2_left_picture,
-                            self.tab2_right_picture)
+        self.update_pictures(self.tab2_detectedPictureAddresses[self.tab2_pictureNavigateCount],
+                            self.tab2_picture, 
+                            928, 420)
 
         # re-enable buttons
         self.tab2_orchard_comboBox.setEnabled(True)
         if len(self.tab2_detectionOutputPaths) > 1:
                 self.tab2_right_date_navigate_button.setEnabled(True)
             
-        if len(self.tab2_originalPictureAddresses) > 1:
+        if len(self.tab2_detectedPictureAddresses) > 1:
             self.tab2_right_picture_navigate_button.setEnabled(True)
     
         self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
@@ -879,7 +857,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_left_picture_navigate_button.setEnabled(False)
         self.tab2_right_picture_navigate_button.setEnabled(False)
         self.tab2_pictureNavigateCount = 0
-        self.tab2_originalPictureAddresses = []
+        self.tab2_detectedPictureAddresses = []
 
         self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Loading. Please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -893,12 +871,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.tab2_originalPictureDirectoryPath = openedStatisticalData['detected_directory']
 
-        self.collect_original_picutre_addresses(self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount], self.tab2_originalPictureAddresses)
+        self.collect_original_picutre_addresses(self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount], self.tab2_detectedPictureAddresses)
         self.tab2_update_statistical_data(openedStatisticalData)
-        self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
-                            # self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount].replace(self.tab2_originalPictureDirectoryPath, self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount]).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
-                            # self.tab2_left_picture,
-                            self.tab2_right_picture)
+        self.update_pictures(self.tab2_detectedPictureAddresses[self.tab2_pictureNavigateCount],
+                            self.tab2_picture, 
+                            928, 420)
 
         # control buttons
         if self.tab2_dateNavigateCount == 0:
@@ -907,7 +884,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.tab2_right_date_navigate_button.isEnabled() == False:
             self.tab2_right_date_navigate_button.setEnabled(True)
         
-        if len(self.tab2_originalPictureAddresses) > 1:
+        if len(self.tab2_detectedPictureAddresses) > 1:
                 self.tab2_right_picture_navigate_button.setEnabled(True)
 
         self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
@@ -920,7 +897,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_left_picture_navigate_button.setEnabled(False)
         self.tab2_right_picture_navigate_button.setEnabled(False)
         self.tab2_pictureNavigateCount = 0
-        self.tab2_originalPictureAddresses = []
+        self.tab2_detectedPictureAddresses = []
 
         self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Loading. Please wait...'))
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
@@ -934,12 +911,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.tab2_originalPictureDirectoryPath = openedStatisticalData['detected_directory']
 
-        self.collect_original_picutre_addresses(self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount], self.tab2_originalPictureAddresses)
+        self.collect_original_picutre_addresses(self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount], self.tab2_detectedPictureAddresses)
         self.tab2_update_statistical_data(openedStatisticalData)
-        self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
-                            # self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount].replace(self.tab2_originalPictureDirectoryPath, self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount]).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
-                            # self.tab2_left_picture,
-                            self.tab2_right_picture)
+        self.update_pictures(self.tab2_detectedPictureAddresses[self.tab2_pictureNavigateCount],
+                            self.tab2_picture, 
+                            928, 420)
 
         # control buttons
         if self.tab2_dateNavigateCount == len(self.tab2_detectionOutputPaths) - 1:
@@ -948,7 +924,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         if self.tab2_left_date_navigate_button.isEnabled() == False:
             self.tab2_left_date_navigate_button.setEnabled(True)
 
-        if len(self.tab2_originalPictureAddresses) > 1:
+        if len(self.tab2_detectedPictureAddresses) > 1:
                 self.tab2_right_picture_navigate_button.setEnabled(True)
 
         self.tab2_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Ready'))
@@ -960,10 +936,9 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def on_tab2_left_picutre_navigate_button_clicked(self):
         self.tab2_pictureNavigateCount = self.tab2_pictureNavigateCount - 1
         
-        self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
-                            # self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount].replace(self.tab2_originalPictureDirectoryPath, self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount]).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
-                            # self.tab2_left_picture,
-                            self.tab2_right_picture)
+        self.update_pictures(self.tab2_detectedPictureAddresses[self.tab2_pictureNavigateCount],
+                            self.tab2_picture, 
+                            928, 420)
         
         # control buttons
         if self.tab2_pictureNavigateCount == 0:
@@ -978,13 +953,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def on_tab2_right_picutre_navigate_button_clicked(self):
         self.tab2_pictureNavigateCount = self.tab2_pictureNavigateCount + 1
 
-        self.update_pictures(self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount],
-                            # self.tab2_originalPictureAddresses[self.tab2_pictureNavigateCount].replace(self.tab2_originalPictureDirectoryPath, self.tab2_detectionOutputPaths[self.tab2_dateNavigateCount]).replace('.jpeg', '.jpg').replace('.png', '.jpg'),
-                            # self.tab2_left_picture,
-                            self.tab2_right_picture)
+        self.update_pictures(self.tab2_detectedPictureAddresses[self.tab2_pictureNavigateCount],
+                            self.tab2_picture, 
+                            928, 420)
         
         # control buttons
-        if self.tab2_pictureNavigateCount == len(self.tab2_originalPictureAddresses) - 1:
+        if self.tab2_pictureNavigateCount == len(self.tab2_detectedPictureAddresses) - 1:
             self.tab2_right_picture_navigate_button.setEnabled(False)
         
         if self.tab2_left_picture_navigate_button.isEnabled() == False:
@@ -1014,7 +988,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.tab2_dateAndOrchard_label.setText(openedStatisticalData['time'] + QtCore.QCoreApplication.translate('MainWindow', ' , at ') + QtCore.QCoreApplication.translate('MainWindow', 'Orchard ') + \
                                                 str(openedStatisticalData['orchard']))
 
-        self.tab2_statistical_data_count_label.setText(str(len(self.tab2_originalPictureAddresses)) + QtCore.QCoreApplication.translate('MainWindow', ' pictures , ') + \
+        self.tab2_statistical_data_count_label.setText(str(len(self.tab2_detectedPictureAddresses)) + QtCore.QCoreApplication.translate('MainWindow', ' pictures , ') + \
                                                         str(detectedObjectTotal) + QtCore.QCoreApplication.translate('MainWindow', ' bugs.'))
 
         self.tab2_statistical_data_dominant_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'DOMINANT OBJECT: ') + dominantObjectName)
