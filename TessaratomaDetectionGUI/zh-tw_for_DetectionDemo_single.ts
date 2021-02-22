@@ -98,8 +98,8 @@
     </message>
     <message>
         <location filename="DetectionDemo_single.py" line="409"/>
-        <source>Statistical data</source>
-        <translation>統計資料</translation>
+        <source>History</source>
+        <translation>歷史紀錄</translation>
     </message>
     <message>
         <location filename="DetectionDemo_single.py" line="495"/>

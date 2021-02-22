@@ -406,7 +406,7 @@ class Ui_MainWindow(object):
         self.tab2_right_date_navigate_button.setText(QtCore.QCoreApplication.translate('MainWindow', '>'))
         self.tab2_left_picture_navigate_button.setText(QtCore.QCoreApplication.translate('MainWindow', '<'))
         self.tab2_right_picture_navigate_button.setText(QtCore.QCoreApplication.translate('MainWindow', '>'))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab2), QtCore.QCoreApplication.translate('MainWindow', 'Statistical data'))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab2), QtCore.QCoreApplication.translate('MainWindow', 'History'))
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -608,12 +608,12 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         QtCore.QCoreApplication.processEvents(QtCore.QEventLoop.AllEvents)
         commands = ['./darknet detector batch',
                     'data/obj.data',
-                    'cfg/yolov4-custom.cfg',
-                    'weights/20200509_20000iterations_random0_sub32_wh480/yolov4-custom_20000.weights',
+                    'cfg/yolov4-640-custom.cfg',
+                    'weights/yolov4-custom_11000.weights',
                     'io_folder ' + self.tab1_originalPictureDirectoryPath,
                     self.tab1_detectionOutputPath,
                     '-out ' + self.tab1_detectionOutputPath + 'detection_results.json',
-                    '-dont_show']
+                    '-dont_show', '-thresh 0.2']
         os.system(' '.join(commands))
         
         self.tab1_state_label.setText(QtCore.QCoreApplication.translate('MainWindow', 'Detection finished'))
